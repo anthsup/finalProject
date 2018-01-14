@@ -1,0 +1,29 @@
+
+I
+src/main/webapp/index.jsp,8/e/8e6d3b70c9f5b02570779b0441540d45eceb0ded
+O
+src/main/webapp/WEB-INF/web.xml,2/e/2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+7
+pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+Q
+!src/main/webapp/css/bootstrap.css,1/3/13ff1c87977647caa2991b40a1e919c79e2b4c31
+V
+&src/main/webapp/css/bootstrap-grid.css,9/c/9cf879ac41a9619fdc6104ac5f012e76bc98c188
+V
+&src/main/webapp/js/bootstrap.bundle.js,2/b/2b347781f6d9c5477343bb0c75848d71f53d9348
+O
+src/main/webapp/js/bootstrap.js,d/4/d4e6b9e1c4f8590713363191b14777838a5253be
+T
+$src/main/webapp/css/index-styles.css,0/8/080cba74957fc84c044bca1af3203c5b6a1cb0a4
+R
+"src/main/webapp/js/registration.js,8/1/815bdfa4b06ee88eeacb345bcd037722989ecb8d
+[
++src/main/webapp/css/registration-styles.css,d/0/d0e1bb0310bc4b42c356d21290791c16f7676784
+\
+,src/main/webapp/WEB-INF/jsp/login-signin.jsp,4/3/4345868f2733b5abdfcd9a890544dc5d6a9d8378
+U
+%src/main/webapp/WEB-INF/jsp/error.jsp,9/3/93e1d4466e49437af2d8da96e6325de845033510
+S
+#src/main/webapp/WEB-INF/jsp/ban.jsp,6/9/692eef9b1bc26a174fec28b4af120d638d511fd3
+U
+%src/main/webapp/WEB-INF/jsp/about.jsp,4/e/4e7b8d7dc4b427151489121dcc5800a3ef43eb65
