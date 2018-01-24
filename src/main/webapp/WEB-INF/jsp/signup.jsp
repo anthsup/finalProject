@@ -1,6 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,7 @@
 
     <!-- Website Font style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/register-style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register-style.css">
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
@@ -23,7 +22,7 @@
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <form class="" method="post" action="/controller">
+            <form method="post" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="signup">
                 <div class="form-group">
                     <div class="cols-sm-10">

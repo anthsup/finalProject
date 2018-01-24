@@ -1,0 +1,66 @@
+/*----------------------
+Product Card Styles
+----------------------*/
+.panel.panel--styled {
+    background: #F4F2F3;
+}
+
+.panelTop {
+    padding: 5px;
+}
+
+.panelBottom {
+    border-top: 1px solid #e7e7e7;
+    padding: 5px;
+}
+
+.btn-add-to-cart {
+    background: #FD5A5B;
+    color: #fff;
+}
+
+.btn.btn-add-to-cart.focus, .btn.btn-add-to-cart:focus, .btn.btn-add-to-cart:hover {
+    color: #fff;
+    background: #FD7172;
+    outline: none;
+}
+
+.btn-add-to-cart:active {
+    background: #F9494B;
+    outline: none;
+}
+
+span.itemPrice {
+    font-size: 15px;
+    color: #FA5B58;
+}
+/****************************/
+.product_view .modal-dialog {
+    max-width: 800px;
+    width: 100%;
+}
+
+.pre-cost {
+    text-decoration: line-through;
+    color: #a5a5a5;
+}
+
+.space-ten {
+    padding: 10px 0;
+}
+
+.img-responsive {
+  height:150px;
+}
+
+#img-custom {
+  height: auto !important;
+}
+
+.title-view {
+    height: 86.4px !important;
+}
+
+.price-view {
+    height: 36.5px !important;
+}
