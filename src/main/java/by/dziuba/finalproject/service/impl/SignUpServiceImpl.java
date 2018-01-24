@@ -1,10 +1,10 @@
-package by.dziuba.finalproject.service.impl;
+package by.dziuba.subscription.service.impl;
 
-import by.dziuba.finalproject.entity.User;
-import by.dziuba.finalproject.service.LogInService;
-import by.dziuba.finalproject.service.SignUpService;
-import by.dziuba.finalproject.service.UserService;
-import by.dziuba.finalproject.service.exception.ServiceException;
+import by.dziuba.subscription.entity.User;
+import by.dziuba.subscription.service.LogInService;
+import by.dziuba.subscription.service.SignUpService;
+import by.dziuba.subscription.service.UserService;
+import by.dziuba.subscription.service.exception.ServiceException;
 
 public class SignUpServiceImpl implements SignUpService {
     private static final UserService userService = new UserServiceImpl();

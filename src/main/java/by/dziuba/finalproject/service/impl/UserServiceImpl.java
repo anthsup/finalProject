@@ -1,13 +1,13 @@
-package by.dziuba.finalproject.service.impl;
+package by.dziuba.subscription.service.impl;
 
-import by.dziuba.finalproject.dao.exception.DAOException;
-import by.dziuba.finalproject.dao.impl.UserDAOImpl;
-import by.dziuba.finalproject.entity.User;
-import by.dziuba.finalproject.service.UserService;
-import by.dziuba.finalproject.service.exception.ServiceException;
-import by.dziuba.finalproject.dao.UserDAO;
+import by.dziuba.subscription.dao.UserDAO;
+import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.dao.impl.UserDAOImpl;
+import by.dziuba.subscription.entity.User;
+import by.dziuba.subscription.service.UserService;
+import by.dziuba.subscription.service.exception.ServiceException;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private static final UserDAO userDao = new UserDAOImpl();
@@ -16,6 +16,15 @@ public class UserServiceImpl implements UserService {
     public User getUserByLogin(String login) throws ServiceException {
         try {
             return userDao.findUserByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getUserById(int id) throws ServiceException {
+        try {
+            return userDao.findUserById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -31,39 +40,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) throws ServiceException {
+    public List<User> getAllUsers() throws ServiceException {
         try {
-            return userDao.getUserById(id);
+            return userDao.findAllUsers();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public User getUserByEmail(String email) throws ServiceException {
+    public boolean banUser(int userId) throws ServiceException {
         try {
-            return userDao.getUserByEmail(email);
+            return userDao.banUser(userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void updateUserRole(int id, User user) throws ServiceException {
+    public boolean updateUserPassword(int id, String password) throws ServiceException {
         try {
-            userDao.updateUserRole(id,role);
+            String hashedPassword = new LogInServiceImpl().encodePassword(password);
+            return userDao.updateUserPassword(id,hashedPassword);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public boolean banUser(int userId, Timestamp banExpirationDate) throws ServiceException {
-        try {
-            return userDao.banUser(userId, banExpirationDate);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-
     }
 }

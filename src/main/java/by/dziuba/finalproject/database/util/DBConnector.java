@@ -1,4 +1,4 @@
-package by.dziuba.finalproject.database.util;
+package by.dziuba.subscription.database.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

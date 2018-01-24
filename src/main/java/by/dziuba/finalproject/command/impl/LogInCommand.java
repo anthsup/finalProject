@@ -1,8 +1,8 @@
 package by.dziuba.subscription.command.impl;
 
 import by.dziuba.subscription.command.Command;
-import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.RequestContent;
+import by.dziuba.subscription.command.util.CommandResult;
+import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.command.exception.CommandException;
 import by.dziuba.subscription.command.util.JspResourceManager;
 import by.dziuba.subscription.entity.User;
@@ -25,8 +25,9 @@ public class LogInCommand implements Command {
             User user = logInService.logIn(login, password);
             if (user != null) {
                 commandResult.putSessionAttribute("user", user);
-                commandResult.setPage(JspResourceManager.ABOUT_PAGE);
+                commandResult.setPage(JspResourceManager.INDEX_PAGE);
                 commandResult.setRedirected(true);
+                //todo redirect
             } else {
                 commandResult.setErrorCode(401);
                 commandResult.setErrorMessage("Incorrect login or password");

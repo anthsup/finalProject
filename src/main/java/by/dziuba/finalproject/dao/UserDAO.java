@@ -1,13 +1,15 @@
-package by.dziuba.finalproject.dao;
+package by.dziuba.subscription.dao;
 
-import by.dziuba.finalproject.dao.exception.DAOException;
-import by.dziuba.finalproject.entity.User;
+import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.entity.User;
+
+import java.util.List;
 
 public interface UserDAO {
     User findUserByLogin(String login) throws DAOException;
-    boolean addUser(User user) throws DAOException;
     User findUserById(int id) throws DAOException;
-    User findUserByEmail(String email) throws DAOException;
-    boolean updateUserStatus(int id, User user) throws DAOException;
+    List<User> findAllUsers() throws DAOException;
+    boolean addUser(User user) throws DAOException;
+    boolean banUser(int userId) throws DAOException;
     boolean updateUserPassword(int id, String password) throws DAOException;
 }

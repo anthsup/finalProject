@@ -1,8 +1,8 @@
 package by.dziuba.subscription.command.impl;
 
 import by.dziuba.subscription.command.Command;
-import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.RequestContent;
+import by.dziuba.subscription.command.util.CommandResult;
+import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.command.util.JspResourceManager;
 
 public class LogOutCommand implements Command {
@@ -12,7 +12,8 @@ public class LogOutCommand implements Command {
         CommandResult executionResult = new CommandResult();
         executionResult.setSessionInvalidated(true);
         executionResult.setRedirected(true);
-        executionResult.setPage(JspResourceManager.LOGIN_PAGE_COMMAND);
+        executionResult.setPage(JspResourceManager.INDEX_PAGE);
+        //todo redirect
         return executionResult;
     }
 }

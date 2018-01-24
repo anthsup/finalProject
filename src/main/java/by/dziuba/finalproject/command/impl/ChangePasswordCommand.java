@@ -1,11 +1,10 @@
 package by.dziuba.subscription.command.impl;
 
 import by.dziuba.subscription.command.Command;
-import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.RequestContent;
+import by.dziuba.subscription.command.util.CommandResult;
+import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.command.exception.BadRequestException;
 import by.dziuba.subscription.command.exception.CommandException;
-import by.dziuba.subscription.command.util.JspResourceManager;
 import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.LogInService;
 import by.dziuba.subscription.service.UserService;
@@ -36,7 +35,7 @@ public class ChangePasswordCommand implements Command {
             User user = authenticationService.logIn(currentUser.getLogin(), oldPassword);
             if (user != null) {
                 userService.updateUserPassword(user.getId(), newPassword);
-//                CommandResult.setPage(JspResourceManager.USER_INFO_COMMAND) + currentUser.getId());
+//                CommandResult.setPage(JspResourceManager.USER_INFO_COMMAND) + currentUser.getPeriodicalId());
                 // TODO finish when page is available
             } else {
                 CommandResult.setErrorCode(401);

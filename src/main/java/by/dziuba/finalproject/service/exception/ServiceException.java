@@ -1,4 +1,4 @@
-package by.dziuba.finalproject.service.exception;
+package by.dziuba.subscription.service.exception;
 
 public class ServiceException extends Exception {
     public ServiceException(String message) {

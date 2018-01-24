@@ -1,9 +1,9 @@
-package by.dziuba.finalproject.database;
+package by.dziuba.subscription.database;
 
 
-import by.dziuba.finalproject.database.exception.DBException;
-import by.dziuba.finalproject.database.util.DBConnector;
-import by.dziuba.finalproject.database.util.DBResourceManager;
+import by.dziuba.subscription.database.exception.DBException;
+import by.dziuba.subscription.database.util.DBConnector;
+import by.dziuba.subscription.database.util.DBResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package by.dziuba.finalproject.entity;
+package by.dziuba.subscription.entity;
 
 import java.io.Serializable;
 import java.sql.Date;

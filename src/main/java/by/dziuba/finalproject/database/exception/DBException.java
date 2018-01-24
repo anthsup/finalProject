@@ -1,4 +1,4 @@
-package by.dziuba.finalproject.database.exception;
+package by.dziuba.subscription.database.exception;
 
 public class DBException extends Exception {
     public DBException(String message, Throwable cause) {

@@ -1,13 +1,17 @@
-package by.dziuba.finalproject.service;
+package by.dziuba.subscription.service;
 
-import by.dziuba.finalproject.entity.User;
-import by.dziuba.finalproject.service.exception.ServiceException;
+import by.dziuba.subscription.entity.User;
+import by.dziuba.subscription.service.exception.ServiceException;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 public interface UserService {
     User getUserByLogin(String login) throws ServiceException;
-    User getUserById(int id) throws ServiceException;
     boolean addUser(User user) throws ServiceException;
-    boolean updateUserStatus(int id, User user) throws ServiceException;
-    void updateUserRole(int id, User user) throws ServiceException;
-    User getUserByEmail(String email) throws ServiceException;
+    boolean banUser(int userId) throws ServiceException;
+    User getUserById(int id) throws ServiceException;
+    List<User> getAllUsers() throws ServiceException;
+    boolean updateUserPassword(int id, String password) throws ServiceException;
+
 }

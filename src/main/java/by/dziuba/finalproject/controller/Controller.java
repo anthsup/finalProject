@@ -1,9 +1,9 @@
 package by.dziuba.subscription.controller;
 
 import by.dziuba.subscription.command.Command;
-import by.dziuba.subscription.command.CommandProvider;
-import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.RequestContent;
+import by.dziuba.subscription.command.util.CommandProvider;
+import by.dziuba.subscription.command.util.CommandResult;
+import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.command.exception.BadRequestException;
 import by.dziuba.subscription.command.exception.CommandException;
 import org.apache.logging.log4j.LogManager;

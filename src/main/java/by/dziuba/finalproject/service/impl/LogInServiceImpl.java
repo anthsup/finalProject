@@ -1,9 +1,9 @@
-package by.dziuba.finalproject.service.impl;
+package by.dziuba.subscription.service.impl;
 
-import by.dziuba.finalproject.entity.User;
-import by.dziuba.finalproject.service.LogInService;
-import by.dziuba.finalproject.service.UserService;
-import by.dziuba.finalproject.service.exception.ServiceException;
+import by.dziuba.subscription.entity.User;
+import by.dziuba.subscription.service.LogInService;
+import by.dziuba.subscription.service.UserService;
+import by.dziuba.subscription.service.exception.ServiceException;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class LogInServiceImpl implements LogInService {

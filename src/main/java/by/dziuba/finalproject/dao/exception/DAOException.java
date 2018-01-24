@@ -1,4 +1,4 @@
-package by.dziuba.finalproject.dao.exception;
+package by.dziuba.subscription.dao.exception;
 
 public class DAOException extends Exception {
     public DAOException(String message) {
