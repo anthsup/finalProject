@@ -32,9 +32,9 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            CommandProvider client = new CommandProvider();
+            CommandProvider commandProvider = new CommandProvider();
             RequestContent requestContent = new RequestContent(req);
-            Command command = client.defineCommand(requestContent);
+            Command command = commandProvider.defineCommand(requestContent);
             CommandResult commandResult = command.execute(requestContent);
             commandResult.updateRequest(req);
 

@@ -30,7 +30,9 @@
                 <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=about_page">About</a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=periodicals">Periodicals</a></li>
-                <li><a href="#">Works</a></li>
+                <c:if test="${not empty sessionScope.user}">
+                    <li><a href="${pageContext.request.contextPath}/controller?command=cart">Cart</a></li>
+                </c:if>
                 <li><a href="#">News</a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=signup_page">Sign up</a></li>
                 <c:if test="${empty sessionScope.user}">

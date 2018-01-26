@@ -42,9 +42,13 @@
                         <div class="row">
                             <div class="col-md-12 panelBottom">
                                 <div class="col-lg-6 pull-left">
-                                    <button class="btn btn-md btn-add-to-cart"><span
-                                            class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
-                                    </button>
+                                    <form method="post" action="${pageContext.request.contextPath}/controller">
+                                        <input type="hidden" name="command" value="add_to_cart">
+                                        <input type="hidden" name="id" value="${periodical.id}">
+                                        <button class="btn btn-md btn-add-to-cart"><span
+                                                class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
+                                        </button>
+                                    </form>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6 text-right">

@@ -1,40 +1,13 @@
-package by.dziuba.finalproject.entity;
+package by.dziuba.subscription.entity;
 
-import java.util.Date;
-import java.util.Objects;
+import java.sql.Date;
 
 public class Subscription {
-    private int subscriptionId;
     private int userId;
-    private int publicationId;
+    private int periodicalId;
+    private int monthsQuantity;
     private Date startDate;
     private Date endDate;
-    private boolean subscriptionIsActive;
-
-    public Subscription(int userId, int publicationId, Date startDate, Date endDate, boolean subscriptionIsActive) {
-        this.userId = userId;
-        this.publicationId = publicationId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.subscriptionIsActive = subscriptionIsActive;
-    }
-
-    public Subscription(int subscriptionId, int userId, int publicationId, Date startDate, Date endDate, boolean subscriptionIsActive) {
-        this.subscriptionId = subscriptionId;
-        this.userId = userId;
-        this.publicationId = publicationId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.subscriptionIsActive = subscriptionIsActive;
-    }
-
-    public int getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(int subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }
 
     public int getUserId() {
         return userId;
@@ -44,12 +17,20 @@ public class Subscription {
         this.userId = userId;
     }
 
-    public int getPublicationId() {
-        return publicationId;
+    public int getPeriodicalId() {
+        return periodicalId;
     }
 
-    public void setPublicationId(int publicationId) {
-        this.publicationId = publicationId;
+    public void setPeriodicalId(int periodicalId) {
+        this.periodicalId = periodicalId;
+    }
+
+    public int getMonthsQuantity() {
+        return monthsQuantity;
+    }
+
+    public void setMonthsQuantity(int monthsQuantity) {
+        this.monthsQuantity = monthsQuantity;
     }
 
     public Date getStartDate() {
@@ -66,31 +47,5 @@ public class Subscription {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public void setSubscriptionIsActive(boolean subscriptionIsActive) {
-        this.subscriptionIsActive = subscriptionIsActive;
-    }
-
-    public boolean getSubscriptionIsActive() {
-        return subscriptionIsActive;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Subscription)) return false;
-        Subscription that = (Subscription) o;
-        return subscriptionId == that.subscriptionId &&
-                userId == that.userId &&
-                publicationId == that.publicationId &&
-                subscriptionIsActive == that.subscriptionIsActive &&
-                Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(subscriptionId, userId, publicationId, startDate, endDate, subscriptionIsActive);
     }
 }

@@ -11,7 +11,9 @@ public enum CommandType {
     CHANGE_PASSWORD(new ChangePasswordCommand()),
     PERIODICALS(new ShowPeriodicalsCommand()),
     ADD_TO_CART(new AddToCartCommand()),
-    SIGNUP_PAGE(new ShowSignUpCommand());
+    SIGNUP_PAGE(new ShowSignUpCommand()),
+    CART(new ShowCartCommand()),
+    CHANGE_PRICE(new ChangePriceCommand());
 
     private Command command;
 
