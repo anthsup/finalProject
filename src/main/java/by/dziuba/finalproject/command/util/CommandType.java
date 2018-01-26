@@ -13,7 +13,9 @@ public enum CommandType {
     ADD_TO_CART(new AddToCartCommand()),
     SIGNUP_PAGE(new ShowSignUpCommand()),
     CART(new ShowCartCommand()),
-    CHANGE_PRICE(new ChangePriceCommand());
+    CHANGE_PRICE(new ChangePriceCommand()),
+    DELETE_FROM_CART(new DeleteFromCartCommand()),
+    CHECKOUT(new CheckoutCommand());
 
     private Command command;
 

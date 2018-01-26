@@ -1,6 +1,7 @@
 package by.dziuba.subscription.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Periodical {
     private int id;
@@ -83,6 +84,27 @@ public class Periodical {
 
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Periodical that = (Periodical) o;
+        return id == that.id &&
+                periodicityId == that.periodicityId &&
+                authorId == that.authorId &&
+                typeId == that.typeId &&
+                booksAmount == that.booksAmount &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(coverImage, that.coverImage) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, price, periodicityId, typeId, coverImage, description);
     }
     //TODO equals hashcode when done with fields
 }

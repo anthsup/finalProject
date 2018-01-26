@@ -9,33 +9,27 @@ import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AddToCartCommand implements Command {
     private static final PeriodicalServiceImpl periodicalService = new PeriodicalServiceImpl();
+    private static final int INITIAL_MONTHS_AMOUNT = 1;
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
-        // TODO what happens if the same product are added?
-        //TODO refactor quantities
         try {
             CommandResult commandResult = new CommandResult();
             Periodical periodical = periodicalService.getById(Integer.parseInt(requestContent.getRequestParameter("id")));
-            Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute("quantities");
-            if (quantities == null) {
-                quantities = new HashMap<>();
-            }
-            quantities.put(periodical.getId(), 1);
-            List<Periodical> cartPeriodicals = new ArrayList<>();
+            Map<Integer, Integer> quantities = defineQuantities(requestContent, periodical.getId());
+
+            Set<Periodical> cartPeriodicals = new LinkedHashSet<>();
             if (requestContent.getSessionAttribute("cart_products") != null) {
-                ((List<Periodical>)requestContent.getSessionAttribute("cart_products")).add(periodical);
+                ((Set<Periodical>)requestContent.getSessionAttribute("cart_products")).add(periodical);
             } else {
                 cartPeriodicals.add(periodical);
                 commandResult.putSessionAttribute("cart_products", cartPeriodicals);
             }
+
             commandResult.putSessionAttribute("totalPrice", calculateTotalPrice(requestContent, periodical));
             commandResult.putSessionAttribute("quantities", quantities);
             commandResult.setPage(requestContent.getReferer());
@@ -52,5 +46,17 @@ public class AddToCartCommand implements Command {
             totalPrice = new BigDecimal(0);
         }
         return totalPrice.add(periodical.getPrice());
+    }
+
+    private Map<Integer, Integer> defineQuantities(RequestContent requestContent, int periodicalId) {
+        Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute("quantities");
+        if (quantities == null) {
+            quantities = new HashMap<>();
+        }
+
+        if (quantities.computeIfPresent(periodicalId, (k, v) -> v + 1) == null) {
+            quantities.put(periodicalId, INITIAL_MONTHS_AMOUNT);
+        }
+        return quantities;
     }
 }

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java"%>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,10 +103,9 @@
                                         <input type="hidden" name="command" value="add_to_cart">
                                         <input type="hidden" name="id" value="${periodical.id}">
                                         <div class="row">
-                                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                                <input type="number" name="monthsAmount"  placeholder="Количество месяцев" min="1" <c:if test="${periodical.booksAmount ne 0}">
-                                                    max="${periodical.booksAmount}"</c:if>/>
-                                            </div>
+                                            <%--<div class="col-md-12 col-sm-12 col-xs-12 text-center">--%>
+                                                <%--<input type="number" name="monthsAmount"  placeholder="Количество месяцев" min="1"/>--%>
+                                            <%--</div>--%>
                                             <!-- end col -->
                                                 <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
                                                 <%--<select class="form-control" name="select">--%>

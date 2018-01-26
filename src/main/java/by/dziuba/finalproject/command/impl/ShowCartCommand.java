@@ -9,7 +9,7 @@ import by.dziuba.subscription.command.util.RequestContent;
 
 public class ShowCartCommand implements Command {
     @Override
-    public CommandResult execute(RequestContent requestContent) throws CommandException, BadRequestException {
+    public CommandResult execute(RequestContent requestContent) {
         CommandResult commandResult = new CommandResult();
         commandResult.setPage(JspResourceManager.CART_PAGE);
         return commandResult;
