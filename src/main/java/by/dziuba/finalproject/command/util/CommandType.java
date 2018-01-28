@@ -15,7 +15,10 @@ public enum CommandType {
     CART(new ShowCartCommand()),
     CHANGE_PRICE(new ChangePriceCommand()),
     DELETE_FROM_CART(new DeleteFromCartCommand()),
-    CHECKOUT(new CheckoutCommand());
+    CHECKOUT(new CheckoutCommand()),
+    PROFILE(new ShowProfileCommand()),
+    PROFILE_EDIT_PAGE(new ShowProfileEditCommand()),
+    EDIT_PROFILE(new EditProfileCommand());
 
     private Command command;
 

@@ -19,6 +19,9 @@
     <title>Registration</title>
 </head>
 <body>
+
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
@@ -86,6 +89,8 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
