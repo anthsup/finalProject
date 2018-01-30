@@ -17,16 +17,18 @@ public class UserDAOImpl implements UserDAO {
     private static final String SELECT_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
     private static final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM user";
-    private static final String INSERT_USER =
-            "INSERT INTO user (login, email, firstName, lastName, password) VALUES (?,?,?,?,?)";
+    private static final String INSERT_USER = "INSERT INTO user (login, email, firstName, lastName, city, address," +
+            "postalIndex, registrationDate, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? WHERE id = ?";
+    private static final String UPDATE_INFO = "UPDATE user SET login = ?, email = ?, firstName = ?, lastName = ?," +
+            "city = ?, address = ?, postalIndex = ?, photo = ? WHERE id = ?";
     private static final String BAN_USER = "UPDATE user SET isBanned = ? WHERE id = ?";
 
     @Override
     public User findUserByLogin(String login) throws DAOException {
         return findUserBy(login, SELECT_BY_LOGIN);
     }
-
+    //TODO refactor return expressions
     @Override
     public User findUserById(int id) throws DAOException {
         User user = null;
@@ -69,7 +71,11 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getLastName());
-            statement.setString(5, user.getPassword());
+            statement.setString(5, user.getCity());
+            statement.setString(6, user.getAddress());
+            statement.setString(7, user.getPostalIndex());
+            statement.setDate(8, user.getRegistrationDate());
+            statement.setString(9, user.getPassword());
             statement.executeUpdate();
             executed = true;
         } catch (DBException | SQLException e) {
@@ -80,17 +86,35 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean updateUserPassword(int id, String password) throws DAOException {
-        boolean executed = false;
-        try (PoolConnection connectionFromPool = DBConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connectionFromPool.getConnection().prepareStatement(UPDATE_PASSWORD)) {
+        try (PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(UPDATE_PASSWORD)) {
             statement.setString(1, password);
             statement.setInt(2, id);
             statement.executeUpdate();
-            executed = true;
+            return true;
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
-        return executed;
+    }
+
+    @Override
+    public boolean updateUserInfo(User user) throws DAOException {
+        try (PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(UPDATE_INFO)) {
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getLastName());
+            statement.setString(5, user.getCity());
+            statement.setString(6, user.getAddress());
+            statement.setString(7, user.getPostalIndex());
+            statement.setString(8, user.getPhoto());
+            statement.setInt(9, user.getId());
+            statement.executeUpdate();
+            return true;
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
     @Override
@@ -124,6 +148,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    //todo make create methods default
     private User createUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("id"));
@@ -133,8 +158,12 @@ public class UserDAOImpl implements UserDAO {
         user.setAdmin(resultSet.getBoolean("admin"));
         user.setFirstName(resultSet.getString("firstName"));
         user.setLastName(resultSet.getString("lastName"));
+        user.setPostalIndex(resultSet.getString("postalIndex"));
+        user.setAddress(resultSet.getString("address"));
+        user.setCity(resultSet.getString("city"));
         user.setEmail(resultSet.getString("email"));
         user.setRegistrationDate(resultSet.getDate("registrationDate"));
+        user.setPhoto(resultSet.getString("photo"));
         return user;
     }
 }

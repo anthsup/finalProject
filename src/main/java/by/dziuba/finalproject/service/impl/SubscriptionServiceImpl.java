@@ -17,4 +17,12 @@ public class SubscriptionServiceImpl {
             throw new ServiceException(e);
         }
     }
+
+    public List<Subscription> getSubscriptionByUserId(int userId) throws ServiceException {
+        try {
+            return subscriptionDao.findSubscriptionByUserId(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

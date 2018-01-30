@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-users fa-fw" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="login" id="login"  placeholder="Login"/>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="email" id="email"  placeholder="Email"/>
                         </div>
                     </div>
@@ -48,8 +48,8 @@
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="firstname" id="firstname"  placeholder="First Name"/>
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="firstName" id="firstName"  placeholder="First Name"/>
                         </div>
                     </div>
                 </div>
@@ -57,8 +57,8 @@
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="lastname" id="lastname"  placeholder="Last Name"/>
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="lastName" id="lastName"  placeholder="Last Name"/>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,34 @@
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-location-arrow fa-fw" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="city" id="city"  placeholder="City"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="address" id="address"  placeholder="Home Address"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="postal" id="postal"  placeholder="Postal Index"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></span>
                             <input type="password" class="form-control" name="password" id="password"  placeholder="Password"/>
                         </div>
                     </div>
@@ -75,7 +102,7 @@
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></span>
                             <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
                         </div>
                     </div>

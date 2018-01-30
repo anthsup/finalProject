@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="id" value="1" scope="page"/>
 <html>
 <head>
     <title>User profile</title>
@@ -12,8 +13,6 @@
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
 <div class="container">
-    <div class="row">
-    </div>
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -21,20 +20,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://placehold.it/300x300" class="img-circle img-responsive"> </div>
-
-                    <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-                      <dl>
-                        <dt>DEPARTMENT:</dt>
-                        <dd>Administrator</dd>
-                        <dt>HIRE DATE</dt>
-                        <dd>11/12/2013</dd>
-                        <dt>DATE OF BIRTH</dt>
-                           <dd>11/12/2013</dd>
-                        <dt>GENDER</dt>
-                        <dd>Male</dd>
-                      </dl>
-                    </div>-->
+                    <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic" src="http://placehold.it/300x300" class="img-circle img-responsive"></div>
                     <div class=" col-md-9 col-lg-9 ">
                         <table class="table table-user-information">
                             <tbody>
@@ -53,31 +39,91 @@
                             <tr>
                             <tr>
                                 <td>Home Address</td>
-                                <td>Belarus, Minsk, Vaneeva str., 32</td>
+                                <td>${sessionScope.user.city}, ${sessionScope.user.address}</td>
                             </tr>
                             <tr>
                                 <td>Postal Index:</td>
-                                <td>222120</td>
+                                <td>${sessionScope.user.postalIndex}</td>
                             </tr>
                             </tbody>
                         </table>
 
-                        <a href="#" class="btn btn-primary">My Sales Performance</a>
-                        <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-keyboard="true" data-target="#subscriptions">My Subscriptions</button>
                     </div>
                 </div>
             </div>
             <div class="panel-footer">
-                <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
                 <span class="pull-right">
-                            <a href="${pageContext.request.contextPath}/controller?command=profile_edit_page" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                        </span>
+                    <a href="${pageContext.request.contextPath}/controller?command=profile_edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                </span>
             </div>
-
         </div>
     </div>
-</div>
+    <div class="modal fade" tabindex="-1" id="subscriptions">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="Order-list">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="alert alert-info">
+                                        Hello, <b>User, </b>below are your orders with dates, price and status.
+                                    </div>
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover text-center">
+                                            <thead class="">
+                                            <tr>
+                                                <th scope="col">No.</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Start Date</th>
+                                                <th scope="col">End Date</th>
+                                                <th scope="col">Total Price</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach items="${subscriptions}" var="subscription">
+                                                <tr>
+                                                    <th scope="row">${id}</th>
+                                                    <c:set var="id" value="${id + 1}" scope="page"/>
+                                                    <td>${periodicals[subscription.periodicalId].title}</td>
+                                                    <td>${subscription.startDate}</td>
+                                                    <td>${subscription.endDate}</td>
+                                                    <td>
+                                                        <label class="label label-primary">${subscription.price}</label>
+                                                    </td>
+                                                    <td>
+                                                        <label class="label <c:choose>
+                                                                                    <c:when test="${statuses[subscription.periodicalId] eq 'Active.'}">
+                                                                                    label-success
+                                                                                    </c:when>
+                                                                                    <c:when test="${statuses[subscription.periodicalId] eq 'Expired.'}">
+                                                                                    label-danger
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                    label-warning
+                                                                                    </c:otherwise>
+                                                                                </c:choose>">${statuses[subscription.periodicalId]}</label></td>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ORDER LIST END-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

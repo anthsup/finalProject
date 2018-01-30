@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <head>
     <!-- Bootstrap core CSS -->
     <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--%>
@@ -31,7 +32,7 @@
                 <li><a href="${pageContext.request.contextPath}/controller?command=about_page">About</a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=periodicals">Periodicals</a></li>
                 <c:if test="${not empty sessionScope.user}">
-                    <li><a href="${pageContext.request.contextPath}/controller?command=cart">Cart</a></li>
+                    <li><a href="${pageContext.request.contextPath}/controller?command=cart">Cart<span class="badge">${fn:length(sessionScope.cart_products)}</span></a></li>
                 </c:if>
                 <li><a href="#">News</a></li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=signup_page">Sign up</a></li>
@@ -68,7 +69,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="${pageContext.request.contextPath}/controller?command=profile">My profile</a></li>
                                 <li><a href="#">Favorited</a></li>
-                                <li><a href="${pageContext.request.contextPath}/controller?command=edit_profile">Settings</a></li>
+                                <li><a href="${pageContext.request.contextPath}/controller?command=profile_edit">Settings</a></li>
                                 <li class="divider"></li>
                                 <li><a href="${pageContext.request.contextPath}/controller?command=logout">Logout</a></li>
                             </ul>

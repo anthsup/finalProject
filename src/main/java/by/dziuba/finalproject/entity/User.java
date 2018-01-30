@@ -1,18 +1,53 @@
 package by.dziuba.subscription.entity;
 
-import java.io.Serializable;
 import java.sql.Date;
 
-public class User implements Serializable {
+public class User {
     private int id;
     private String login;
     private String email;
     private String firstName;
     private String lastName;
+    private String city;
+    private String address;
+    private String postalIndex;
+    private String photo;
     private String password;
     private boolean admin;
     private boolean banned;
     private Date registrationDate;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPostalIndex() {
+        return postalIndex;
+    }
+
+    public void setPostalIndex(String postalIndex) {
+        this.postalIndex = postalIndex;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public int getId() {
         return id;

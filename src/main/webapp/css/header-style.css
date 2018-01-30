@@ -25,3 +25,7 @@ nav {
     .navbar .nav-collapse .navbar-form { margin: 0; }
     .nav-collapse>li { float: none; }
 }
+
+.badge {
+    margin-left: 3px;
+}

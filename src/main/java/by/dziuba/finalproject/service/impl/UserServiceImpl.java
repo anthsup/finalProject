@@ -61,7 +61,16 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserPassword(int id, String password) throws ServiceException {
         try {
             String hashedPassword = new LogInServiceImpl().encodePassword(password);
-            return userDao.updateUserPassword(id,hashedPassword);
+            return userDao.updateUserPassword(id, hashedPassword);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateUserInfo(User user) throws ServiceException {
+        try {
+            return userDao.updateUserInfo(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

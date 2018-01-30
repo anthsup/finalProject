@@ -13,15 +13,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 ">
-            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
-                <input type="hidden" name="command" value="edit_profile">
+            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=edit_profile">
+                <input type="hidden" name="command" value="profile_edit">
                 <fieldset>
 
                     <!-- Form Name -->
                     <legend>Edit Profile</legend>
 
                     <!-- Text input-->
-
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="firstName">First Name</label>
                         <div class="col-md-4">
@@ -69,65 +68,82 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label col-xs-12" for="country">Home Address</label>
-                        <div class="col-md-2  col-xs-4">
-                            <input id="country" name="country" type="text" placeholder="Country" class="form-control input-md ">
-                        </div>
-
-                        <div class="col-md-2 col-xs-4">
-                            <input id="city" name="city" type="text" placeholder="City" class="form-control input-md ">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="street"></label>
-                        <div class="col-md-2  col-xs-4">
-                            <input id="street" name="street" type="text" placeholder="Street" class="form-control input-md ">
-                        </div>
-
-                        <div class="col-md-2  col-xs-4">
-                            <input id="house" name="house" type="text" placeholder="House" class="form-control input-md ">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 col-md-offset-1 control-label" for="apartment"></label>
-                        <div class="col-md-2  col-xs-4">
-                            <input id="apartment" name="apartment" type="text" placeholder="Apartment" class="form-control input-md ">
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="password">New Password</label>
+                        <label class="col-md-4 control-label col-xs-12" for="city">City</label>
                         <div class="col-md-4">
-                            <div class="input-group">
-                                <input id="password" name="password" type="password" placeholder="New Password" class="form-control input-md">
-                            </div>
+                            <input id="city" name="city" type="text" placeholder="City" class="form-control input-md" value="${sessionScope.user.city}">
                         </div>
                     </div>
 
-                    <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="confirm_password">Confirm New Password</label>
+                        <label class="col-md-4 control-label" for="address">Home Address</label>
                         <div class="col-md-4">
-                            <div class="input-group">
-                                <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm New Password" class="form-control input-md">
-                            </div>
+                            <input id="address" name="address" type="text" placeholder="Home Address" class="form-control input-md" value="${sessionScope.user.address}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="postal">Postal Index</label>
+                        <div class="col-md-4">
+                            <input id="postal" name="postal" type="text" placeholder="Postal Index" class="form-control input-md" value="${sessionScope.user.postalIndex}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-5">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#change_password">Change Password</button>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" ></label>
-                        <div class="col-md-4">
+                        <div class="col-md-6-offset-2">
                             <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</button>
-                            <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Clear</a>
                         </div>
                     </div>
                 </fieldset>
             </form>
-        </div>
+            <div class="modal fade product_view" id="change_password">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=change_password">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="password">Old Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input id="old_password" name="old_password" type="password" placeholder="Old Password" class="form-control input-md">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="password">New Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input id="password" name="new_password" type="password" placeholder="New Password" class="form-control input-md">
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="confirm_password">Confirm New Password</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm New Password" class="form-control input-md">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</button>
+                                    <input type="reset" class="btn btn-danger" value="Clear">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

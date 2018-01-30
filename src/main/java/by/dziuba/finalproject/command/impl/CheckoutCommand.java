@@ -54,12 +54,13 @@ public class CheckoutCommand implements Command {
         subscription.setUserId(user.getId());
         subscription.setPeriodicalId(periodical.getId());
 
-        Date startDate = Date.valueOf(LocalDate.now().plusMonths(1).withDayOfMonth(1));
+        Date startDate = Date.valueOf(LocalDate.now().withDayOfMonth(1).plusMonths(1));
         subscription.setStartDate(startDate);
 
         Map<Integer, Integer> quantities = (Map<Integer, Integer>) requestContent.getSessionAttribute("quantities");
         int quantity = quantities.get(periodical.getId());
         subscription.setEndDate(Date.valueOf(startDate.toLocalDate().plusMonths(quantity)));
+        subscription.setPrice(periodical.getPrice().multiply(BigDecimal.valueOf(quantity)));
 
         return subscription;
     }

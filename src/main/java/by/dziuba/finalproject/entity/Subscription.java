@@ -1,13 +1,22 @@
 package by.dziuba.subscription.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class Subscription {
     private int userId;
     private int periodicalId;
-    private int monthsQuantity;
     private Date startDate;
     private Date endDate;
+    private BigDecimal price;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public int getUserId() {
         return userId;
@@ -23,14 +32,6 @@ public class Subscription {
 
     public void setPeriodicalId(int periodicalId) {
         this.periodicalId = periodicalId;
-    }
-
-    public int getMonthsQuantity() {
-        return monthsQuantity;
-    }
-
-    public void setMonthsQuantity(int monthsQuantity) {
-        this.monthsQuantity = monthsQuantity;
     }
 
     public Date getStartDate() {

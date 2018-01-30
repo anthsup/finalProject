@@ -12,4 +12,7 @@ public final class JspResourceManager {
 
     public static final String LOGIN_PAGE_COMMAND = "/controller?command=login_page";
     public static final String CART_PAGE_COMMAND = "/controller?command=cart";
+    public static final String PROFILE_EDIT_COMMAND = "/controller?command=profile_edit";
+    public static final String PROFILE_PAGE_COMMAND = "/controller?command=profile";
+
 }
