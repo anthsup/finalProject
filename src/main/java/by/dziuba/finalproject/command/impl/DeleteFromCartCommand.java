@@ -27,7 +27,7 @@ public class DeleteFromCartCommand implements Command {
             BigDecimal totalPrice = calculateTotalPrice(requestContent, periodical);
 
             commandResult.putSessionAttribute("totalPrice", totalPrice);
-            commandResult.setPage(JspResourceManager.CART_PAGE_COMMAND);
+            commandResult.setPage(requestContent.getReferer());
             commandResult.setRedirected(true);
             return commandResult;
         } catch (ServiceException e) {

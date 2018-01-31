@@ -30,7 +30,7 @@ public class CheckoutCommand implements Command {
             commandResult.putSessionAttribute("cart_products", new LinkedHashSet<Periodical>());
             commandResult.putSessionAttribute("totalPrice", new BigDecimal(0));
             commandResult.putSessionAttribute("quantities", new HashMap<Integer, Integer>());
-            commandResult.setPage(JspResourceManager.INDEX_PAGE);
+            commandResult.setPage(requestContent.getReferer());
             commandResult.setRedirected(true);
             return commandResult;
         } catch (ServiceException e) {

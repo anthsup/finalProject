@@ -24,26 +24,23 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="firstName">First Name</label>
                         <div class="col-md-4">
-                            <div class="input-group">
                                 <input id="firstName" name="firstName" type="text" placeholder="First Name" class="form-control" value="${sessionScope.user.firstName}">
-                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="lastName">Last Name</label>
                         <div class="col-md-4">
-                            <div class="input-group">
                                 <input id="lastName" name="lastName" type="text" placeholder="Last Name" class="form-control" value="${sessionScope.user.lastName}">
-                            </div>
                         </div>
                     </div>
 
                     <!-- File Button -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="Upload photo">Upload photo</label>
+                        <label class="col-md-4 control-label" for="upload">Upload profile pic</label>
                         <div class="col-md-4">
-                            <input id="Upload photo" name="photo" class="input-file" type="file">
+                                <input id="upload" name="photo" class="form-control" type="url" placeholder="Insert your photo URL (max. 300x300)"
+                                       pattern="^(https|http).+(jpg|svg|gif|png)$">
                         </div>
                     </div>
 
@@ -51,9 +48,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="login">Login</label>
                         <div class="col-md-4">
-                            <div class="input-group">
                                 <input id="login" name="login" type="text" placeholder="Login" class="form-control input-md" value="${sessionScope.user.login}">
-                            </div>
                         </div>
                     </div>
 
@@ -61,9 +56,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="email">Email Address</label>
                         <div class="col-md-4">
-                            <div class="input-group">
                                 <input id="email" name="email" type="text" placeholder="Email Address" class="form-control input-md" value="${sessionScope.user.email}">
-                            </div>
                         </div>
                     </div>
 

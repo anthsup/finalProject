@@ -1,6 +1,7 @@
 package by.dziuba.subscription.entity;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class User {
     private int id;
@@ -121,4 +122,21 @@ public class User {
         this.registrationDate = registrationDate;
     }
     //TODO getters setters after other stuff is all set
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, email, firstName, lastName);
+    }
 }

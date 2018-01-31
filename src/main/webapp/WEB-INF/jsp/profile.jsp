@@ -5,6 +5,7 @@
 <head>
     <title>User profile</title>
     <%--Bootstrap core CSS--%>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile-style.css">
 </head>
@@ -20,30 +21,37 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic" src="http://placehold.it/300x300" class="img-circle img-responsive"></div>
+                    <div class="col-md-3 col-lg-3 " align="center"><img src="<c:choose>
+                                                                                                <c:when test="${not empty user.photo}">
+                                                                                                    ${user.photo}
+                                                                                                </c:when>
+                                                                                                <c:otherwise>
+                                                                                                    http://placehold.it/300x300
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>" alt="User Pic" class="img-circle img-responsive"></div>
                     <div class=" col-md-9 col-lg-9 ">
                         <table class="table table-user-information">
                             <tbody>
                             <tr>
                                 <td>Name:</td>
-                                <td>${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
+                                <td>${user.firstName} ${user.lastName}</td>
                             </tr>
                             <tr>
                                 <td>Login:</td>
-                                <td>${sessionScope.user.login}</td>
+                                <td>${user.login}</td>
                             </tr>
                             <tr>
                                 <td>Email:</td>
-                                <td><a href="mailto:${sessionScope.user.email}">${sessionScope.user.email}</a></td>
+                                <td><a href="mailto:${user.email}">${user.email}</a></td>
                             </tr>
                             <tr>
                             <tr>
                                 <td>Home Address</td>
-                                <td>${sessionScope.user.city}, ${sessionScope.user.address}</td>
+                                <td>${user.city}, ${user.address}</td>
                             </tr>
                             <tr>
                                 <td>Postal Index:</td>
-                                <td>${sessionScope.user.postalIndex}</td>
+                                <td>${user.postalIndex}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -54,8 +62,9 @@
             </div>
             <div class="panel-footer">
                 <span class="pull-right">
-                    <a href="${pageContext.request.contextPath}/controller?command=profile_edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                    <c:if test="${sessionScope.user eq user}">
+                        <a href="${pageContext.request.contextPath}/controller?command=profile_edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                    </c:if>
                 </span>
             </div>
         </div>
@@ -72,11 +81,11 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     <div class="alert alert-info">
-                                        Hello, <b>User, </b>below are your orders with dates, price and status.
+                                        Hello, <b>${sessionScope.user.login}, </b>below are your orders with dates, price and status.
                                     </div>
                                     <hr />
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover text-center">
+                                        <table class="table table-striped table-hover text-center">
                                             <thead class="">
                                             <tr>
                                                 <th scope="col">No.</th>

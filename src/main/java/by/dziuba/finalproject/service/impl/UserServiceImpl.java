@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean banUser(int userId) throws ServiceException {
+    public boolean changeUserBanStatus(int userId, boolean banStatus) throws ServiceException {
         try {
-            return userDao.banUser(userId);
+            return userDao.updateUserBanStatus(userId, banStatus);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

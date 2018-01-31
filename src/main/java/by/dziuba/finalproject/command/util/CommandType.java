@@ -7,7 +7,7 @@ public enum CommandType {
     LOGIN(new LogInCommand()),
     LOGOUT(new LogOutCommand()),
     SIGNUP(new SignUpCommand()),
-    BAN_USER(new BanCommand()),
+    BAN_USER(new ChangeBanStatusCommand()),
     CHANGE_PASSWORD(new ChangePasswordCommand()),
     PERIODICALS(new ShowPeriodicalsCommand()),
     ADD_TO_CART(new AddToCartCommand()),
@@ -18,7 +18,8 @@ public enum CommandType {
     CHECKOUT(new CheckoutCommand()),
     PROFILE(new ShowProfileCommand()),
     PROFILE_EDIT(new ShowProfileEditCommand()),
-    EDIT_PROFILE(new EditProfileCommand());
+    EDIT_PROFILE(new EditProfileCommand()),
+    USERS(new ShowUsersCommand());
 
     private Command command;
 

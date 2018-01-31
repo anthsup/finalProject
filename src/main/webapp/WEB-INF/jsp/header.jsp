@@ -34,7 +34,9 @@
                 <c:if test="${not empty sessionScope.user}">
                     <li><a href="${pageContext.request.contextPath}/controller?command=cart">Cart<span class="badge">${fn:length(sessionScope.cart_products)}</span></a></li>
                 </c:if>
-                <li><a href="#">News</a></li>
+                <c:if test="${sessionScope.user.admin eq true}">
+                    <li><a href="${pageContext.request.contextPath}/controller?command=users">Users</a></li>
+                </c:if>
                 <li><a href="${pageContext.request.contextPath}/controller?command=signup_page">Sign up</a></li>
                 <c:if test="${empty sessionScope.user}">
                     <li>

@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? WHERE id = ?";
     private static final String UPDATE_INFO = "UPDATE user SET login = ?, email = ?, firstName = ?, lastName = ?," +
             "city = ?, address = ?, postalIndex = ?, photo = ? WHERE id = ?";
-    private static final String BAN_USER = "UPDATE user SET isBanned = ? WHERE id = ?";
+    private static final String BAN_USER = "UPDATE user SET banned = ? WHERE id = ?";
 
     @Override
     public User findUserByLogin(String login) throws DAOException {
@@ -118,11 +118,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean banUser(int userId) throws DAOException {
+    public boolean updateUserBanStatus(int userId, boolean banStatus) throws DAOException {
         boolean executed = false;
         try (PoolConnection connectionFromPool = DBConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connectionFromPool.getConnection().prepareStatement(BAN_USER)) {
-            statement.setBoolean(1, true);
+            statement.setBoolean(1, banStatus);
             statement.setInt(2, userId);
             statement.executeUpdate();
             executed = true;

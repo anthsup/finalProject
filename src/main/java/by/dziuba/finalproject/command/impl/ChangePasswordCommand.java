@@ -38,7 +38,7 @@ public class ChangePasswordCommand implements Command {
             User user = logInService.logIn(currentUser.getLogin(), oldPassword);
             if (user != null && newPassword.equals(confirmNewPassword)) {
                 userService.updateUserPassword(user.getId(), newPassword);
-                commandResult.setPage(JspResourceManager.PROFILE_EDIT_COMMAND);
+                commandResult.setPage(requestContent.getReferer());
                 commandResult.setRedirected(true);
                 // TODO success message and validation
             } else {

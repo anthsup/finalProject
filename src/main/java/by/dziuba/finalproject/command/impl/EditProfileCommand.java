@@ -41,6 +41,7 @@ public class EditProfileCommand implements Command {
         user.setCity(requestContent.getRequestParameter(CITY_PARAMETER));
         user.setAddress(requestContent.getRequestParameter(ADDRESS_PARAMETER));
         user.setPostalIndex(requestContent.getRequestParameter(POSTAL_PARAMETER));
+        user.setPhoto(requestContent.getRequestParameter("photo"));
         return user;
     }
 }

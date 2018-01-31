@@ -25,7 +25,7 @@ public class LogInCommand implements Command {
             User user = logInService.logIn(login, password);
             if (user != null) {
                 commandResult.putSessionAttribute("user", user);
-                commandResult.setPage(JspResourceManager.INDEX_PAGE);
+                commandResult.setPage(requestContent.getReferer());
                 commandResult.setRedirected(true);
                 //todo redirect
             } else {

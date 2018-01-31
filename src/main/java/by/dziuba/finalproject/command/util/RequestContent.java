@@ -33,7 +33,7 @@ public class RequestContent {
     }
 
     public String getRequestParameter(String parameter) {
-        return requestParameters.get(parameter)[0];
+        return requestParameters.get(parameter) == null ? null : requestParameters.get(parameter)[0];
     }
 
     public Object getSessionAttribute(String attribute) {

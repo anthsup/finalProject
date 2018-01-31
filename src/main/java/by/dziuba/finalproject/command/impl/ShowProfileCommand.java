@@ -9,9 +9,11 @@ import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.entity.Periodical;
 import by.dziuba.subscription.entity.Subscription;
 import by.dziuba.subscription.entity.User;
+import by.dziuba.subscription.service.UserService;
 import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 import by.dziuba.subscription.service.impl.SubscriptionServiceImpl;
+import by.dziuba.subscription.service.impl.UserServiceImpl;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -21,17 +23,25 @@ import java.util.Map;
 public class ShowProfileCommand implements Command {
     private static final SubscriptionServiceImpl subscriptionService = new SubscriptionServiceImpl();
     private static final PeriodicalServiceImpl periodicalService = new PeriodicalServiceImpl();
+    private static final UserService userService = new UserServiceImpl();
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException, BadRequestException {
         try {
             CommandResult commandResult = new CommandResult();
-            int userId = ((User) requestContent.getSessionAttribute("user")).getId();
+            int userId;
+            if (requestContent.getRequestParameter("id") != null) {
+                userId = Integer.parseInt(requestContent.getRequestParameter("id"));
+            } else {
+                userId = ((User) requestContent.getSessionAttribute("user")).getId();
+            }
+            User user = userService.getUserById(userId);
             List<Subscription> userSubscriptions = subscriptionService.getSubscriptionByUserId(userId);
             Map<Integer, Periodical> userPeriodicals = new HashMap<>();
             for (Subscription subscription : userSubscriptions) {
                 userPeriodicals.put(subscription.getPeriodicalId(), periodicalService.getById(subscription.getPeriodicalId()));
             }
+            commandResult.putRequestAttribute("user", user);
             commandResult.putRequestAttribute("subscriptions", userSubscriptions);
             commandResult.putRequestAttribute("periodicals", userPeriodicals);
             commandResult.putRequestAttribute("statuses", defineSubscriptionStatus(userSubscriptions));
