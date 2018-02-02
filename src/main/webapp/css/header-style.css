@@ -4,7 +4,7 @@ nav {
 
 .navbar-brand { position: relative; z-index: 2; }
 
-.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
+.navbar-nav.navbar-right .btn-circle { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
 
 .navbar .navbar-collapse { position: relative; }
 .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
@@ -16,6 +16,7 @@ nav {
 .nav-collapse>li { float: right; }
 
 .btn.btn-circle { border-radius: 50px; }
+.btn.btn-default.dropdown-toggle { margin: 10px auto; }
 .btn.btn-outline { background-color: transparent; }
 
 @media screen and (max-width: 767px) {
@@ -26,6 +27,4 @@ nav {
     .nav-collapse>li { float: none; }
 }
 
-.badge {
-    margin-left: 3px;
-}
+

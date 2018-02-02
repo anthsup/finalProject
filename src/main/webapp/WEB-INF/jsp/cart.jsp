@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<html>
+
+<!-- internationalization -->
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="Contents"/>
+
+<html lang="${locale}">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart-style.css">
@@ -15,10 +22,10 @@
     <table id="cart" class="table table-hover table-condensed">
         <thead>
         <tr>
-            <th style="width:50%">Periodical</th>
-            <th style="width:10%">Price</th>
-            <th style="width:8%">Months</th>
-            <th style="width:22%" class="text-center">Subtotal</th>
+            <th style="width:50%"><fmt:message key="cart.periodical"/></th>
+            <th style="width:10%"><fmt:message key="cart.price"/></th>
+            <th style="width:8%"><fmt:message key="cart.months"/></th>
+            <th style="width:22%" class="text-center"><fmt:message key="cart.subtotal"/></th>
             <th style="width:10%"></th>
         </tr>
         </thead>
@@ -35,7 +42,7 @@
                     </div>
                 </td>
                 <form action="${pageContext.request.contextPath}/controller" method="post" class="parent-custom${product.id}">
-                    <td data-th="Price" class="price">$${product.price}</td>
+                    <td data-th="Price" class="price">${product.price} <fmt:message key="currency.value"/></td>
                     <td data-th="Quantity">
                         <input type="hidden" name="command" value="change_price">
                         <input type="number" name="quantity" class="form-control text-center input-custom" min="1" value="${sessionScope.quantities[product.id]}" <c:if test="${product.booksAmount ne 0}">
@@ -45,7 +52,6 @@
                     <td data-th="Subtotal" id="subtotal${product.id}" class="text-center">${product.price * sessionScope.quantities[product.id]}</td>
                 </form>
                 <td class="actions" data-th="">
-                    <%--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>--%>
                     <form method="post" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="command" value="delete_from_cart">
                         <input type="hidden" name="id" value="${product.id}"/>
@@ -56,14 +62,11 @@
             </tbody>
         </c:forEach>
         <tfoot>
-        <tr class="visible-xs">
-            <td class="text-center total-xs"><strong>Total 1.99</strong></td>
-        </tr>
         <tr>
-            <td><a href="${pageContext.request.contextPath}/controller?command=periodicals" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+            <td><a href="${pageContext.request.contextPath}/controller?command=periodicals" class="btn btn-warning"><i class="fa fa-angle-left"></i> <fmt:message key="cart.continue"/></a></td>
             <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong id="total" class="total">$${sessionScope.totalPrice}</strong></td>
-            <td><a href="${pageContext.request.contextPath}/controller?command=checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+            <td class="hidden-xs text-center"><strong id="total" class="total">${sessionScope.totalPrice} <fmt:message key="currency.value"/></strong></td>
+            <td><a href="${pageContext.request.contextPath}/controller?command=checkout" class="btn btn-success btn-block"><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
         </tr>
         </tfoot>
     </table>

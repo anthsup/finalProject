@@ -19,7 +19,9 @@ public enum CommandType {
     PROFILE(new ShowProfileCommand()),
     PROFILE_EDIT(new ShowProfileEditCommand()),
     EDIT_PROFILE(new EditProfileCommand()),
-    USERS(new ShowUsersCommand());
+    USERS(new ShowUsersCommand()),
+    ERROR(new ShowErrorPageCommand()),
+    CHANGE_LOCALE(new ChangeLocaleCommand());
 
     private Command command;
 

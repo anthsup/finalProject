@@ -50,7 +50,8 @@ public class Controller extends HttpServlet {
             throw new ServletException(e);
         } catch (BadRequestException e) {
             LOGGER.warn(e.getMessage());
-            resp.sendError(400, e.getMessage());
+            req.setAttribute("errorData", e.getMessage()); //TODO check if alright to show users exception info?
+            resp.sendError(400);
         }
     }
 }

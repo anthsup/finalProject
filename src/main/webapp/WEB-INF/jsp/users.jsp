@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+
+<!-- internationalization -->
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="Contents"/>
+
+<html lang="${locale}">
 <head>
     <title>Users</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,7 +26,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2><b>User Management</b></h2>
+                                <h2><b><fmt:message key="users.management"/></b></h2>
                             </div>
                         </div>
                     </div>
@@ -27,10 +34,10 @@
                         <table class="table user-list table-striped table-hover">
                             <thead>
                             <tr>
-                                <th><span>User</span></th>
-                                <th><span>Login</span></th>
-                                <th class="text-center"><span>Status</span></th>
-                                <th><span>Email</span></th>
+                                <th><span><fmt:message key="user.user"/></span></th>
+                                <th><span><fmt:message key="user.login"/></span></th>
+                                <th class="text-center"><span><fmt:message key="users.status"/></span></th>
+                                <th><span><fmt:message key="user.email"/></span></th>
                                 <th>&nbsp;</th>
                             </tr>
                             </thead>
@@ -42,10 +49,10 @@
                                         <a href="${pageContext.request.contextPath}/controller?command=profile&id=${user.id}" class="user-link">${user.firstName} ${user.lastName}</a>
                                         <c:choose>
                                             <c:when test="${user.admin eq true}">
-                                                <span class="user-subhead">Admin</span>
+                                                <span class="user-subhead"><fmt:message key="users.admin"/></span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="user-subhead">User</span>
+                                                <span class="user-subhead"><fmt:message key="user.user"/></span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -53,10 +60,10 @@
                                     <td class="text-center">
                                         <c:choose>
                                             <c:when test="${user.banned eq true}">
-                                                <span class="label label-danger">Banned</span>
+                                                <span class="label label-danger"><fmt:message key="users.banned"/></span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="label label-success">Active</span>
+                                                <span class="label label-success"><fmt:message key="users.active"/></span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -68,10 +75,10 @@
                                             <input type="hidden" name="user_id" value="${user.id}">
                                             <c:choose>
                                                 <c:when test="${user.banned eq false}">
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i> Ban</button>
+                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i> <fmt:message key="users.ban"/></button>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <button type="submit" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i> Unban</button>
+                                                    <button type="submit" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i> <fmt:message key="users.unban"/></button>
                                                 </c:otherwise>
                                             </c:choose>
                                         </form>

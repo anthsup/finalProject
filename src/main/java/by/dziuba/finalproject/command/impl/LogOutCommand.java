@@ -13,7 +13,6 @@ public class LogOutCommand implements Command {
         executionResult.setSessionInvalidated(true);
         executionResult.setRedirected(true);
         executionResult.setPage(JspResourceManager.INDEX_PAGE);
-        //todo redirect
         return executionResult;
     }
 }

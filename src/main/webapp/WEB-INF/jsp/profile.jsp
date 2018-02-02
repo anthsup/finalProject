@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="id" value="1" scope="page"/>
+
+<!-- internationalization -->
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="Contents"/>
+
 <html>
 <head>
     <title>User profile</title>
@@ -17,46 +24,46 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">Profile Info</h3>
+                <h3 class="panel-title"><fmt:message key="profile.info"/></h3>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 " align="center"><img src="<c:choose>
-                                                                                                <c:when test="${not empty user.photo}">
-                                                                                                    ${user.photo}
-                                                                                                </c:when>
-                                                                                                <c:otherwise>
-                                                                                                    http://placehold.it/300x300
-                                                                                                </c:otherwise>
-                                                                                            </c:choose>" alt="User Pic" class="img-circle img-responsive"></div>
-                    <div class=" col-md-9 col-lg-9 ">
+                                                                                <c:when test="${not empty user.photo}">
+                                                                                    ${user.photo}
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    http://placehold.it/300x300
+                                                                                </c:otherwise>
+                                                                            </c:choose>" alt="User Pic" class="img-circle img-responsive"></div>
+    <div class=" col-md-9 col-lg-9 ">
                         <table class="table table-user-information">
                             <tbody>
                             <tr>
-                                <td>Name:</td>
+                                <td><fmt:message key="profile.fullName"/>:</td>
                                 <td>${user.firstName} ${user.lastName}</td>
                             </tr>
                             <tr>
-                                <td>Login:</td>
+                                <td><fmt:message key="user.login"/>:</td>
                                 <td>${user.login}</td>
                             </tr>
                             <tr>
-                                <td>Email:</td>
+                                <td><fmt:message key="user.email"/>:</td>
                                 <td><a href="mailto:${user.email}">${user.email}</a></td>
                             </tr>
                             <tr>
                             <tr>
-                                <td>Home Address</td>
+                                <td><fmt:message key="user.address"/>:</td>
                                 <td>${user.city}, ${user.address}</td>
                             </tr>
                             <tr>
-                                <td>Postal Index:</td>
+                                <td><fmt:message key="user.postal"/>:</td>
                                 <td>${user.postalIndex}</td>
                             </tr>
                             </tbody>
                         </table>
 
-                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-keyboard="true" data-target="#subscriptions">My Subscriptions</button>
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-keyboard="true" data-target="#subscriptions"><fmt:message key="profile.subscriptions"/></button>
                     </div>
                 </div>
             </div>
@@ -81,19 +88,19 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     <div class="alert alert-info">
-                                        Hello, <b>${sessionScope.user.login}, </b>below are your orders with dates, price and status.
+                                        <b>${sessionScope.user.login}</b><fmt:message key="profile.orders"/>
                                     </div>
                                     <hr />
                                     <div class="table-responsive">
                                         <table class="table table-striped table-hover text-center">
                                             <thead class="">
                                             <tr>
-                                                <th scope="col">No.</th>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Start Date</th>
-                                                <th scope="col">End Date</th>
-                                                <th scope="col">Total Price</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">#</th>
+                                                <th scope="col"><fmt:message key="profile.title"/></th>
+                                                <th scope="col"><fmt:message key="profile.startDate"/></th>
+                                                <th scope="col"><fmt:message key="profile.endDate"/></th>
+                                                <th scope="col"><fmt:message key="profile.total"/></th>
+                                                <th scope="col"><fmt:message key="profile.status"/></th>
                                             </tr>
                                             </thead>
                                             <tbody>

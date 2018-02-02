@@ -1,7 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- internationalization -->
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="Contents"/>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${locale}">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,7 +38,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="login" id="login"  placeholder="Login"/>
+                            <input type="text" class="form-control" name="login" id="login"  placeholder="<fmt:message key="user.login"/>"/>
                         </div>
                     </div>
                 </div>
@@ -40,7 +47,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" id="email"  placeholder="Email"/>
+                            <input type="text" class="form-control" name="email" id="email"  placeholder="<fmt:message key="user.email"/>"/>
                         </div>
                     </div>
                 </div>
@@ -49,7 +56,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="firstName" id="firstName"  placeholder="First Name"/>
+                            <input type="text" class="form-control" name="firstName" id="firstName"  placeholder="<fmt:message key="user.firstName"/>"/>
                         </div>
                     </div>
                 </div>
@@ -58,7 +65,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="lastName" id="lastName"  placeholder="Last Name"/>
+                            <input type="text" class="form-control" name="lastName" id="lastName"  placeholder="<fmt:message key="user.lastName"/>"/>
                         </div>
                     </div>
                 </div>
@@ -67,7 +74,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-location-arrow fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="city" id="city"  placeholder="City"/>
+                            <input type="text" class="form-control" name="city" id="city"  placeholder="<fmt:message key="user.city"/>"/>
                         </div>
                     </div>
                 </div>
@@ -76,7 +83,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="address" id="address"  placeholder="Home Address"/>
+                            <input type="text" class="form-control" name="address" id="address"  placeholder="<fmt:message key="user.address"/>"/>
                         </div>
                     </div>
                 </div>
@@ -85,7 +92,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="postal" id="postal"  placeholder="Postal Index"/>
+                            <input type="text" class="form-control" name="postal" id="postal"  placeholder="<fmt:message key="user.postal"/>"/>
                         </div>
                     </div>
                 </div>
@@ -94,7 +101,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" id="password"  placeholder="Password"/>
+                            <input type="password" class="form-control" name="password" id="password"  placeholder="<fmt:message key="user.password"/>"/>
                         </div>
                     </div>
                 </div>
@@ -103,13 +110,13 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+                            <input type="password" class="form-control" name="confirm" id="confirm"  placeholder="<fmt:message key="user.confirm"/>"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group ">
-                    <button type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                    <button type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button"><fmt:message key="signup.register"/></button>
                 </div>
 
             </form>

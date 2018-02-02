@@ -10,6 +10,7 @@ public final class JspResourceManager {
     public static final String PROFILE_PAGE = "/WEB-INF/jsp/profile.jsp";
     public static final String EDIT_PROFILE_PAGE = "/WEB-INF/jsp/edit-profile.jsp";
     public static final String USERS_PAGE = "/WEB-INF/jsp/users.jsp";
+    public static final String ERROR_PAGE = "/WEB-INF/jsp/error.jsp";
 
     public static final String LOGIN_PAGE_COMMAND = "/controller?command=login_page";
     public static final String CART_PAGE_COMMAND = "/controller?command=cart";

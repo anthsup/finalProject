@@ -1,13 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<c:set var="user" scope="session" value="${sessionScope.user}"/>--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- internationalization -->
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="Contents"/>
+
 <!doctype html>
-<html lang="en">
+<html lang="${locale}">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Welcome</title>
 

@@ -4,5 +4,17 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
          version="3.0">
 
-  <display-name>Subscription Web Application</display-name>
+    <display-name>Subscription Web Application</display-name>
+
+    <error-page>
+        <!--<location>/controller?command=error</location>-->
+        <location>/WEB-INF/jsp/error.jsp</location>
+    </error-page>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 </web-app>

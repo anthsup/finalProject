@@ -2,54 +2,55 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="sessionScope.lastPageURI" value="/resources/login.jsp"/>
+<!-- internationalization -->
+<c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="Contents"/>
 
-<%--<!-- internationalization -->--%>
-<%--<c:choose>--%>
-    <%--<c:when test="${not empty sessionScope.locale}">--%>
-        <%--<fmt:setLocale value="${sessionScope.locale}"/>--%>
-    <%--</c:when>--%>
-    <%--<c:otherwise>--%>
-        <%--<fmt:setLocale value="en_US"/>--%>
-    <%--</c:otherwise>--%>
-<%--</c:choose>--%>
-<%--<fmt:setBundle basename="Messages"/>--%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Login</title>
-    <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="This is home page of movie rating web application."/>
-    <link rel="stylesheet" href="/resources/css/movie_rating_styles.css"/>
-    <link rel="stylesheet" href="/resources/css/index_styles.css"/>
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/resources/css/bootstrap-theme.min.css"/>
-    <script src="/resources/js/jquery-3.1.0.min.js"></script>
-    <script src="/resources/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/resources/js/navigation.js"></script>
+    <title>Error</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/error-style.css">
 </head>
-
 <body>
-<mytags:navbar/>
+
+<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+
+<div class="container error">
+    <div class="jumbotron">
+        <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+        <h1 class="text-center">${pageContext.errorData.statusCode}<p><small class="text-center"><fmt:message key="error.small"/></small></p></h1>
+        <h3 class="text-center">${errorData}</h3>
+        <br>
+        <p class="text-center"><fmt:message key="error.text"/></p>
+        <p class="text-center"><a class="btn btn-primary" href="${pageContext.request.contextPath}/index.jsp"><i class="fa fa-home"></i> <fmt:message key="error.button"/></a></p>
+    </div>
+</div>
+
+<c:if test="${sessionScope.user.admin eq true}">
 <section class="container">
     <div class="well text-center">
-        <h1>
-            ${pageContext.errorData.statusCode}<br/>
-            ${pageContext.exception.message}<br/>
-        </h1>
-        <c:if test="${sessionScope.user.role eq 'ADMIN'}">
-            <b>Error: </b>${pageContext.exception} <br/>
-            <b>Stack trace:</b><br/>
-            <c:forEach var="trace"
-                       items="${pageContext.exception.stackTrace}">
-                <p>${trace}</p>
-            </c:forEach>
-        </c:if>
+        <b>Error: </b>${pageContext.exception}<br/>
+        <b>Stack trace:</b><br/>
+        <c:forEach var="trace"
+                   items="${pageContext.exception.stackTrace}">
+            <p>${trace}</p>
+        </c:forEach>
     </div>
 </section>
-</body>
+</c:if>
 
+<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
 </html>
