@@ -107,16 +107,16 @@
                     <div class="modal-content">
                         <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=change_password">
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="password"><fmt:message key="edit.oldPassword"/></label>
-                                <div class="col-md-4">
+                                <label class="col-md-6 control-label" for="password"><fmt:message key="edit.oldPassword"/></label>
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <input id="old_password" name="old_password" type="password" placeholder="<fmt:message key="edit.oldPassword"/>" class="form-control input-md">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="password"><fmt:message key="edit.newPassword"/></label>
-                                <div class="col-md-4">
+                                <label class="col-md-6 control-label" for="password"><fmt:message key="edit.newPassword"/></label>
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <input id="password" name="new_password" type="password" placeholder="<fmt:message key="edit.newPassword"/>" class="form-control input-md">
                                     </div>
@@ -125,16 +125,16 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="confirm_password"><fmt:message key="edit.confirm"/></label>
-                                <div class="col-md-4">
+                                <label class="col-md-6 control-label" for="confirm_password"><fmt:message key="edit.confirm"/></label>
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <input id="confirm_password" name="confirm_password" type="password" placeholder="<fmt:message key="edit.confirm"/>" class="form-control input-md">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label"></label>
-                                <div class="col-md-4">
+                                <label class="col-md-6 control-label"></label>
+                                <div class="col-md-6">
                                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> <fmt:message key="edit.submit"/></button>
                                     <input type="reset" class="btn btn-danger" value="<fmt:message key="edit.clear"/>">
                                 </div>

@@ -16,7 +16,7 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/periodicals-style.css">
 
     <title>Periodicals</title>
@@ -30,6 +30,12 @@
         <c:forEach items="${periodicals}" var="periodical">
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <div class="panel panel-default  panel--styled">
+                    <c:if test="${sessionScope.user.admin eq true}">
+                        <div class="panel-heading clearfix">
+                            <a href="${pageContext.request.contextPath}/controller?command=edit_periodical&id=${periodical.id}}" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning pull-left"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-toggle="modal" data-target="#delete${periodical.id}" type="button" class="btn btn-sm btn-danger pull-right"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </c:if>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -52,7 +58,7 @@
                                     <form method="post" action="${pageContext.request.contextPath}/controller">
                                         <input type="hidden" name="command" value="add_to_cart">
                                         <input type="hidden" name="id" value="${periodical.id}">
-                                        <button class="btn btn-md btn-add-to-cart"><span
+                                        <button class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user}">disabled</c:if>><span
                                                 class="glyphicon glyphicon-shopping-cart"></span> <fmt:message key="period.addToCart"/>
                                         </button>
                                     </form>
@@ -81,6 +87,9 @@
                             <a href="product_view${periodical.id}" data-dismiss="modal" class="class pull-right"><span
                                     class="glyphicon glyphicon-remove"></span></a>
                             <h3 class="modal-title">${periodical.title}</h3>
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i> <fmt:message key="period.priceAlert"/>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -109,16 +118,35 @@
                                         <input type="hidden" name="id" value="${periodical.id}">
                                         <div class="space-ten"></div>
                                         <div class="btn-ground text-center">
-                                            <button type="submit" class="btn btn-primary"><span
+                                            <button type="submit" class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user}">disabled</c:if>><span
                                                     class="glyphicon glyphicon-shopping-cart"></span> <fmt:message key="period.addToCart"/>
                                             </button>
-                                                <%--<button type="button" class="btn btn-primary"><span--%>
-                                                <%--class="glyphicon glyphicon-heart"></span> Add To Wishlist--%>
-                                                <%--</button>--%>
+                                            <c:if test="${empty sessionScope.user}">
+                                                <div class="alert alert-danger" role="alert">
+                                                    <i class="fas fa-exclamation-circle"></i> <fmt:message key="period.loginAlert"/> <a data-dismiss="modal" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2"><fmt:message key="period.loginAlert.link"/></a>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="delete${periodical.id}" tabindex="-1" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title"><fmt:message key="period.delete"/> ${periodical.title}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <strong><fmt:message key="period.delete.msg"/></strong>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="${pageContext.request.contextPath}/controller?command=delete_periodical&id=${periodical.id}" type="button" id="del" class="btn btn-danger"><fmt:message key="period.delete"/></a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="period.close"/></button>
                         </div>
                     </div>
                 </div>

@@ -9,10 +9,11 @@
 
 <html lang="${locale}">
 <head>
+    <title>Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart-style.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <title>Cart</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -66,19 +67,19 @@
             <td><a href="${pageContext.request.contextPath}/controller?command=periodicals" class="btn btn-warning"><i class="fa fa-angle-left"></i> <fmt:message key="cart.continue"/></a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong id="total" class="total">${sessionScope.totalPrice} <fmt:message key="currency.value"/></strong></td>
-            <td><a href="${pageContext.request.contextPath}/controller?command=checkout" class="btn btn-success btn-block"><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
+            <td><a class="btn btn-success btn-block" data-toggle="modal" data-keyboard="true" data-target="#payment"><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
         </tr>
         </tfoot>
     </table>
 
+    <jsp:include page="payment.jsp"/>
     <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script src="${pageContext.request.contextPath}/js/changePrice.js"></script>
 </div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/js/changePrice.js"></script>
 </body>
 </html>

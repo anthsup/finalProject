@@ -1,5 +1,6 @@
 package by.dziuba.subscription.entity;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -17,6 +18,15 @@ public class User {
     private boolean admin;
     private boolean banned;
     private Date registrationDate;
+    private BigDecimal loan;
+
+    public BigDecimal getLoan() {
+        return loan;
+    }
+
+    public void setLoan(BigDecimal loan) {
+        this.loan = loan;
+    }
 
     public String getCity() {
         return city;

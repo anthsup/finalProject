@@ -19,6 +19,7 @@ public class PeriodicalDAOImpl {
     private static final String SELECT_ALL = "SELECT * FROM periodical";
     private static final String SELECT_BY_ID = "SELECT * FROM periodical WHERE id = ?";
     private static final String SELECT_ALL_TYPES = "SELECT * FROM periodical_type";
+    private static final String DELETE_BY_ID = "DELETE FROM periodical WHERE id = ?";
 
 
     public List<Periodical> findAll() throws DAOException {
@@ -65,6 +66,16 @@ public class PeriodicalDAOImpl {
             throw new DAOException(e);
         }
         return periodicalTypes;
+    }
+
+    public void deleteById(int periodicalId) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(DELETE_BY_ID)) {
+            statement.setInt(1, periodicalId);
+            statement.execute();
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
     private Periodical createPeriodical(ResultSet resultSet) throws SQLException {

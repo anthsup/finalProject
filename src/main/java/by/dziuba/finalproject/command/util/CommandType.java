@@ -21,7 +21,8 @@ public enum CommandType {
     EDIT_PROFILE(new EditProfileCommand()),
     USERS(new ShowUsersCommand()),
     ERROR(new ShowErrorPageCommand()),
-    CHANGE_LOCALE(new ChangeLocaleCommand());
+    CHANGE_LOCALE(new ChangeLocaleCommand()),
+    DELETE_PERIODICAL(new DeletePeriodicalCommand());
 
     private Command command;
 

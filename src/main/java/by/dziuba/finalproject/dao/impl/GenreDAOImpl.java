@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class GenreDAOImpl {
     private static final String SELECT_ALL = "SELECT * FROM periodical_genre";
+    private static final String DELETE_BY_ID = "DELETE FROM periodical_genre WHERE periodical_id = ?";
 
     public Map<Integer, List<Genre>> findAll() throws DAOException {
         Map<Integer, List<Genre>> genresMap = new HashMap<>();
@@ -36,6 +37,16 @@ public class GenreDAOImpl {
             throw new DAOException(e);
         }
         return genresMap;
+    }
+
+    public void deleteById(int periodicalId) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(DELETE_BY_ID)) {
+            statement.setInt(1, periodicalId);
+            statement.execute();
+        } catch (SQLException | DBException e) {
+            throw new DAOException(e);
+        }
     }
 
     private Genre createGenre(ResultSet selected) throws SQLException {

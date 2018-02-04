@@ -18,4 +18,12 @@ public class GenreServiceImpl {
             throw new ServiceException(e);
         }
     }
+
+    public void deleteById(int periodicalId) throws ServiceException {
+        try {
+            genreDao.deleteById(periodicalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

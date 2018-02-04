@@ -64,3 +64,26 @@ span.itemPrice {
 .price-view {
     height: 36.5px !important;
 }
+
+.alert-danger {
+    margin-top: 10px;
+}
+
+.alert-warning {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: inline-block !important;
+}
+
+.modal-title {
+    display: inline-block !important;
+}
+
+.btn.btn-sm {
+    padding: 3px 5px;
+}
+
+.panel-heading {
+    padding: 0px;
+    border-bottom: 0px;
+}

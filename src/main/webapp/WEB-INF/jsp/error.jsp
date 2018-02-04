@@ -8,7 +8,7 @@
 <fmt:setBundle basename="Contents"/>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${locale}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -25,25 +25,19 @@
     <div class="jumbotron">
         <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
         <h1 class="text-center">${pageContext.errorData.statusCode}<p><small class="text-center"><fmt:message key="error.small"/></small></p></h1>
-        <h3 class="text-center">${errorData}</h3>
+        <c:choose>
+            <c:when test="${pageContext.errorData.statusCode eq 404}">
+                <h3 class="text-center"><fmt:message key="error.404.cause"/></h3>
+            </c:when>
+            <c:otherwise>
+                <h3 class="text-center">${requestScope['javax.servlet.error.message']}</h3>
+            </c:otherwise>
+        </c:choose>
         <br>
         <p class="text-center"><fmt:message key="error.text"/></p>
         <p class="text-center"><a class="btn btn-primary" href="${pageContext.request.contextPath}/index.jsp"><i class="fa fa-home"></i> <fmt:message key="error.button"/></a></p>
     </div>
 </div>
-
-<c:if test="${sessionScope.user.admin eq true}">
-<section class="container">
-    <div class="well text-center">
-        <b>Error: </b>${pageContext.exception}<br/>
-        <b>Stack trace:</b><br/>
-        <c:forEach var="trace"
-                   items="${pageContext.exception.stackTrace}">
-            <p>${trace}</p>
-        </c:forEach>
-    </div>
-</section>
-</c:if>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 

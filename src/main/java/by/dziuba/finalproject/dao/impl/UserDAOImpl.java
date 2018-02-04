@@ -18,7 +18,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM user";
     private static final String INSERT_USER = "INSERT INTO user (login, email, firstName, lastName, city, address," +
-            "postalIndex, registrationDate, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "postalIndex, registrationDate, password, loan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? WHERE id = ?";
     private static final String UPDATE_INFO = "UPDATE user SET login = ?, email = ?, firstName = ?, lastName = ?," +
             "city = ?, address = ?, postalIndex = ?, photo = ? WHERE id = ?";
@@ -76,6 +76,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(7, user.getPostalIndex());
             statement.setDate(8, user.getRegistrationDate());
             statement.setString(9, user.getPassword());
+            statement.setBigDecimal(10, user.getLoan());
             statement.executeUpdate();
             executed = true;
         } catch (DBException | SQLException e) {
@@ -164,6 +165,7 @@ public class UserDAOImpl implements UserDAO {
         user.setEmail(resultSet.getString("email"));
         user.setRegistrationDate(resultSet.getDate("registrationDate"));
         user.setPhoto(resultSet.getString("photo"));
+        user.setLoan(resultSet.getBigDecimal("loan"));
         return user;
     }
 }

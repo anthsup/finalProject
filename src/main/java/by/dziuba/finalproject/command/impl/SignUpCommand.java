@@ -12,6 +12,7 @@ import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.SignUpServiceImpl;
 import by.dziuba.subscription.service.impl.UserServiceImpl;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -62,6 +63,7 @@ public class SignUpCommand implements Command {
         user.setBanned(false);
         user.setRegistrationDate(Date.valueOf(LocalDate.now()));
         user.setPassword(requestContent.getRequestParameter(PASSWORD_PARAMETER));
+        user.setLoan(BigDecimal.valueOf(10));
         return user;
     }
 }

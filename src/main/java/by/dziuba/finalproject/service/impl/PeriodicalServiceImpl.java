@@ -35,4 +35,12 @@ public class PeriodicalServiceImpl {
             throw new ServiceException(e);
         }
     }
+
+    public void deleteById(int periodicalId) throws ServiceException {
+        try {
+            periodicalDAO.deleteById(periodicalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

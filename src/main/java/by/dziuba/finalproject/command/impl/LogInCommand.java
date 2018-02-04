@@ -30,7 +30,7 @@ public class LogInCommand implements Command {
                 //todo redirect
             } else {
                 commandResult.setErrorCode(401);
-                commandResult.putRequestAttribute("errorData", "Incorrect login or password");
+                commandResult.setErrorMessage("Incorrect login or password");
             }
             return commandResult;
         } catch (ServiceException e) {

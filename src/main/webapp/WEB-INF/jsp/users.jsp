@@ -78,7 +78,7 @@
                                                     <button type="submit" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i> <fmt:message key="users.ban"/></button>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <button type="submit" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i> <fmt:message key="users.unban"/></button>
+                                                    <button type="submit" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i> <fmt:message key="users.unBan"/></button>
                                                 </c:otherwise>
                                             </c:choose>
                                         </form>

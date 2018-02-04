@@ -48,10 +48,10 @@
                 <c:if test="${sessionScope.user.admin eq true}">
                     <li><a href="${pageContext.request.contextPath}/controller?command=users"><fmt:message key="nav.users"/></a></li>
                 </c:if>
-                <li><a href="${pageContext.request.contextPath}/controller?command=signup_page"><fmt:message key="nav.signup"/></a></li>
                 <c:if test="${empty sessionScope.user}">
-                    <li>
-                        <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2"><fmt:message key="nav.signin"/></a>
+                <li><a href="${pageContext.request.contextPath}/controller?command=signup_page"><fmt:message key="nav.signup"/></a></li>
+                <li>
+                        <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2"><fmt:message key="nav.login"/></a>
                     </li>
                 </ul>
                 <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse2">
@@ -65,7 +65,7 @@
                             <label class="sr-only" for="Password">Password</label>
                             <input type="password" class="form-control" name="password" id="Password" placeholder="<fmt:message key="user.password"/>" required />
                         </div>
-                        <button type="submit" class="btn btn-success"><fmt:message key="nav.signin"/></button>
+                        <button type="submit" class="btn btn-success"><fmt:message key="nav.login"/></button>
                     </form>
                 </div>
                 </c:if>
@@ -79,7 +79,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${user.login}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="nav.myprofile"/></a></li>
+                                <li><a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="nav.myProfile"/></a></li>
                                 <%--<li><a href="#">Favorited</a></li>--%>
                                 <li><a href="${pageContext.request.contextPath}/controller?command=profile_edit"><fmt:message key="nav.settings"/></a></li>
                                 <li class="divider"></li>
