@@ -20,12 +20,12 @@
 
 <div class="container bootstrap snippet">
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-lg-12">
             <div class="main-box no-header clearfix">
                 <div class="main-box-body clearfix">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-lg-12 text-center">
                                 <h2><b><fmt:message key="users.management"/></b></h2>
                             </div>
                         </div>

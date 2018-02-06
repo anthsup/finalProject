@@ -23,7 +23,7 @@ public class EditProfileCommand implements Command {
         try {
             CommandResult commandResult = new CommandResult();
             User currentUser = setUpdatedUserData(requestContent);
-            userService.updateUserInfo(currentUser);
+            userService.updateUserById(currentUser);
             commandResult.setPage(JspResourceManager.PROFILE_PAGE_COMMAND);
             commandResult.setRedirected(true);
             return commandResult;

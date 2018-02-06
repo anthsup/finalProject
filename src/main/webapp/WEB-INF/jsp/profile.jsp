@@ -108,7 +108,7 @@
                                                 <tr>
                                                     <th scope="row">${id}</th>
                                                     <c:set var="id" value="${id + 1}" scope="page"/>
-                                                    <td>${periodicals[subscription.periodicalId].title}</td>
+                                                    <td>${periodicals[subscription.id].title}</td>
                                                     <td>${subscription.startDate}</td>
                                                     <td>${subscription.endDate}</td>
                                                     <td>
@@ -116,16 +116,16 @@
                                                     </td>
                                                     <td>
                                                         <label class="label <c:choose>
-                                                                                    <c:when test="${statuses[subscription.periodicalId] eq 'Active.'}">
+                                                                                    <c:when test="${statuses[subscription.id] eq 'Active.'}">
                                                                                     label-success
                                                                                     </c:when>
-                                                                                    <c:when test="${statuses[subscription.periodicalId] eq 'Expired.'}">
+                                                                                    <c:when test="${statuses[subscription.id] eq 'Expired.'}">
                                                                                     label-danger
                                                                                     </c:when>
                                                                                     <c:otherwise>
                                                                                     label-warning
                                                                                     </c:otherwise>
-                                                                                </c:choose>">${statuses[subscription.periodicalId]}</label></td>
+                                                                                </c:choose>">${statuses[subscription.id]}</label></td>
                                                 </tr>
                                             </c:forEach>
                                             </tbody>

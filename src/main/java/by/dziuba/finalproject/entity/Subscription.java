@@ -2,6 +2,7 @@ package by.dziuba.subscription.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Objects;
 
 public class Subscription {
     private int userId;
@@ -48,5 +49,21 @@ public class Subscription {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subscription that = (Subscription) o;
+        return userId == that.userId &&
+                periodicalId == that.periodicalId &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, periodicalId, startDate, endDate);
     }
 }

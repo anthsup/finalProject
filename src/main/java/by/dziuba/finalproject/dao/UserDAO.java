@@ -12,5 +12,5 @@ public interface UserDAO {
     boolean addUser(User user) throws DAOException;
     boolean updateUserBanStatus(int userId, boolean banStatus) throws DAOException;
     boolean updateUserPassword(int id, String password) throws DAOException;
-    boolean updateUserInfo(User user) throws DAOException;
+    boolean updateUserById(User user) throws DAOException;
 }

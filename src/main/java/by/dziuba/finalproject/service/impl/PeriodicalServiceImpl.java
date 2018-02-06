@@ -3,11 +3,9 @@ package by.dziuba.subscription.service.impl;
 import by.dziuba.subscription.dao.exception.DAOException;
 import by.dziuba.subscription.dao.impl.PeriodicalDAOImpl;
 import by.dziuba.subscription.entity.Periodical;
-import by.dziuba.subscription.entity.PeriodicalType;
 import by.dziuba.subscription.service.exception.ServiceException;
 
 import java.util.List;
-import java.util.Map;
 
 public class PeriodicalServiceImpl {
     private static final PeriodicalDAOImpl periodicalDAO = new PeriodicalDAOImpl();
@@ -28,17 +26,17 @@ public class PeriodicalServiceImpl {
         }
     }
 
-    public Map<Integer, PeriodicalType> getAllTypes() throws ServiceException {
+    public void deleteById(int periodicalId) throws ServiceException {
         try {
-            return periodicalDAO.findAllTypes();
+            periodicalDAO.deleteById(periodicalId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
-    public void deleteById(int periodicalId) throws ServiceException {
+    public void updateById(Periodical periodical) throws ServiceException {
         try {
-            periodicalDAO.deleteById(periodicalId);
+            periodicalDAO.updateById(periodical);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

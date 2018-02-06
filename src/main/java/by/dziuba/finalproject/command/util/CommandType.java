@@ -22,7 +22,10 @@ public enum CommandType {
     USERS(new ShowUsersCommand()),
     ERROR(new ShowErrorPageCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
-    DELETE_PERIODICAL(new DeletePeriodicalCommand());
+    DELETE_PERIODICAL(new DeletePeriodicalCommand()),
+    PERIODICAL_EDIT(new ShowPeriodicalEditCommand()),
+    EDIT_PERIODICAL(new EditPeriodicalCommand()),
+    ADMIN_PANEL(new ShowAdminPanelCommand());
 
     private Command command;
 

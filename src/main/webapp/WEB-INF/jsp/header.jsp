@@ -31,10 +31,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <li class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
                         <fmt:message key="nav.lang"/> <span class="caret"></span>
-                    </button>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU"><fmt:message key="nav.lang.ru"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_US"><fmt:message key="nav.lang.en"/></a></li>
@@ -46,9 +46,17 @@
                     <li><a href="${pageContext.request.contextPath}/controller?command=cart"><fmt:message key="nav.cart"/> <span class="badge">${fn:length(sessionScope.cart_products)}</span></a></li>
                 </c:if>
                 <c:if test="${sessionScope.user.admin eq true}">
-                    <li><a href="${pageContext.request.contextPath}/controller?command=users"><fmt:message key="nav.users"/></a></li>
+                    <li class="dropdown">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <fmt:message key="nav.admin"/> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="${pageContext.request.contextPath}/controller?command=users"><fmt:message key="nav.users"/></a></li>
+                            <li><a href="${pageContext.request.contextPath}/controller?command=admin_panel"><fmt:message key="nav.admin"/></a></li>
+                        </ul>
+                    </li>
                 </c:if>
-                <c:if test="${empty sessionScope.user}">
+            <c:if test="${empty sessionScope.user}">
                 <li><a href="${pageContext.request.contextPath}/controller?command=signup_page"><fmt:message key="nav.signup"/></a></li>
                 <li>
                         <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2"><fmt:message key="nav.login"/></a>

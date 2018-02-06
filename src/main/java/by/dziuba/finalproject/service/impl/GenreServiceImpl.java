@@ -11,7 +11,15 @@ import java.util.Map;
 public class GenreServiceImpl {
     private static final GenreDAOImpl genreDao = new GenreDAOImpl();
 
-    public Map<Integer, List<Genre>> getAll() throws ServiceException {
+    public Map<Integer, List<Genre>> getAllPeriodicalGenres() throws ServiceException {
+        try {
+            return genreDao.findAllPeriodicalGenres();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Genre> getAll() throws ServiceException {
         try {
             return genreDao.findAll();
         } catch (DAOException e) {
@@ -19,9 +27,25 @@ public class GenreServiceImpl {
         }
     }
 
-    public void deleteById(int periodicalId) throws ServiceException {
+    public void deleteByPeriodicalId(int periodicalId) throws ServiceException {
         try {
-            genreDao.deleteById(periodicalId);
+            genreDao.deleteByPeriodicalId(periodicalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void insertPeriodicalGenres(int periodicalId, List<Genre> periodicalGenres) throws ServiceException {
+        try {
+            genreDao.insertPeriodicalGenres(periodicalId, periodicalGenres);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Genre> getByPeriodicalId(int periodicalId) throws ServiceException {
+        try {
+            return genreDao.findByPeriodicalId(periodicalId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

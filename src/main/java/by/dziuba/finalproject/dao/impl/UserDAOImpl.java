@@ -20,7 +20,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String INSERT_USER = "INSERT INTO user (login, email, firstName, lastName, city, address," +
             "postalIndex, registrationDate, password, loan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_PASSWORD = "UPDATE user SET password = ? WHERE id = ?";
-    private static final String UPDATE_INFO = "UPDATE user SET login = ?, email = ?, firstName = ?, lastName = ?," +
+    private static final String UPDATE_BY_ID = "UPDATE user SET login = ?, email = ?, firstName = ?, lastName = ?," +
             "city = ?, address = ?, postalIndex = ?, photo = ? WHERE id = ?";
     private static final String BAN_USER = "UPDATE user SET banned = ? WHERE id = ?";
 
@@ -99,9 +99,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean updateUserInfo(User user) throws DAOException {
+    public boolean updateUserById(User user) throws DAOException {
         try (PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = poolConnection.getConnection().prepareStatement(UPDATE_INFO)) {
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(UPDATE_BY_ID)) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getFirstName());

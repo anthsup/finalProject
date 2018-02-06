@@ -7,7 +7,7 @@ public class Periodical {
     private int id;
     private String title;
     private BigDecimal price;
-    private int periodicityId;
+    private int periodicity;
     private int authorId;
     private int typeId;
     private String coverImage;
@@ -54,12 +54,12 @@ public class Periodical {
         this.price = price;
     }
 
-    public int getPeriodicityId() {
-        return periodicityId;
+    public int getPeriodicity() {
+        return periodicity;
     }
 
-    public void setPeriodicityId(int periodicityId) {
-        this.periodicityId = periodicityId;
+    public void setPeriodicity(int periodicity) {
+        this.periodicity = periodicity;
     }
 
     public int getAuthorId() {
@@ -92,19 +92,15 @@ public class Periodical {
         if (o == null || getClass() != o.getClass()) return false;
         Periodical that = (Periodical) o;
         return id == that.id &&
-                periodicityId == that.periodicityId &&
                 authorId == that.authorId &&
                 typeId == that.typeId &&
                 booksAmount == that.booksAmount &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(price, that.price) &&
-                Objects.equals(coverImage, that.coverImage) &&
-                Objects.equals(description, that.description);
+                Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, periodicityId, typeId, coverImage, description);
+        return Objects.hash(id, title, authorId, typeId, booksAmount);
     }
     //TODO equals hashcode when done with fields
 }

@@ -3,7 +3,7 @@ package by.dziuba.subscription.dao.impl;
 import by.dziuba.subscription.dao.exception.DAOException;
 import by.dziuba.subscription.database.DBConnectionPool;
 import by.dziuba.subscription.database.exception.DBException;
-import by.dziuba.subscription.entity.Author;
+import by.dziuba.subscription.entity.PeriodicalType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,45 +13,45 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AuthorDAOImpl {
-    private static final String SELECT_ALL = "SELECT * FROM author";
-    private static final String SELECT_BY_ID = "SELECT * FROM author WHERE id = ?";
+public class PeriodicalTypeDAOImpl {
+    private static final String SELECT_ALL = "SELECT * FROM periodical_type";
+    private static final String SELECT_BY_ID = "SELECT * FROM periodical_type WHERE id = ?";
 
-    public List<Author> findAll() throws DAOException {
-        List<Author> authorsMap = new ArrayList<>();
+    public List<PeriodicalType> findAll() throws DAOException {
+        List<PeriodicalType> periodicalTypes = new ArrayList<>();
         try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
              PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_ALL)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    authorsMap.add(createAuthor(resultSet));
+                    periodicalTypes.add(createPeriodicalType(resultSet));
                 }
             }
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
-        return authorsMap;
+        return periodicalTypes;
     }
 
-    public Author findById(int authorId) throws DAOException {
-        Author author = null;
+    public PeriodicalType findById(int periodicalTypeId) throws DAOException {
+        PeriodicalType periodicalType = null;
         try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
              PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_BY_ID)) {
-            statement.setInt(1, authorId);
+            statement.setInt(1, periodicalTypeId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    author = createAuthor(resultSet);
+                    periodicalType = createPeriodicalType(resultSet);
                 }
             }
-            return author;
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
+        return periodicalType;
     }
 
-    private Author createAuthor(ResultSet selected) throws SQLException {
-        Author author = new Author();
-        author.setId(selected.getInt("id"));
-        author.setFullName(selected.getString("fullName"));
-        return author;
+    private PeriodicalType createPeriodicalType(ResultSet selected) throws SQLException {
+        PeriodicalType periodicalType = new PeriodicalType();
+        periodicalType.setId(selected.getInt("id"));
+        periodicalType.setName(selected.getString("type"));
+        return periodicalType;
     }
 }

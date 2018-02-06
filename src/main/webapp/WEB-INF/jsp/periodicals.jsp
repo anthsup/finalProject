@@ -14,7 +14,6 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <!-- Website Font style -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/periodicals-style.css">
@@ -32,7 +31,7 @@
                 <div class="panel panel-default  panel--styled">
                     <c:if test="${sessionScope.user.admin eq true}">
                         <div class="panel-heading clearfix">
-                            <a href="${pageContext.request.contextPath}/controller?command=edit_periodical&id=${periodical.id}}" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning pull-left"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="${pageContext.request.contextPath}/controller?command=periodical_edit&id=${periodical.id}" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning pull-left"><i class="glyphicon glyphicon-edit"></i></a>
                             <a data-toggle="modal" data-target="#delete${periodical.id}" type="button" class="btn btn-sm btn-danger pull-right"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </c:if>
@@ -98,7 +97,7 @@
                                          class="img-responsive" id="img-custom">
                                 </div>
                                 <div class="col-md-6 product_content">
-                                    <h4><fmt:message key="period.periodicity"/>: <span>${periodicities[periodical.periodicityId].periodicity}</span></h4>
+                                    <h4><fmt:message key="period.periodicity"/>: <span>${periodical.periodicity} <fmt:message key="period.times"/></span></h4>
 
                                     <h4><fmt:message key="period.type"/>: <span>${(periodicalTypes[periodical.typeId]).name}</span></h4>
 
@@ -106,6 +105,7 @@
 
                                     <c:if test="${periodical.authorId ne 0}">
                                         <h4><fmt:message key="period.author"/>: <span>${authors[periodical.authorId].fullName}</span></h4>
+                                        <h4><fmt:message key="period.books"/>: <span>${periodical.booksAmount}</span></h4>
                                     </c:if>
 
                                     <h4><fmt:message key="period.genres"/>: <span><c:forEach items="${genres[periodical.id]}" var="genre">

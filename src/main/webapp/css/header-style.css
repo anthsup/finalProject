@@ -16,7 +16,6 @@ nav {
 .nav-collapse>li { float: right; }
 
 .btn.btn-circle { border-radius: 50px; }
-.btn.btn-default.dropdown-toggle { margin: 10px auto; }
 .btn.btn-outline { background-color: transparent; }
 
 @media screen and (max-width: 767px) {

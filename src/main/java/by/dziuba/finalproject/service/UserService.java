@@ -13,5 +13,5 @@ public interface UserService {
     User getUserById(int id) throws ServiceException;
     List<User> getAllUsers() throws ServiceException;
     boolean updateUserPassword(int id, String password) throws ServiceException;
-    boolean updateUserInfo(User user) throws ServiceException;
+    boolean updateUserById(User user) throws ServiceException;
 }

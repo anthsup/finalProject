@@ -21,7 +21,7 @@
     <div class="row">
         <div class="col-md-10 ">
             <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=edit_profile">
-                <input type="hidden" name="command" value="profile_edit">
+                <%--<input type="hidden" name="command" value="profile_edit">--%>
                 <fieldset>
 
                     <!-- Form Name -->
@@ -42,7 +42,6 @@
                         </div>
                     </div>
 
-                    <!-- File Button -->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="upload"><fmt:message key="edit.photo"/></label>
                         <div class="col-md-4">

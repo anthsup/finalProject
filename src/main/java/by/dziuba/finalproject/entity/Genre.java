@@ -1,15 +1,12 @@
 package by.dziuba.subscription.entity;
 
+import java.util.Objects;
+
 public class Genre {
-    private int periodicalId;
     private String name;
 
-    public int getPeriodicalId() {
-        return periodicalId;
-    }
-
-    public void setPeriodicalId(int periodicalId) {
-        this.periodicalId = periodicalId;
+    public Genre(String name) {
+        this.name = name;
     }
 
     public String getName() {
@@ -19,5 +16,17 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
-    //TODO equals hashcode when done with fields
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Genre genre = (Genre) o;
+        return Objects.equals(name, genre.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

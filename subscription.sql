@@ -59,28 +59,14 @@ COMMENT = 'Данные о клиенте-читателе приложения.
 
 
 -- -----------------------------------------------------
--- Table `periodicity`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `periodicity` ;
-
-CREATE TABLE IF NOT EXISTS `periodicity` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор типа подписки.',
-  `periodicity` VARCHAR(45) NOT NULL COMMENT 'Непосредственно тип подписки (weekly, monthly, yearly, etc.)',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `subscription_type_UNIQUE` (`periodicity` ASC))
-ENGINE = InnoDB
-COMMENT = 'Частота выхода изданий — еженедельная, ежемесячная, годовая и т.д.';
-
-
--- -----------------------------------------------------
 -- Table `genre`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `genre` ;
 
 CREATE TABLE IF NOT EXISTS `genre` (
-  `name` VARCHAR(45) NOT NULL COMMENT 'Непосредственно название жанра.',
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
-  PRIMARY KEY (`name`))
+  `genre_name` VARCHAR(45) NOT NULL COMMENT 'Непосредственно название жанра.',
+  UNIQUE INDEX `name_UNIQUE` (`genre_name` ASC),
+  PRIMARY KEY (`genre_name`))
 ENGINE = InnoDB
 COMMENT = 'Данные о жанрах книжных серий — роман, детектив, приключенческий и т.д.';
 
@@ -119,21 +105,15 @@ CREATE TABLE IF NOT EXISTS `periodical` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор периодического издания.',
   `title` VARCHAR(255) NOT NULL COMMENT 'Название.',
   `price` DECIMAL(10,2) UNSIGNED NOT NULL COMMENT 'Цена за единицу. ',
-  `periodicity_id` INT UNSIGNED NOT NULL COMMENT 'Частота выхода издания — ежегодная, ежемесячная, еженедельная и т.д.',
   `author_id` INT UNSIGNED NULL DEFAULT NULL,
   `periodical_type_id` INT UNSIGNED NOT NULL,
   `coverImage` VARCHAR(1024) NOT NULL,
   `description` TEXT(63000) NOT NULL,
   `booksAmount` INT UNSIGNED NULL DEFAULT NULL,
+  `periodicity` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_periodical_periodicity1_idx` (`periodicity_id` ASC),
   INDEX `fk_periodical_author1_idx` (`author_id` ASC),
   INDEX `fk_periodical_periodical_type1_idx` (`periodical_type_id` ASC),
-  CONSTRAINT `fk_periodical_periodicity1`
-    FOREIGN KEY (`periodicity_id`)
-    REFERENCES `periodicity` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_periodical_author1`
     FOREIGN KEY (`author_id`)
     REFERENCES `author` (`id`)
@@ -195,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `periodical_genre` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_periodical_genre_genre1`
     FOREIGN KEY (`genre_name`)
-    REFERENCES `genre` (`name`)
+    REFERENCES `genre` (`genre_name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -206,36 +186,22 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `periodicity`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `subscription`;
-INSERT INTO `periodicity` (`id`, `periodicity`) VALUES (1, '1 раз в месяц');
-INSERT INTO `periodicity` (`id`, `periodicity`) VALUES (2, '4 раза в месяц');
-INSERT INTO `periodicity` (`id`, `periodicity`) VALUES (3, '8 раз в месяц');
-INSERT INTO `periodicity` (`id`, `periodicity`) VALUES (4, '12 раз в месяц');
-INSERT INTO `periodicity` (`id`, `periodicity`) VALUES (5, '2 раза в месяц');
-
-COMMIT;
-
-
--- -----------------------------------------------------
 -- Data for table `genre`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `subscription`;
-INSERT INTO `genre` (`name`) VALUES ('Подростковая литература');
-INSERT INTO `genre` (`name`) VALUES ('Фэнтези');
-INSERT INTO `genre` (`name`) VALUES ('Роман');
-INSERT INTO `genre` (`name`) VALUES ('Мужской');
-INSERT INTO `genre` (`name`) VALUES ('История');
-INSERT INTO `genre` (`name`) VALUES ('Лайфстайл');
-INSERT INTO `genre` (`name`) VALUES ('Новости');
-INSERT INTO `genre` (`name`) VALUES ('Политика');
-INSERT INTO `genre` (`name`) VALUES ('Экономика');
-INSERT INTO `genre` (`name`) VALUES ('Общество');
-INSERT INTO `genre` (`name`) VALUES ('Эпическое');
-INSERT INTO `genre` (`name`) VALUES ('Антиутопия');
+INSERT INTO `genre` (`genre_name`) VALUES ('Подростковая литература');
+INSERT INTO `genre` (`genre_name`) VALUES ('Фэнтези');
+INSERT INTO `genre` (`genre_name`) VALUES ('Роман');
+INSERT INTO `genre` (`genre_name`) VALUES ('Мужской');
+INSERT INTO `genre` (`genre_name`) VALUES ('История');
+INSERT INTO `genre` (`genre_name`) VALUES ('Лайфстайл');
+INSERT INTO `genre` (`genre_name`) VALUES ('Новости');
+INSERT INTO `genre` (`genre_name`) VALUES ('Политика');
+INSERT INTO `genre` (`genre_name`) VALUES ('Экономика');
+INSERT INTO `genre` (`genre_name`) VALUES ('Общество');
+INSERT INTO `genre` (`genre_name`) VALUES ('Эпическое');
+INSERT INTO `genre` (`genre_name`) VALUES ('Антиутопия');
 
 COMMIT;
 
@@ -271,16 +237,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `subscription`;
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (1, 'Дилетант', 7.2, 2, NULL, 3, 'http://journal-off.info/uploads/posts/2016-09/1474895768_310fd331e1dfec82589e217b7f3b9f21.jpg', 'Дилентант — это познавательный журнал, всецело посвященный истории. Наш проект создан для тех, кто любит историю и хочет знать о ней как можно больше. \nМы придумали для вас простой и понятный способ войти в мир захватывающего водоворота исторических событий. Мир истории, от древних, не знавших письменности племен, до XXI века.\nНаш журнал рассчитан на тех, кто любит историю, хочет знать о ней как можно больше, но не является профессиональным историком. Научных текстов, написанных сложным языком, вы у нас не найдете, зато найдете увлекательный исторический контент, часть которого создают сами читатели.', NULL);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (2, 'Большой', 5.7, 5, NULL, 3, 'http://jurnali-online.ru/wp-content/uploads/2013/04/1365962585_bol042013600.jpg', 'Журнал \"Большой\" ищет ответы на вопросы об устройстве общества, законах социума и мироощущении у известных режиссеров, бизнесменов, музыкантов, политологов, дизайнеров, писателей, телеведущих. Ему интересна личность и объективный взгляд на события.', NULL);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (3, 'Esquire', 9, 1, NULL, 3, 'https://s-media-cache-ak0.pinimg.com/originals/11/1f/4c/111f4cbe6338b3dfda9754a3e90d1bd2.jpg', 'Издание для тех, кого не прельщают дешевые сенсации, для тех, кто в состоянии оценить настоящий стиль в литературе и моде.', NULL);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (4, 'Народная воля', 2.7, 3, NULL, 2, 'https://nn.by/img/w924d4/photos/z_2016_07/img_20160726_131901-rytpz.jpg', 'Актуальныя падзеі і эксклюзіўная аналітыка з Беларусі. Палітыка, эканоміка, культура і адпачынак. Важныя навіны на карысць грамадству.', NULL);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (5, 'Салiдарнасць', 3.6, 4, NULL, 2, 'https://nn.by/img/w500d4/photos/z_2012_12/salidarnasc_redyzajn.jpg', 'Дайджест и самые быстрые новости Беларуси и мира, фото и видео дня.', NULL);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (6, 'Гарри Поттер', 8.4, 1, 1, 1, 'https://hpbooks.ru/uploadedFiles/eshopimages/big/7k_QjtDkslM.jpg', 'Серия из семи романов, написанных английской писательницей Дж. К. Роулинг. Книги представляют собой хронику приключений юного волшебника Гарри Поттера, а также его друзей Рона Уизли и Гермионы Грейнджер, обучающихся в школе чародейства и волшебства Хогвартс. Основной сюжет посвящён противостоянию Гарри и тёмного волшебника по имени лорд Волан-де-Морт, в чьи цели входит обретение бессмертия и порабощение магического мира.', 7);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (7, 'Песнь льда и пламени', 12, 1, 2, 1, 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/0074/9780007477159.jpg', 'Серия эпических фэнтези-романов американского писателя и сценариста Джорджа Р. Р. Мартина. Мартин начал писать эту серию в 1991 году. Изначально задуманная как трилогия, к настоящему моменту она разрослась до пяти опубликованных томов, и ещё два находятся в проекте. Автором также написаны повести-приквелы и серия повестей, представляющих собой выдержки из основных романов серии. Одна из таких повестей, «Кровь дракона», была удостоена Премии Хьюго. Три первых романа серии были награждены премией «Локус» за лучший роман фэнтези в 1997, 1999 и 2001 годах соответственно.', 5);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (8, 'Властелин колец', 10, 1, 3, 1, 'https://ozon-st.cdn.ngenix.net/multimedia/1007185431.jpg', 'Роман-эпопея английского писателя Дж. Р. Р. Толкина, одно из самых известных произведений жанра фэнтези. «Властелин колец» был написан как единая книга, но из-за объёма при первом издании его разделили на 3 части — «Братство Кольца», «Две крепости» и «Возвращение короля». В виде трилогии он публикуется и по сей день. «Властелин колец» является одной из самых известных и популярных книг XX века. Он переведён по меньшей мере на 38 языков. Эта книга оказала огромное влияние на литературу в жанре фэнтези, на настольные и компьютерные игры, на кинематограф и вообще на мировую культуру. Именно под влиянием работ профессора Толкина появилось ролевое движение.', 3);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (9, 'Голодные игры', 5.4, 1, 4, 1, 'https://vignette.wikia.nocookie.net/thehungergames/images/1/1b/Hunger_games_trilogy.jpg/revision/latest?cb=20110529021953', 'Трилогия американской писательницы Сьюзен Коллинз. В трилогию входят романы «Голодные игры» 2008 года, «И вспыхнет пламя» 2009 года и «Сойка-пересмешница» 2010 года. За короткое время книги трилогии стали бестселлерами, первые два романа почти два года находились в списке самых продаваемых книг на территории США. Компания Lionsgate выкупила права на экранизацию всех частей трилогии, мировая премьера фильма по первому роману состоялась 12 марта 2012 года, по второму роману — 11 ноября 2013 года, а выход оставшихся (фильм по роману «Сойка-пересмешница» разделён на две части) состоялся 10 ноября 2014 года и 4 ноября 2015 года.', 3);
-INSERT INTO `periodical` (`id`, `title`, `price`, `periodicity_id`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`) VALUES (10, 'Дивергент', 6.3, 1, 5, 1, 'https://best-reviews.com/wp-content/uploads/2017/09/divergent-book-free-pdf-download.png', 'В начале XXI века антиутопия уверенно заняла место в списке популярных жанров литературы для подростков. \"Дивергент\" — очередное тому подтверждение. Вселенная романа — мир, развернувшийся на руинах бывшего Чикаго, в котором люди, пытаясь побороть пороки, приведшие их на грань гибели, образовали пять фракций — своеобразных закрытых каст: Отречение, Эрудиция, Бесстрашие, Дружелюбие и Искренность. Каждая фракция выполняет свою функцию в обществе, и всем её членам присущ общий набор черт характера. Есть также Изгои — те, кто не подошел ни к одной фракции или по тем или иным причинам выбыл из одной из них.', 3);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (1, 'Дилетант', 7.2, NULL, 3, 'http://journal-off.info/uploads/posts/2016-09/1474895768_310fd331e1dfec82589e217b7f3b9f21.jpg', 'Дилентант — это познавательный журнал, всецело посвященный истории. Наш проект создан для тех, кто любит историю и хочет знать о ней как можно больше. \nМы придумали для вас простой и понятный способ войти в мир захватывающего водоворота исторических событий. Мир истории, от древних, не знавших письменности племен, до XXI века.\nНаш журнал рассчитан на тех, кто любит историю, хочет знать о ней как можно больше, но не является профессиональным историком. Научных текстов, написанных сложным языком, вы у нас не найдете, зато найдете увлекательный исторический контент, часть которого создают сами читатели.', NULL, 2);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (2, 'Большой', 5.7, NULL, 3, 'http://jurnali-online.ru/wp-content/uploads/2013/04/1365962585_bol042013600.jpg', 'Журнал \"Большой\" ищет ответы на вопросы об устройстве общества, законах социума и мироощущении у известных режиссеров, бизнесменов, музыкантов, политологов, дизайнеров, писателей, телеведущих. Ему интересна личность и объективный взгляд на события.', NULL, 2);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (3, 'Esquire', 9, NULL, 3, 'https://s-media-cache-ak0.pinimg.com/originals/11/1f/4c/111f4cbe6338b3dfda9754a3e90d1bd2.jpg', 'Издание для тех, кого не прельщают дешевые сенсации, для тех, кто в состоянии оценить настоящий стиль в литературе и моде.', NULL, 1);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (4, 'Народная воля', 2.7, NULL, 2, 'https://nn.by/img/w924d4/photos/z_2016_07/img_20160726_131901-rytpz.jpg', 'Актуальныя падзеі і эксклюзіўная аналітыка з Беларусі. Палітыка, эканоміка, культура і адпачынак. Важныя навіны на карысць грамадству.', NULL, 8);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (5, 'Салiдарнасць', 3.6, NULL, 2, 'https://nn.by/img/w500d4/photos/z_2012_12/salidarnasc_redyzajn.jpg', 'Дайджест и самые быстрые новости Беларуси и мира, фото и видео дня.', NULL, 12);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (6, 'Гарри Поттер', 8.4, 1, 1, 'https://hpbooks.ru/uploadedFiles/eshopimages/big/7k_QjtDkslM.jpg', 'Серия из семи романов, написанных английской писательницей Дж. К. Роулинг. Книги представляют собой хронику приключений юного волшебника Гарри Поттера, а также его друзей Рона Уизли и Гермионы Грейнджер, обучающихся в школе чародейства и волшебства Хогвартс. Основной сюжет посвящён противостоянию Гарри и тёмного волшебника по имени лорд Волан-де-Морт, в чьи цели входит обретение бессмертия и порабощение магического мира.', 7, 1);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (7, 'Песнь льда и пламени', 12, 2, 1, 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/0074/9780007477159.jpg', 'Серия эпических фэнтези-романов американского писателя и сценариста Джорджа Р. Р. Мартина. Мартин начал писать эту серию в 1991 году. Изначально задуманная как трилогия, к настоящему моменту она разрослась до пяти опубликованных томов, и ещё два находятся в проекте. Автором также написаны повести-приквелы и серия повестей, представляющих собой выдержки из основных романов серии. Одна из таких повестей, «Кровь дракона», была удостоена Премии Хьюго. Три первых романа серии были награждены премией «Локус» за лучший роман фэнтези в 1997, 1999 и 2001 годах соответственно.', 5, 1);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (8, 'Властелин колец', 10, 3, 1, 'https://ozon-st.cdn.ngenix.net/multimedia/1007185431.jpg', 'Роман-эпопея английского писателя Дж. Р. Р. Толкина, одно из самых известных произведений жанра фэнтези. «Властелин колец» был написан как единая книга, но из-за объёма при первом издании его разделили на 3 части — «Братство Кольца», «Две крепости» и «Возвращение короля». В виде трилогии он публикуется и по сей день. «Властелин колец» является одной из самых известных и популярных книг XX века. Он переведён по меньшей мере на 38 языков. Эта книга оказала огромное влияние на литературу в жанре фэнтези, на настольные и компьютерные игры, на кинематограф и вообще на мировую культуру. Именно под влиянием работ профессора Толкина появилось ролевое движение.', 3, 1);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (9, 'Голодные игры', 5.4, 4, 1, 'https://vignette.wikia.nocookie.net/thehungergames/images/1/1b/Hunger_games_trilogy.jpg/revision/latest?cb=20110529021953', 'Трилогия американской писательницы Сьюзен Коллинз. В трилогию входят романы «Голодные игры» 2008 года, «И вспыхнет пламя» 2009 года и «Сойка-пересмешница» 2010 года. За короткое время книги трилогии стали бестселлерами, первые два романа почти два года находились в списке самых продаваемых книг на территории США. Компания Lionsgate выкупила права на экранизацию всех частей трилогии, мировая премьера фильма по первому роману состоялась 12 марта 2012 года, по второму роману — 11 ноября 2013 года, а выход оставшихся (фильм по роману «Сойка-пересмешница» разделён на две части) состоялся 10 ноября 2014 года и 4 ноября 2015 года.', 3, 1);
+INSERT INTO `periodical` (`id`, `title`, `price`, `author_id`, `periodical_type_id`, `coverImage`, `description`, `booksAmount`, `periodicity`) VALUES (10, 'Дивергент', 6.3, 5, 1, 'https://best-reviews.com/wp-content/uploads/2017/09/divergent-book-free-pdf-download.png', 'В начале XXI века антиутопия уверенно заняла место в списке популярных жанров литературы для подростков. \"Дивергент\" — очередное тому подтверждение. Вселенная романа — мир, развернувшийся на руинах бывшего Чикаго, в котором люди, пытаясь побороть пороки, приведшие их на грань гибели, образовали пять фракций — своеобразных закрытых каст: Отречение, Эрудиция, Бесстрашие, Дружелюбие и Искренность. Каждая фракция выполняет свою функцию в обществе, и всем её членам присущ общий набор черт характера. Есть также Изгои — те, кто не подошел ни к одной фракции или по тем или иным причинам выбыл из одной из них.', 3, 1);
 
 COMMIT;
 

@@ -68,9 +68,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserInfo(User user) throws ServiceException {
+    public boolean updateUserById(User user) throws ServiceException {
         try {
-            return userDao.updateUserInfo(user);
+            return userDao.updateUserById(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

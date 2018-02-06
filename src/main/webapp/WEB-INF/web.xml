@@ -6,10 +6,9 @@
 
     <display-name>Subscription Web Application</display-name>
 
-    <error-page>
-        <!--<location>/controller?command=error</location>-->
-        <location>/WEB-INF/jsp/error.jsp</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<location>/WEB-INF/jsp/error.jsp</location>-->
+    <!--</error-page>-->
 
     <jsp-config>
         <jsp-property-group>
