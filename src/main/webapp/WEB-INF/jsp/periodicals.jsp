@@ -24,8 +24,9 @@
 
 <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
-<div class="container ">
-    <div class="row">
+<div class="container">
+    <div class="row periodicals">
+        <input type="hidden" id="periodicalsNumber" value="${periodicalsNumber}">
         <c:forEach items="${periodicals}" var="periodical">
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <div class="panel panel-default  panel--styled">
@@ -57,7 +58,7 @@
                                     <form method="post" action="${pageContext.request.contextPath}/controller">
                                         <input type="hidden" name="command" value="add_to_cart">
                                         <input type="hidden" name="id" value="${periodical.id}">
-                                        <button class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user}">disabled</c:if>><span
+                                        <button class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user || sessionScope.user.loan < 0}">disabled</c:if>><span
                                                 class="glyphicon glyphicon-shopping-cart"></span> <fmt:message key="period.addToCart"/>
                                         </button>
                                     </form>
@@ -118,12 +119,17 @@
                                         <input type="hidden" name="id" value="${periodical.id}">
                                         <div class="space-ten"></div>
                                         <div class="btn-ground text-center">
-                                            <button type="submit" class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user}">disabled</c:if>><span
+                                            <button type="submit" class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user || sessionScope.user.loan < 0}">disabled</c:if>><span
                                                     class="glyphicon glyphicon-shopping-cart"></span> <fmt:message key="period.addToCart"/>
                                             </button>
                                             <c:if test="${empty sessionScope.user}">
                                                 <div class="alert alert-danger" role="alert">
                                                     <i class="fas fa-exclamation-circle"></i> <fmt:message key="period.loginAlert"/> <a data-dismiss="modal" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2"><fmt:message key="period.loginAlert.link"/></a>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${sessionScope.user.loan < 0}">
+                                                <div class="alert alert-danger" role="alert">
+                                                    <i class="fas fa-exclamation-circle"></i> <fmt:message key="period.creditAlert"/> <a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="period.creditAlert.link"/></a>
                                                 </div>
                                             </c:if>
                                         </div>
@@ -153,6 +159,9 @@
             </div>
         </c:forEach>
     </div>
+    <div class="row text-center">
+        <ul id="pagination" class="pagination"></ul>
+    </div>
 </div>
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp" />
@@ -163,5 +172,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.twbsPagination.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/pagination.js"></script>
 </body>
 </html>

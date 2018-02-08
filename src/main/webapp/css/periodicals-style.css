@@ -84,6 +84,10 @@ span.itemPrice {
 }
 
 .panel-heading {
-    padding: 0px;
-    border-bottom: 0px;
+    padding: 0;
+    border-bottom: 0;
+}
+
+.periodicals {
+    margin-top: 20px;
 }

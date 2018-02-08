@@ -63,7 +63,7 @@ public class SignUpCommand implements Command {
         user.setBanned(false);
         user.setRegistrationDate(Date.valueOf(LocalDate.now()));
         user.setPassword(requestContent.getRequestParameter(PASSWORD_PARAMETER));
-        user.setLoan(BigDecimal.valueOf(10));
+        user.setLoan(BigDecimal.valueOf(0));
         return user;
     }
 }

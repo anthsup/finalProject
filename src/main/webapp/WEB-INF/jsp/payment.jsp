@@ -90,12 +90,25 @@
                                     <button class="subscribe btn btn-success btn-lg btn-block" type="submit"><fmt:message key="payment.submit"/></button>
                                 </div>
                             </div>
+                        </form>
                             <div class="row" style="display:none;">
                                 <div class="col-xs-12">
                                     <p class="payment-errors"></p>
                                 </div>
                             </div>
-                        </form>
+                            <hr>
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i> <fmt:message key="payment.credit.text"/>:
+                            </div>
+                            <div class="row">
+                                <div class='col-xs-12'>
+                                    <form method="POST" action="${pageContext.request.contextPath}/controller">
+                                        <input type="hidden" name="command" value="checkout">
+                                        <input type="hidden" name="credit" value="true">
+                                        <button type="submit" class="btn btn-danger btn-block credit"><fmt:message key="payment.credit"/></button>
+                                    </form>
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <!-- CREDIT CARD FORM ENDS HERE -->

@@ -23,6 +23,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String UPDATE_BY_ID = "UPDATE user SET login = ?, email = ?, firstName = ?, lastName = ?," +
             "city = ?, address = ?, postalIndex = ?, photo = ? WHERE id = ?";
     private static final String BAN_USER = "UPDATE user SET banned = ? WHERE id = ?";
+    private static final String UPDATE_LOAN = "UPDATE user SET loan = ? WHERE id = ?";
 
     @Override
     public User findUserByLogin(String login) throws DAOException {
@@ -131,6 +132,18 @@ public class UserDAOImpl implements UserDAO {
             throw new DAOException(e);
         }
         return executed;
+    }
+
+    @Override
+    public void updateLoan(User user) throws DAOException {
+        try (PoolConnection connectionFromPool = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connectionFromPool.getConnection().prepareStatement(UPDATE_LOAN)) {
+            statement.setBigDecimal(1, user.getLoan());
+            statement.setInt(2, user.getId());
+            statement.executeUpdate();
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
     private User findUserBy(String parameter, String query) throws DAOException {

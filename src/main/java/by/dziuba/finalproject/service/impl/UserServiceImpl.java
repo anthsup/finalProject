@@ -75,4 +75,12 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    public void updateLoan(User user) throws ServiceException {
+        try {
+            userDao.updateLoan(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

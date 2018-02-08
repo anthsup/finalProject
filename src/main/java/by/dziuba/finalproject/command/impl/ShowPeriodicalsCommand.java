@@ -11,6 +11,7 @@ import by.dziuba.subscription.service.impl.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,16 +25,21 @@ public class ShowPeriodicalsCommand implements Command {
     public CommandResult execute(RequestContent requestContent) throws CommandException {
         CommandResult commandResult = new CommandResult();
         try {
-            List<Periodical> periodicals = periodicalService.getAll();
+            String pageNumber = Optional.ofNullable(requestContent.getRequestParameter("page")).orElse("1");
+            String filmsPerPage = Optional.ofNullable(requestContent.getRequestParameter("periodicalsPerPage")).orElse("8");
+
+            List<Periodical> periodicals = periodicalService.getAll(Integer.parseInt(pageNumber), Integer.parseInt(filmsPerPage));
             Map<Integer, PeriodicalType> periodicalTypes = periodicalTypeService.getAll().stream()
                     .collect(Collectors.toMap(PeriodicalType::getId, Function.identity()));;
             Map<Integer, List<Genre>> genres = genreService.getAllPeriodicalGenres();
             Map<Integer, Author> authors = authorService.getAll().stream()
                     .collect(Collectors.toMap(Author::getId, Function.identity()));
+
             commandResult.putRequestAttribute("genres", genres);
             commandResult.putRequestAttribute("authors", authors);
             commandResult.putRequestAttribute("periodicals", periodicals);
             commandResult.putRequestAttribute("periodicalTypes", periodicalTypes);
+            commandResult.putRequestAttribute("periodicalsNumber", periodicalService.getPeriodicalsNumber());
             commandResult.setPage(JspResourceManager.PERIODICALS_PAGE);
             return commandResult;
         } catch (ServiceException e) {

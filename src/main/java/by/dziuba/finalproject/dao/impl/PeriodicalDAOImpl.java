@@ -19,23 +19,20 @@ public class PeriodicalDAOImpl {
     private static final String SELECT_BY_ID = "SELECT * FROM periodical WHERE id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM periodical WHERE id = ?";
     private static final String UPDATE_BY_ID = "UPDATE periodical SET title = ?, price = ?," +
-            "periodicity_id = ?, author_id = ?, periodical_type_id = ?, coverImage = ?," +
+            "periodicity = ?, author_id = ?, periodical_type_id = ?, coverImage = ?," +
             "description = ?, booksAmount = ? WHERE id = ?";
+    private static final String SELECT_BY_AUTHOR_ID = "SELECT * FROM periodical WHERE author_id = ?";
+    private static final String INSERT_PERIODICAL = "INSERT INTO periodical (title, price, periodicity, author_id," +
+            "periodical_type_id, coverImage, description, booksAmount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SELECT_BY_TITLE = "SELECT * FROM periodical WHERE title = ?";
 
+    public List<Periodical> findAll(int pageNumber, int periodicalsPerPage) throws DAOException {
+        String selectQuery = SELECT_ALL + " LIMIT " + (pageNumber - 1) * periodicalsPerPage + ", " + periodicalsPerPage;
+        return findAll(selectQuery);
+    }
 
-    public List<Periodical> findAll() throws DAOException {
-        List<Periodical> periodicals = new ArrayList<>();
-        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_ALL)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    periodicals.add(createPeriodical(resultSet));
-                }
-            }
-        } catch (DBException | SQLException e) {
-            throw new DAOException(e);
-        }
-        return periodicals;
+    public int getPeriodicalsNumber() throws DAOException {
+        return findAll(SELECT_ALL).size();
     }
 
     public Periodical findById(int id) throws DAOException {
@@ -70,14 +67,7 @@ public class PeriodicalDAOImpl {
             statement.setString(1, periodical.getTitle());
             statement.setBigDecimal(2, periodical.getPrice());
             statement.setInt(3, periodical.getPeriodicity());
-            if (periodical.getAuthorId() == 0) {
-
-                statement.setNull(4, NULL);
-                statement.setNull(8, NULL);
-            } else {
-                statement.setInt(4, periodical.getAuthorId());
-                statement.setInt(8, periodical.getBooksAmount());
-            }
+            setBookSeriesData(statement, periodical);
             statement.setInt(5, periodical.getTypeId());
             statement.setString(6, periodical.getCoverImage());
             statement.setString(7, periodical.getDescription());
@@ -86,6 +76,79 @@ public class PeriodicalDAOImpl {
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    public void insertPeriodical(Periodical periodical) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(INSERT_PERIODICAL)) {
+            statement.setString(1, periodical.getTitle());
+            statement.setBigDecimal(2, periodical.getPrice());
+            statement.setInt(3, periodical.getPeriodicity());
+            setBookSeriesData(statement, periodical);
+            statement.setInt(5, periodical.getTypeId());
+            statement.setString(6, periodical.getCoverImage());
+            statement.setString(7, periodical.getDescription());
+            statement.executeUpdate();
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    public List<Periodical> findByAuthorId(int authorId) throws DAOException {
+        List<Periodical> periodicals = new ArrayList<>();
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_BY_AUTHOR_ID)) {
+            statement.setInt(1, authorId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    periodicals.add(createPeriodical(resultSet));
+                }
+            }
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+        return periodicals;
+    }
+
+    public Periodical findByTitle(String periodicalTitle) throws DAOException {
+        Periodical periodical = null;
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_BY_TITLE)) {
+            statement.setString(1, periodicalTitle);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    periodical = createPeriodical(resultSet);
+                }
+            }
+            return periodical;
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    private void setBookSeriesData(PreparedStatement statement, Periodical periodical) throws SQLException {
+            if (periodical.getAuthorId() == 0) {
+                statement.setNull(4, NULL);
+                statement.setNull(8, NULL);
+            } else {
+                statement.setInt(4, periodical.getAuthorId());
+                statement.setInt(8, periodical.getBooksAmount());
+            }
+    }
+
+    private List<Periodical> findAll(String selectQuery) throws DAOException {
+        List<Periodical> periodicals = new ArrayList<>();
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(selectQuery)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    periodicals.add(createPeriodical(resultSet));
+                }
+            }
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+        return periodicals;
     }
 
     private Periodical createPeriodical(ResultSet resultSet) throws SQLException {

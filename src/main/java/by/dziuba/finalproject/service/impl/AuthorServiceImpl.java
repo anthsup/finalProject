@@ -26,4 +26,20 @@ public class AuthorServiceImpl {
             throw new ServiceException(e);
         }
     }
+
+    public void addAuthor(String authorName) throws ServiceException {
+        try {
+            authorDao.insertAuthor(authorName);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void deleteById(int authorId) throws ServiceException {
+        try {
+            authorDao.deleteById(authorId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

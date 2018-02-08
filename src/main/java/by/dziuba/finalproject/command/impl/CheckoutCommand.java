@@ -8,8 +8,10 @@ import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.entity.Periodical;
 import by.dziuba.subscription.entity.Subscription;
 import by.dziuba.subscription.entity.User;
+import by.dziuba.subscription.service.UserService;
 import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.SubscriptionServiceImpl;
+import by.dziuba.subscription.service.impl.UserServiceImpl;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -18,6 +20,7 @@ import java.util.*;
 
 public class CheckoutCommand implements Command {
     private static final SubscriptionServiceImpl subscriptionService = new SubscriptionServiceImpl();
+    private static final UserService userService = new UserServiceImpl();
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
@@ -25,6 +28,11 @@ public class CheckoutCommand implements Command {
             CommandResult commandResult = new CommandResult();
             List<Subscription> subscriptions = createSubscriptionList(requestContent);
             subscriptionService.addSubscription(subscriptions);
+            if (requestContent.getRequestParameter("credit").equals("true")) {
+                User user = (User) requestContent.getSessionAttribute("user");
+                user.setLoan(user.getLoan().subtract((BigDecimal) requestContent.getSessionAttribute("totalPrice")));
+                userService.updateLoan(user);
+            }
             // TODO SET SUCCESS PAGE
             // TODO check for success and set error if somethings's up
             commandResult.putSessionAttribute("cart_products", new LinkedHashSet<Periodical>());

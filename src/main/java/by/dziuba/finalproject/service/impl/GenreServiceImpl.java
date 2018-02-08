@@ -35,7 +35,7 @@ public class GenreServiceImpl {
         }
     }
 
-    public void insertPeriodicalGenres(int periodicalId, List<Genre> periodicalGenres) throws ServiceException {
+    public void addPeriodicalGenres(int periodicalId, List<Genre> periodicalGenres) throws ServiceException {
         try {
             genreDao.insertPeriodicalGenres(periodicalId, periodicalGenres);
         } catch (DAOException e) {
@@ -46,6 +46,30 @@ public class GenreServiceImpl {
     public List<Genre> getByPeriodicalId(int periodicalId) throws ServiceException {
         try {
             return genreDao.findByPeriodicalId(periodicalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void addGenre(String genreName) throws ServiceException {
+        try {
+            genreDao.insertGenre(genreName);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void deleteGenre(String genreName) throws ServiceException {
+        try {
+            genreDao.deleteGenre(genreName);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public Map<Genre, Integer> getByGenreName(String genreName) throws ServiceException {
+        try {
+            return genreDao.findByGenreName(genreName);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

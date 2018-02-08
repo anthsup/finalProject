@@ -21,6 +21,9 @@ public class GenreDAOImpl {
     private static final String SELECT_ALL = "SELECT * FROM genre";
     private static final String INSERT_PERIODICAL_GENRES = "INSERT INTO periodical_genre" +
             "(periodical_id, genre_name) VALUES (?, ?)";
+    private static final String INSERT_GENRE = "INSERT into genre (genre_name) VALUES (?)";
+    private static final String DELETE_GENRE = "DELETE FROM genre WHERE genre_name = ?";
+    private static final String SELECT_BY_GENRE_NAME = "SELECT * FROM periodical_genre WHERE genre_name = ?";
 
     public Map<Integer, List<Genre>> findAllPeriodicalGenres() throws DAOException {
         Map<Integer, List<Genre>> genresMap = new HashMap<>();
@@ -82,6 +85,26 @@ public class GenreDAOImpl {
         }
     }
 
+    public void insertGenre(String genreName) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(INSERT_GENRE)) {
+            statement.setString(1, genreName);
+            statement.executeUpdate();
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    public void deleteGenre(String genreName) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(DELETE_GENRE)) {
+            statement.setString(1, genreName);
+            statement.execute();
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
     public List<Genre> findByPeriodicalId(int periodicalId) throws DAOException {
         List<Genre> genres = new ArrayList<>();
         try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
@@ -96,6 +119,22 @@ public class GenreDAOImpl {
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    public Map<Genre, Integer> findByGenreName(String genreName) throws DAOException {
+        Map<Genre, Integer> genresMap = new HashMap<>();
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_BY_GENRE_NAME)) {
+            statement.setString(1, genreName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    genresMap.put(createGenre(resultSet), resultSet.getInt("periodical_id"));
+                }
+            }
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+        return genresMap;
     }
 
     private Genre createGenre(ResultSet selected) throws SQLException {

@@ -4,23 +4,20 @@ import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.exception.BadRequestException;
 import by.dziuba.subscription.command.exception.CommandException;
 import by.dziuba.subscription.command.util.CommandResult;
-import by.dziuba.subscription.command.util.JspResourceManager;
 import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.AuthorServiceImpl;
-import by.dziuba.subscription.service.impl.GenreServiceImpl;
 
-public class ShowAdminPanelCommand implements Command {
-    private static final GenreServiceImpl genreService = new GenreServiceImpl();
+public class AddAuthorCommand implements Command {
     private static final AuthorServiceImpl authorService = new AuthorServiceImpl();
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException, BadRequestException {
         try {
             CommandResult commandResult = new CommandResult();
-            commandResult.putRequestAttribute("genres", genreService.getAll());
-            commandResult.putRequestAttribute("authors", authorService.getAll());
-            commandResult.setPage(JspResourceManager.ADMIN_PANEL_PAGE);
+            authorService.addAuthor(requestContent.getRequestParameter("author"));
+            commandResult.setPage(requestContent.getReferer());
+            commandResult.setRedirected(true);
             return commandResult;
         } catch (ServiceException e) {
             throw new CommandException(e);

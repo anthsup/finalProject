@@ -9,7 +9,7 @@
 
 <html lang="${locale}">
 <head>
-    <title>Edit Periodical</title>
+    <title><fmt:message key="period.addPeriodical"/></title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -21,14 +21,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 ">
-            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=edit_periodical">
-                <input type="hidden" name="id" value="${periodical.id}"/>
+            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=add_periodical">
                 <fieldset>
-                    <legend>Edit Periodical</legend>
+                    <legend><fmt:message key="period.addPeriodical"/></legend>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="title"><fmt:message key="period.title"/></label>
                         <div class="col-md-4">
-                            <input id="title" name="title" type="text" placeholder="<fmt:message key="period.title"/>" class="form-control" value="${periodical.title}">
+                            <input id="title" name="title" type="text" placeholder="<fmt:message key="period.title"/>" class="form-control">
                         </div>
                     </div>
 
@@ -37,7 +36,7 @@
                         <div class="col-md-4">
                             <select id="type" name="type" data-style="btn-primary" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.type"/>">
                                 <c:forEach items="${periodicalTypes}" var="periodicalType">
-                                    <option <c:if test="${periodicalType.id eq periodical.typeId}">selected</c:if> value="${periodicalType.id}">${periodicalType.name}</option>
+                                    <option value="${periodicalType.id}">${periodicalType.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -47,14 +46,14 @@
                         <label class="col-md-4 control-label" for="coverImage"><fmt:message key="period.image"/></label>
                         <div class="col-md-4">
                             <input id="coverImage" name="coverImage" class="form-control" type="url" placeholder="<fmt:message key="period.image"/> URL"
-                                   pattern="^(https|http).+(jpg|svg|gif|png)$" value="${periodical.coverImage}">
+                                   pattern="^(https|http).+(jpg|svg|gif|png)$">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="periodicity"><fmt:message key="period.periodicity"/></label>
                         <div class="col-md-4">
-                            <input id="periodicity" name="periodicity" type="number" placeholder="<fmt:message key="period.periodicity"/>" class="form-control input-md" min="1" max="30" value="${periodical.periodicity}">
+                            <input id="periodicity" name="periodicity" type="number" placeholder="<fmt:message key="period.periodicity"/>" class="form-control input-md" min="1" max="30">
                         </div>
                     </div>
 
@@ -68,9 +67,9 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label col-xs-12" for="genres"><fmt:message key="period.genres"/></label>
                         <div class="col-md-4">
-                            <select id="genres" name="genres" data-style="btn-info" class="selectpicker form-control input-md" multiple data-max-options="5" data-actions-box="true" data-live-search="true" title="<fmt:message key="period.genres"/>" data-size="5">
+                            <select id="genres" name="genres" data-style="btn-info" class="selectpicker form-control input-md" multiple data-max-options="5" data-live-search="true" title="<fmt:message key="period.genres"/>" data-size="5">
                                 <c:forEach items="${genres}" var="genre">
-                                    <option <c:if test="${periodicalGenres.contains(genre) eq true}">selected</c:if>>${genre.name}</option>
+                                    <option>${genre.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -80,18 +79,20 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label col-xs-12" for="author"><fmt:message key="period.author"/></label>
                             <div class="col-md-4">
-                                <select id="author" name="author" data-style="btn-danger" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.author"/>">
+                                <select id="author" name="author" data-style="btn-danger" data-actions-box="true" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.author"/>">
                                     <c:forEach items="${authors}" var="author">
-                                        <option <c:if test="${author.id eq periodical.authorId}">selected</c:if> value="${author.id}">${author.fullName}</option>
+                                        <option value="${author.id}">${author.fullName}</option>
                                     </c:forEach>
                                 </select>
+                                <p class="help-block"><fmt:message key="period.help"/></p>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="books"><fmt:message key="period.books"/></label>
                             <div class="col-md-4">
-                                <input id="books" name="books" type="number" placeholder="<fmt:message key="period.books"/>" class="form-control input-md" min="0" value="${periodical.booksAmount}">
+                                <input id="books" name="books" type="number" placeholder="<fmt:message key="period.books"/>" class="form-control input-md" min="1">
+                                <p class="help-block"><fmt:message key="period.help"/></p>
                             </div>
                         </div>
                     </c:if>
@@ -99,14 +100,14 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="Description"><fmt:message key="period.description"/></label>
                         <div class="col-md-4">
-                            <textarea id="description" name="description" placeholder="<fmt:message key="period.description"/>" class="form-control input-md" rows="5">${periodical.description}</textarea>
+                            <textarea id="description" name="description" placeholder="<fmt:message key="period.description"/>" class="form-control input-md" rows="5"></textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" ></label>
                         <div class="col-md-4">
-                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> <fmt:message key="edit.submit"/></button>
+                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> <fmt:message key="period.add"/></button>
                         </div>
                     </div>
                 </fieldset>

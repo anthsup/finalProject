@@ -26,7 +26,7 @@ public class EditPeriodicalCommand implements Command {
             CommandResult commandResult = new CommandResult();
             int periodicalId = Integer.parseInt(requestContent.getRequestParameter("id"));
             genreService.deleteByPeriodicalId(periodicalId);
-            genreService.insertPeriodicalGenres(periodicalId, createGenresList(requestContent));
+            genreService.addPeriodicalGenres(periodicalId, createGenresList(requestContent));
             periodicalService.updateById(setUpdatedPeriodicalData(requestContent, periodicalId));
             commandResult.setPage(JspResourceManager.PERIODICALS_PAGE_COMMAND);
             commandResult.setRedirected(true);

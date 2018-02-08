@@ -40,6 +40,7 @@ public class DeleteFromCartCommand implements Command {
         Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute("quantities");
         int quantity = quantities.get(periodical.getId());
         totalPrice = totalPrice.subtract(periodical.getPrice().multiply(BigDecimal.valueOf(quantity)));
+        quantities.remove(periodical.getId());
         return totalPrice;
     }
 }

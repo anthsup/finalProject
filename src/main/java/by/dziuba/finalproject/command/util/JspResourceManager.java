@@ -13,8 +13,10 @@ public final class JspResourceManager {
     public static final String ERROR_PAGE = "/WEB-INF/jsp/error.jsp";
     public static final String EDIT_PERIODICAL_PAGE = "/WEB-INF/jsp/edit-periodical.jsp";
     public static final String ADMIN_PANEL_PAGE = "/WEB-INF/jsp/admin-panel.jsp";
+    public static final String PERIODICAL_ADD_PAGE = "/WEB-INF/jsp/add-periodical.jsp";
 
     public static final String PERIODICALS_PAGE_COMMAND = "/controller?command=periodicals";
+    public static final String ADMIN_PANEL_PAGE_COMMAND = "/controller?command=admin_panel";
     public static final String CART_PAGE_COMMAND = "/controller?command=cart";
     public static final String PROFILE_EDIT_COMMAND = "/controller?command=profile_edit";
     public static final String PROFILE_PAGE_COMMAND = "/controller?command=profile";

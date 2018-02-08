@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart-style.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
 
@@ -56,7 +56,7 @@
                     <form method="post" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="command" value="delete_from_cart">
                         <input type="hidden" name="id" value="${product.id}"/>
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </form>
                 </td>
             </tr>
@@ -67,7 +67,7 @@
             <td><a href="${pageContext.request.contextPath}/controller?command=periodicals" class="btn btn-warning"><i class="fa fa-angle-left"></i> <fmt:message key="cart.continue"/></a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong id="total" class="total">${sessionScope.totalPrice} <fmt:message key="currency.value"/></strong></td>
-            <td><a class="btn btn-success btn-block" data-toggle="modal" data-keyboard="true" data-target="#payment"><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
+            <td><a class="btn btn-success btn-block" data-toggle="modal" data-keyboard="true" data-target="#payment" <c:if test="${empty sessionScope.cart_products}">disabled</c:if>><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
         </tr>
         </tfoot>
     </table>

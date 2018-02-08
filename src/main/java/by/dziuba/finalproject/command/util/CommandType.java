@@ -25,7 +25,13 @@ public enum CommandType {
     DELETE_PERIODICAL(new DeletePeriodicalCommand()),
     PERIODICAL_EDIT(new ShowPeriodicalEditCommand()),
     EDIT_PERIODICAL(new EditPeriodicalCommand()),
-    ADMIN_PANEL(new ShowAdminPanelCommand());
+    ADMIN_PANEL(new ShowAdminPanelCommand()),
+    ADD_GENRE(new AddGenreCommand()),
+    ADD_AUTHOR(new AddAuthorCommand()),
+    DELETE_AUTHORS(new DeleteAuthorsCommand()),
+    DELETE_GENRES(new DeleteGenresCommand()),
+    PERIODICAL_ADD(new ShowPeriodicalAddCommand()),
+    ADD_PERIODICAL(new AddPeriodicalCommand());
 
     private Command command;
 

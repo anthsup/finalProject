@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `registrationDate` DATE NOT NULL COMMENT 'Время регистрации пользователя в системе (понадобится в дальнейшем для генерации токена авторизации).',
   `firstName` VARCHAR(35) NOT NULL COMMENT 'Имя пользователя.',
   `lastName` VARCHAR(35) NOT NULL COMMENT 'Фамилия пользователя.',
-  `balance` DECIMAL(10,2) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Баланс пользователя. Беззнаковый тип, баланс не может быть минусовым. Для удобства дефолтное значение — ноль.',
   `login` VARCHAR(32) NOT NULL,
   `banned` TINYINT(1) NOT NULL DEFAULT 0,
   `city` VARCHAR(45) NOT NULL,
@@ -78,8 +77,9 @@ DROP TABLE IF EXISTS `author` ;
 
 CREATE TABLE IF NOT EXISTS `author` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fullName` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
+  `fullName` VARCHAR(99) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `fullName_UNIQUE` (`fullName` ASC))
 ENGINE = InnoDB;
 
 

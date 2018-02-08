@@ -16,6 +16,8 @@ import java.util.Map;
 public class AuthorDAOImpl {
     private static final String SELECT_ALL = "SELECT * FROM author";
     private static final String SELECT_BY_ID = "SELECT * FROM author WHERE id = ?";
+    private static final String INSERT_AUTHOR = "INSERT INTO author (fullName) VALUES (?)";
+    private static final String DELETE_BY_ID = "DELETE FROM author WHERE id = ?";
 
     public List<Author> findAll() throws DAOException {
         List<Author> authorsMap = new ArrayList<>();
@@ -43,6 +45,26 @@ public class AuthorDAOImpl {
                 }
             }
             return author;
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    public void insertAuthor(String authorName) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(INSERT_AUTHOR)) {
+            statement.setString(1, authorName);
+            statement.executeUpdate();
+        } catch (DBException | SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    public void deleteById(int authorId) throws DAOException {
+        try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = poolConnection.getConnection().prepareStatement(DELETE_BY_ID)) {
+            statement.setInt(1, authorId);
+            statement.execute();
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
