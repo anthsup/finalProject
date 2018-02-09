@@ -26,9 +26,9 @@ public class ShowPeriodicalsCommand implements Command {
         CommandResult commandResult = new CommandResult();
         try {
             String pageNumber = Optional.ofNullable(requestContent.getRequestParameter("page")).orElse("1");
-            String filmsPerPage = Optional.ofNullable(requestContent.getRequestParameter("periodicalsPerPage")).orElse("8");
+            String periodicalsPerPage = Optional.ofNullable(requestContent.getRequestParameter("periodicalsPerPage")).orElse("8");
 
-            List<Periodical> periodicals = periodicalService.getAll(Integer.parseInt(pageNumber), Integer.parseInt(filmsPerPage));
+            List<Periodical> periodicals = periodicalService.getAll(Integer.parseInt(pageNumber), Integer.parseInt(periodicalsPerPage));
             Map<Integer, PeriodicalType> periodicalTypes = periodicalTypeService.getAll().stream()
                     .collect(Collectors.toMap(PeriodicalType::getId, Function.identity()));;
             Map<Integer, List<Genre>> genres = genreService.getAllPeriodicalGenres();

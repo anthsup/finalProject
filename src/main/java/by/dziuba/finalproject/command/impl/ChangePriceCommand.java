@@ -31,7 +31,7 @@ public class ChangePriceCommand implements Command {
     private BigDecimal calculateTotalPrice(RequestContent requestContent, Integer id, int quantity,
                                            Map<Integer, Integer> quantities) throws CommandException {
         try {
-            BigDecimal price = periodicalService.getById(id).getPrice();
+            BigDecimal price = periodicalService.getByPeriodicalId(id).getPrice();
             BigDecimal oldSubtotal = price.multiply(new BigDecimal(quantity));
             BigDecimal newSubtotal = price.multiply(new BigDecimal(quantities.get(id)));
             BigDecimal total = (BigDecimal)requestContent.getSessionAttribute("totalPrice");

@@ -5,12 +5,11 @@ import by.dziuba.subscription.command.exception.BadRequestException;
 import by.dziuba.subscription.command.exception.CommandException;
 import by.dziuba.subscription.command.util.CommandResult;
 import by.dziuba.subscription.command.util.RequestContent;
-import by.dziuba.subscription.entity.Genre;
 import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.GenreServiceImpl;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 
-import java.util.Map;
+import java.util.List;
 
 public class DeleteGenresCommand implements Command {
     private static final GenreServiceImpl genreService = new GenreServiceImpl();
@@ -21,11 +20,11 @@ public class DeleteGenresCommand implements Command {
         try {
             CommandResult commandResult = new CommandResult();
             for (String genreName : requestContent.getRequestParameterValues("genres")) {
-                Map<Genre, Integer> genreMap = genreService.getByGenreName(genreName);
-                if (!genreMap.isEmpty()) {
+                List<Integer> periodicalIds = genreService.getPeriodicalsByGenreName(genreName);
+                if (!periodicalIds.isEmpty()) {
                     commandResult.setErrorCode(400);
                     commandResult.setErrorMessage("Cannot delete " + genreName + ": it's being referenced by " +
-                            periodicalService.getById(genreMap.get(new Genre(genreName))).getTitle());
+                            periodicalService.getByPeriodicalId(periodicalIds.get(0)).getTitle());
                     break;
                 } else {
                     genreService.deleteGenre(genreName);

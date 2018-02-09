@@ -67,9 +67,9 @@ public class GenreServiceImpl {
         }
     }
 
-    public Map<Genre, Integer> getByGenreName(String genreName) throws ServiceException {
+    public List<Integer> getPeriodicalsByGenreName(String genreName) throws ServiceException {
         try {
-            return genreDao.findByGenreName(genreName);
+            return genreDao.findPeriodicalsByGenreName(genreName);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -31,7 +31,9 @@ public enum CommandType {
     DELETE_AUTHORS(new DeleteAuthorsCommand()),
     DELETE_GENRES(new DeleteGenresCommand()),
     PERIODICAL_ADD(new ShowPeriodicalAddCommand()),
-    ADD_PERIODICAL(new AddPeriodicalCommand());
+    ADD_PERIODICAL(new AddPeriodicalCommand()),
+    PAY_LOAN(new PayLoanCommand()),
+    SEARCH_PERIODICALS(new SearchPeriodicalsCommand());
 
     private Command command;
 

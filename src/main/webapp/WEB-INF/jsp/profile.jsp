@@ -12,7 +12,7 @@
 <head>
     <title>User profile</title>
     <%--Bootstrap core CSS--%>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile-style.css">
 </head>
@@ -63,10 +63,10 @@
                             <c:if test="${user.loan < 0 && sessionScope.user eq user}">
                                 <tr class="bg-danger">
                                     <td><fmt:message key="user.loan"/>:</td>
-                                    <td>${user.loan}</td>
+                                    <td>${user.loan} <fmt:message key="currency.value"/></td>
                                 </tr>
                                 <div class="alert alert-danger" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> <fmt:message key="period.creditAlert"/> <a data-toggle="modal" data-target="#payment"><fmt:message key="period.creditAlert.link"/></a>
+                                    <i class="fas fa-exclamation"></i> <fmt:message key="period.creditAlert"/> <a data-toggle="modal" data-target="#payment"><fmt:message key="period.creditAlert.link"/></a>
                                 </div>
                             </c:if>
                             </tbody>
@@ -154,9 +154,10 @@
 
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/payment.js"></script>
 </body>
 </html>

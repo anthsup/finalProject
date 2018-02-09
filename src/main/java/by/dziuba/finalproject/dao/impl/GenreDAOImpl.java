@@ -121,20 +121,20 @@ public class GenreDAOImpl {
         }
     }
 
-    public Map<Genre, Integer> findByGenreName(String genreName) throws DAOException {
-        Map<Genre, Integer> genresMap = new HashMap<>();
+    public List<Integer> findPeriodicalsByGenreName(String genreName) throws DAOException {
+        List<Integer> periodicalIds = new ArrayList<>();
         try (DBConnectionPool.PoolConnection poolConnection = DBConnectionPool.getInstance().getConnection();
              PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_BY_GENRE_NAME)) {
             statement.setString(1, genreName);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    genresMap.put(createGenre(resultSet), resultSet.getInt("periodical_id"));
+                    periodicalIds.add(resultSet.getInt("periodical_id"));
                 }
             }
         } catch (DBException | SQLException e) {
             throw new DAOException(e);
         }
-        return genresMap;
+        return periodicalIds;
     }
 
     private Genre createGenre(ResultSet selected) throws SQLException {

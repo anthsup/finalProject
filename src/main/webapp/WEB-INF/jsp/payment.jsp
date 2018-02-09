@@ -27,7 +27,14 @@
                     </div>
                     <div class="panel-body">
                         <form role="form" id="payment-form" method="POST" action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="checkout"/>
+                            <c:choose>
+                                <c:when test="${sessionScope.user.loan >= 0}">
+                                    <input type="hidden" name="command" value="checkout"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="hidden" name="command" value="pay_loan"/>
+                                </c:otherwise>
+                            </c:choose>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
@@ -81,13 +88,20 @@
                                 <div class='col-xs-12'>
                                     <div class='form-control total btn btn-info'>
                                         <fmt:message key="payment.total"/>:
-                                        <span class='amount'>${sessionScope.totalPrice} <fmt:message key="currency.value"/></span>
+                                        <span class='amount'><c:choose>
+                                            <c:when test="${sessionScope.user.loan >= 0}">
+                                                ${sessionScope.totalPrice}
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${-sessionScope.user.loan}
+                                            </c:otherwise>
+                                        </c:choose> <fmt:message key="currency.value"/></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button class="subscribe btn btn-success btn-lg btn-block" type="submit"><fmt:message key="payment.submit"/></button>
+                                    <button class="subscribe btn btn-success btn-lg btn-block" type="submit"><fmt:message key="edit.submit"/></button>
                                 </div>
                             </div>
                         </form>
@@ -97,6 +111,7 @@
                                 </div>
                             </div>
                             <hr>
+                        <c:if test="${sessionScope.user.loan >= 0}">
                             <div class="alert alert-warning" role="alert">
                                 <i class="fas fa-exclamation-triangle"></i> <fmt:message key="payment.credit.text"/>:
                             </div>
@@ -109,6 +124,7 @@
                                     </form>
                                 </div>
                             </div>
+                        </c:if>
                     </div>
                 </div>
                 <!-- CREDIT CARD FORM ENDS HERE -->
@@ -118,6 +134,9 @@
 </div>
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

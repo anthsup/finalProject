@@ -11,9 +11,6 @@ import by.dziuba.subscription.service.exception.ServiceException;
 import by.dziuba.subscription.service.impl.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ShowPeriodicalEditCommand implements Command {
     private static final PeriodicalServiceImpl periodicalService = new PeriodicalServiceImpl();
@@ -26,7 +23,7 @@ public class ShowPeriodicalEditCommand implements Command {
         try {
             CommandResult commandResult = new CommandResult();
 
-            Periodical periodical = periodicalService.getById(Integer.parseInt(requestContent.getRequestParameter("id")));
+            Periodical periodical = periodicalService.getByPeriodicalId(Integer.parseInt(requestContent.getRequestParameter("id")));
             List<PeriodicalType> periodicalTypes = periodicalTypeService.getAll();
             List<Genre> periodicalGenres = genreService.getByPeriodicalId(periodical.getId());
             List<Genre> genres = genreService.getAll();

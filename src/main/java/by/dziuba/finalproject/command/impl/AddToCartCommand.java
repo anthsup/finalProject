@@ -19,7 +19,7 @@ public class AddToCartCommand implements Command {
     public CommandResult execute(RequestContent requestContent) throws CommandException {
         try {
             CommandResult commandResult = new CommandResult();
-            Periodical periodical = periodicalService.getById(Integer.parseInt(requestContent.getRequestParameter("id")));
+            Periodical periodical = periodicalService.getByPeriodicalId(Integer.parseInt(requestContent.getRequestParameter("id")));
             Map<Integer, Integer> quantities = defineQuantities(requestContent, periodical.getId());
 
             Set<Periodical> cartPeriodicals = new LinkedHashSet<>();

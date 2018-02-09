@@ -38,7 +38,6 @@
                         <div class="col-sm-2 hidden-xs"><img src="${product.coverImage}" class="img-responsive"/></div>
                         <div class="col-sm-10">
                             <h4 class="nomargin">${product.title}</h4>
-                                <%--<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>--%>
                         </div>
                     </div>
                 </td>

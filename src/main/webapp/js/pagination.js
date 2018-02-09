@@ -1,8 +1,7 @@
 function changePage(page, periodicalsPerPage) {
     var pageNumber = page || 1;
-    // var periodicalsPerPage = 8;
-
-    var command = 'controller?command=periodicals';
+    var command = $('#searchCommand').val() === "" ?
+        'controller?command=periodicals' : $('#searchCommand').val();
 
     $.ajax({
         type: 'GET',
@@ -20,7 +19,6 @@ $(document).ready(function () {
     var periodicalsPerPage = 8;
 
     var records = $('#periodicalsNumber').val();
-    // periodicalsPerPage = $(this).val();
     var pages = Math.ceil(records / periodicalsPerPage);
     $('#pagination').twbsPagination('destroy');
     $('#pagination').twbsPagination({

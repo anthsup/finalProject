@@ -26,6 +26,7 @@
 
 <div class="container">
     <div class="row periodicals">
+        <input type="hidden" name="command" id="searchCommand" value="${searchCommand}">
         <input type="hidden" id="periodicalsNumber" value="${periodicalsNumber}">
         <c:forEach items="${periodicals}" var="periodical">
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
@@ -49,7 +50,7 @@
                         </div>
 
                         <div class="row text-center">
-                            <p><fmt:message key="period.type"/>: ${(periodicalTypes[periodical.typeId]).name}</p>
+                            <p><fmt:message key="period.type"/>: <a href="${pageContext.request.contextPath}/controller?command=search_periodicals&periodicalType=${periodical.typeId}">${(periodicalTypes[periodical.typeId]).name}</a></p>
                         </div>
 
                         <div class="row">
@@ -98,19 +99,19 @@
                                          class="img-responsive" id="img-custom">
                                 </div>
                                 <div class="col-md-6 product_content">
-                                    <h4><fmt:message key="period.periodicity"/>: <span>${periodical.periodicity} <fmt:message key="period.times"/></span></h4>
+                                    <h4><fmt:message key="period.periodicity"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search_periodicals&periodicity=${periodical.periodicity}">${periodical.periodicity}</a> <fmt:message key="period.times"/></span></h4>
 
-                                    <h4><fmt:message key="period.type"/>: <span>${(periodicalTypes[periodical.typeId]).name}</span></h4>
+                                    <h4><fmt:message key="period.type"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search_periodicals&periodicalType=${periodical.typeId}">${(periodicalTypes[periodical.typeId]).name}</a></span></h4>
 
                                     <p>${periodical.description}</p>
 
                                     <c:if test="${periodical.authorId ne 0}">
-                                        <h4><fmt:message key="period.author"/>: <span>${authors[periodical.authorId].fullName}</span></h4>
+                                        <h4><fmt:message key="period.author"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search_periodicals&author=${periodical.authorId}">${authors[periodical.authorId].fullName}</a></span></h4>
                                         <h4><fmt:message key="period.books"/>: <span>${periodical.booksAmount}</span></h4>
                                     </c:if>
 
                                     <h4><fmt:message key="period.genres"/>: <span><c:forEach items="${genres[periodical.id]}" var="genre">
-                                        ${genre.name}
+                                        <a href="${pageContext.request.contextPath}/controller?command=search_periodicals&genre=${genre.name}">${genre.name}</a>
                                     </c:forEach></span></h4>
 
                                     <h3 class="cost">${periodical.price} <fmt:message key="currency.value"/></h3>

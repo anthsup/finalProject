@@ -26,9 +26,9 @@ public class PeriodicalServiceImpl {
         }
     }
 
-    public Periodical getById(int id) throws ServiceException {
+    public Periodical getByPeriodicalId(int id) throws ServiceException {
         try {
-            return periodicalDAO.findById(id);
+            return periodicalDAO.findByPeriodicalId(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -58,6 +58,14 @@ public class PeriodicalServiceImpl {
         }
     }
 
+    public List<Periodical> getByAuthorId(int authorId, int pageNumber, int periodicalsPerPage) throws ServiceException {
+        try {
+            return periodicalDAO.findByAuthorId(authorId, pageNumber, periodicalsPerPage);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public void addPeriodical(Periodical periodical) throws ServiceException {
         try {
             periodicalDAO.insertPeriodical(periodical);
@@ -69,6 +77,22 @@ public class PeriodicalServiceImpl {
     public Periodical getByTitle(String periodicalTitle) throws ServiceException {
         try {
             return periodicalDAO.findByTitle(periodicalTitle);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Periodical> getByPeriodicalType(int periodicalTypeId, int pageNumber, int periodicalsPerPage) throws ServiceException {
+        try {
+            return periodicalDAO.findByPeriodicalType(periodicalTypeId, pageNumber, periodicalsPerPage);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Periodical> getByPeriodicity(int periodicity, int pageNumber, int periodicalsPerPage) throws ServiceException {
+        try {
+            return periodicalDAO.findByPeriodicity(periodicity, pageNumber, periodicalsPerPage);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

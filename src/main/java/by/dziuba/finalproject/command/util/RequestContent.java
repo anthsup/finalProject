@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestContent {
-    private String requestURI;
+    private String requestURL;
     private String referer;
     private Map<String, String[]> requestParameters;
     private Map<String, Object> sessionAttributes;
@@ -16,7 +16,8 @@ public class RequestContent {
     public RequestContent(HttpServletRequest req) {
         sessionAttributes = new HashMap<>();
         requestParameters = new HashMap<>(req.getParameterMap());
-        requestURI = req.getRequestURI();
+        requestURL = req.getRequestURL().append("?").append(req.getQueryString()).toString();
+
         referer = req.getHeader("Referer");
         HttpSession currentSession = req.getSession(false);
         if (currentSession != null) {
@@ -40,8 +41,8 @@ public class RequestContent {
         return sessionAttributes.get(attribute);
     }
 
-    public String getRequestURI() {
-        return requestURI;
+    public String getRequestURL() {
+        return requestURL;
     }
 
     public Map<String, String[]> getRequestParameters() {

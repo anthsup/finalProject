@@ -39,7 +39,7 @@ public class ShowProfileCommand implements Command {
             List<Subscription> userSubscriptions = subscriptionService.getSubscriptionByUserId(userId);
             Map<Integer, Periodical> userPeriodicals = new HashMap<>();
             for (Subscription subscription : userSubscriptions) {
-                userPeriodicals.put(subscription.getPeriodicalId(), periodicalService.getById(subscription.getPeriodicalId()));
+                userPeriodicals.put(subscription.getPeriodicalId(), periodicalService.getByPeriodicalId(subscription.getPeriodicalId()));
             }
             commandResult.putRequestAttribute("user", user);
             commandResult.putRequestAttribute("subscriptions", userSubscriptions);

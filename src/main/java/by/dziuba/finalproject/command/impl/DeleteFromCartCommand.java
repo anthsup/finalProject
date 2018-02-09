@@ -3,7 +3,6 @@ package by.dziuba.subscription.command.impl;
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.exception.CommandException;
 import by.dziuba.subscription.command.util.CommandResult;
-import by.dziuba.subscription.command.util.JspResourceManager;
 import by.dziuba.subscription.command.util.RequestContent;
 import by.dziuba.subscription.entity.Periodical;
 import by.dziuba.subscription.service.exception.ServiceException;
@@ -21,7 +20,7 @@ public class DeleteFromCartCommand implements Command {
         //TODO error when cart is empty and delete pressed?
         try {
             CommandResult commandResult = new CommandResult();
-            Periodical periodical = periodicalService.getById(Integer.parseInt(requestContent.getRequestParameter("id")));
+            Periodical periodical = periodicalService.getByPeriodicalId(Integer.parseInt(requestContent.getRequestParameter("id")));
             Set<Periodical> periodicals = (Set<Periodical>)requestContent.getSessionAttribute("cart_products");
             periodicals.remove(periodical);
             BigDecimal totalPrice = calculateTotalPrice(requestContent, periodical);
