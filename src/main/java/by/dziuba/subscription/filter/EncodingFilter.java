@@ -18,21 +18,16 @@ public class EncodingFilter implements Filter {
     private String encoding;
 
     @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-        filterConfig.getInitParameter(ENCODING_PARAMETER);
+    public void init(final FilterConfig filterConfig) {
+        encoding = filterConfig.getInitParameter(ENCODING_PARAMETER);
     }
 
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain
             filterChain) throws IOException, ServletException {
-        String requestEncoding = servletRequest.getCharacterEncoding();
-        String responseEncoding = servletResponse.getCharacterEncoding();
         try {
-            if (encoding != null && !encoding.equalsIgnoreCase(requestEncoding)) {
+            if (servletRequest.getCharacterEncoding() == null) {
                 servletRequest.setCharacterEncoding(encoding);
-            }
-            if (encoding != null && !encoding.equalsIgnoreCase(responseEncoding)) {
-                servletResponse.setCharacterEncoding(encoding);
             }
         } catch (UnsupportedEncodingException e) {
             LOGGER.warn(e.getMessage(), "Using default request encoding (not utf-8)");

@@ -7,11 +7,9 @@ import by.dziuba.subscription.command.RequestContent;
 import by.dziuba.subscription.command.exception.BadRequestException;
 import by.dziuba.subscription.command.exception.CommandException;
 
-import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
-
-public class ShowLogInCommand implements Command {
+public class ShowBanPageCommand implements Command {
     @Override
-    public CommandResult execute(RequestContent requestContent) {
-        return new CommandResult(JspResourceManager.LOGIN_PAGE);
+    public CommandResult execute(RequestContent requestContent) throws CommandException, BadRequestException {
+        return new CommandResult(JspResourceManager.BAN_PAGE);
     }
 }

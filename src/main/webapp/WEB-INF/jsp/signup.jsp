@@ -12,14 +12,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <!-- Website CSS style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Website Font style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register-style.css">
-    <title>Registration</title>
+    <title><fmt:message key="title.registration"/></title>
 </head>
 <body>
 
@@ -30,7 +29,7 @@
         <div class="col-sm-8 col-sm-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Registration</h3>
+                    <h3 class="panel-title"><fmt:message key="title.registration"/></h3>
                 </div>
                 <div class="panel-body">
                     <form id="signupForm" method="post" class="form-horizontal" action="${pageContext.request.contextPath}/controller">
@@ -117,6 +116,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/signup.js"></script>
+<script src="${pageContext.request.contextPath}/js/messages_ru.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

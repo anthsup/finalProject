@@ -42,21 +42,21 @@ $(document).ready( function () {
             }
         },
         messages: {
-            firstName: "Please enter your valid first name",
-            lastName: "Please enter your valid last name",
+            firstName: {
+                pattern: "Имя должно начинаться с большой буквы и быть длиннее 2 символов"
+            },
+            lastName: {
+                pattern: "Фамилия должна начинаться с большой буквы и быть длиннее 2 символов"
+            },
             login: {
-                required: "Please enter a login"
+                pattern: "Логин должен быть длиннее 2ух символов и включать в себя только латинские буквы, цифры и символы - _ ."
             },
             password: {
-                required: "Please provide a password",
-                pattern: "Your password must be at least 8 characters long and contain an upper case, lower case and number/Special Char"
+                pattern: "Ваш пароль должен включать минимум 8 символов и содержать букву верхнего, нижнего регистра и число или специальный символ"
             },
             confirm: {
-                required: "Please provide a password",
-                pattern: "Your password must be at least 8 characters long and contain an upper case, lower case and number/Special Char",
-                equalTo: "Please enter the same password as above"
-            },
-            email: "Please enter a valid email address"
+                pattern: "Ваш пароль должен включать минимум 8 символов и содержать латинскую букву верхнего, нижнего регистра и число или специальный символ"
+            }
         },
         errorElement: "em",
         errorPlacement: function ( error, element ) {
@@ -91,27 +91,3 @@ $(document).ready( function () {
         }
     });
 });
-
-signupFormReady = function() {
-    if ($form.find('.login').hasClass("has-success") &&
-        $form.find('.email').hasClass("has-success") &&
-        $form.find('.firstName').hasClass("has-success") &&
-        $form.find('.lastName').hasClass("has-success") &&
-        $form.find('.city').hasClass("has-success") &&
-        $form.find('.postal').hasClass("has-success") &&
-        $form.find('.address').hasClass("has-success") &&
-        $form.find('.password').hasClass("has-success") &&
-        $form.find('.confirm').hasClass("has-success")) {
-        return true;
-    } else {
-        return false;
-    }
-};
-
-$form.find('.signup').prop('disabled', true);
-var readyInterval = setInterval(function() {
-    if (signupFormReady()) {
-        $form.find('.signup').prop('disabled', false);
-        clearInterval(readyInterval);
-    }
-}, 250);

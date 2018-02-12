@@ -20,8 +20,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 ">
-            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=edit_profile">
-                <%--<input type="hidden" name="command" value="profile_edit">--%>
+            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="edit_profile">
                 <fieldset>
 
                     <!-- Form Name -->
@@ -45,8 +45,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="upload"><fmt:message key="edit.photo"/></label>
                         <div class="col-md-4">
-                                <input id="upload" name="photo" class="form-control" type="url" placeholder="<fmt:message key="edit.insert"/>"
-                                       pattern="^(https|http).+(jpg|svg|gif|png)$">
+                            <input id="upload" name="photo" class="form-control" type="url" <c:if test="${not empty sessionScope.user.photo}">value="${sessionScope.user.photo}"</c:if> placeholder="<fmt:message key="edit.insert"/>" pattern="^(https|http).+(jpg|svg|gif|png)$">
                         </div>
                     </div>
 

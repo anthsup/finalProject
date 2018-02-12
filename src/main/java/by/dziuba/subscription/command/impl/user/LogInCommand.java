@@ -2,6 +2,7 @@ package by.dziuba.subscription.command.impl.user;
 
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
+import by.dziuba.subscription.command.JspResourceManager;
 import by.dziuba.subscription.command.RequestContent;
 import by.dziuba.subscription.command.exception.CommandException;
 import by.dziuba.subscription.entity.User;
@@ -21,6 +22,10 @@ public class LogInCommand implements Command {
     public CommandResult execute(RequestContent requestContent) throws CommandException {
         try {
             CommandResult commandResult = new CommandResult(REDIRECT, requestContent.getReferer());
+            if (requestContent.getRequestParameter("previousURI") != null) {
+                commandResult.setPage(JspResourceManager.PROFILE_PAGE_COMMAND);
+            }
+
             String login = requestContent.getRequestParameter(LOGIN_PARAMETER);
             String password = requestContent.getRequestParameter(PASSWORD_PARAMETER);
             User user = logInService.logIn(login, password);

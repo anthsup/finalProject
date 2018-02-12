@@ -26,9 +26,10 @@
 }
 
 .user-list tbody td .user-subhead {
+    display: block;
     font-size: 0.95em;
     font-style: italic;
-    padding-left: 57px;
+    margin-left: 60px;
 }
 
 .user-list tbody td .user-link {
@@ -72,7 +73,6 @@ a {
 }
 
 .table-title {
-    padding-bottom: 15px;
     background: #299be4;
     color: #fff;
     padding: 16px 30px;

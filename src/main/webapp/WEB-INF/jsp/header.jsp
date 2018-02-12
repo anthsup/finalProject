@@ -40,7 +40,6 @@
                         <li><a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_US"><fmt:message key="nav.lang.en"/></a></li>
                     </ul>
                 </li>
-                <%--<li><a href="${pageContext.request.contextPath}/controller?command=about_page">About</a></li>--%>
                 <li><a href="${pageContext.request.contextPath}/controller?command=periodicals"><fmt:message key="nav.periodicals"/></a></li>
                 <c:if test="${not empty sessionScope.user}">
                     <li><a href="${pageContext.request.contextPath}/controller?command=cart"><fmt:message key="nav.cart"/> <span class="badge">${fn:length(sessionScope.cart_products)}</span></a></li>
@@ -51,8 +50,8 @@
                             <fmt:message key="nav.admin"/> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="${pageContext.request.contextPath}/controller?command=users"><fmt:message key="nav.users"/></a></li>
-                            <li><a href="${pageContext.request.contextPath}/controller?command=admin_panel"><fmt:message key="nav.admin"/></a></li>
+                            <li><a href="${pageContext.request.contextPath}/controller?command=users"><fmt:message key="users.management"/></a></li>
+                            <li><a href="${pageContext.request.contextPath}/controller?command=admin_panel"><fmt:message key="period.management"/></a></li>
                         </ul>
                     </li>
                 </c:if>
@@ -85,7 +84,7 @@
                     </ul>
                     <ul class="collapse nav navbar-nav nav-collapse" id="nav-collapse4">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${user.login}<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${user.login}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="nav.myProfile"/></a></li>
                                 <%--<li><a href="#">Favorited</a></li>--%>

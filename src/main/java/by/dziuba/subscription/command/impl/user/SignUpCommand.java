@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
+
 public class SignUpCommand implements Command {
     public static final String LOGIN_PARAMETER = "login";
     public static final String EMAIL_PARAMETER = "email";
@@ -29,12 +31,12 @@ public class SignUpCommand implements Command {
 
     private final SignUpService signUpService = new SignUpServiceImpl();
     private final UserService userService = new UserServiceImpl();
-    //TODO automatically login after signup
+
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
         //TODO check email and overall signup process
         try {
-            CommandResult commandResult = new CommandResult(JspResourceManager.LOGIN_PAGE);
+            CommandResult commandResult = new CommandResult(REDIRECT, JspResourceManager.LOGIN_PAGE_COMMAND);
             User user = setUserData(requestContent);
             if (userService.getUserByLogin(user.getLogin()) == null) {
                 signUpService.signUp(user);

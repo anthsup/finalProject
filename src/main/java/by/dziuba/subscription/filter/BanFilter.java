@@ -3,6 +3,7 @@ package by.dziuba.subscription.filter;
 import by.dziuba.subscription.command.CommandProvider;
 import by.dziuba.subscription.command.CommandType;
 import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -10,19 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {"/controller"}, dispatcherTypes = {DispatcherType.REQUEST,
+@WebFilter(filterName = "BanFilter", urlPatterns = {"/controller"}, dispatcherTypes = {DispatcherType.REQUEST,
         DispatcherType.FORWARD})
-public class AuthenticationFilter implements Filter {
+public class BanFilter  implements Filter {
     private Set<String> grantedCommands = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) {
-        EnumSet<CommandType> guestCommands = EnumSet.range(CommandType.LOGIN, CommandType.SEARCH_PERIODICALS);
-        guestCommands.forEach(commandType -> grantedCommands.add(commandType.name()));
+        grantedCommands.add(CommandType.LOGOUT.name());
+        grantedCommands.add(CommandType.PROFILE.name());
+        grantedCommands.add(CommandType.CHANGE_LOCALE.name());
     }
 
     @Override
@@ -30,18 +31,21 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession currentSession = request.getSession(false);
+        User currentUser = (User) currentSession.getAttribute("user");
+        String bannedURL = JspResourceManager.BAN_PAGE_COMMAND;
+        String requestedURL = request.getRequestURI() + "?" + request.getQueryString();
+        boolean banPageRequested = bannedURL.equalsIgnoreCase(requestedURL);
 
-        boolean userLoggedIn = currentSession != null && currentSession.getAttribute("user") != null;
-        String command = CommandProvider.convertCommandType(request.getParameter("command"));
-
-        if (grantedCommands.contains(command) || userLoggedIn) {
-            filterChain.doFilter(servletRequest, servletResponse);
+        if (currentUser != null && currentUser.isBanned() && !grantedCommands
+                .contains(CommandProvider.convertCommandType(request.getParameter("command"))) && !banPageRequested) {
+            response.sendRedirect(JspResourceManager.BAN_PAGE_COMMAND);
         } else {
-            response.sendRedirect(request.getContextPath() + JspResourceManager.LOGIN_PAGE_COMMAND);
+            filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 
     @Override
     public void destroy() {
+
     }
 }

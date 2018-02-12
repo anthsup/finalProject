@@ -14,13 +14,13 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST,
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = {"/controller"}, dispatcherTypes = {DispatcherType.REQUEST,
         DispatcherType.FORWARD})
 public class AuthorizationFilter implements Filter {
     private Set<String> adminCommands = new HashSet<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         EnumSet<CommandType> adminCommandTypes = EnumSet.range(CommandType.BAN_USER, CommandType.ADD_PERIODICAL);
         adminCommandTypes.forEach(commandType -> adminCommands.add(commandType.name()));
     }
@@ -52,6 +52,5 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

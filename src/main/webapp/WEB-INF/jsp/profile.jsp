@@ -77,7 +77,7 @@
                     <jsp:include page="payment.jsp"/>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer profile-edit">
                 <span class="pull-right">
                     <c:if test="${sessionScope.user eq user}">
                         <a href="${pageContext.request.contextPath}/controller?command=profile_edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
