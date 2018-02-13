@@ -1,11 +1,11 @@
 package by.dziuba.subscription.service.impl;
 
 import by.dziuba.subscription.dao.PeriodicalTypeDAO;
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.dao.impl.PeriodicalTypeDAOImpl;
 import by.dziuba.subscription.entity.PeriodicalType;
 import by.dziuba.subscription.service.PeriodicalTypeService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 
 import java.util.List;
 

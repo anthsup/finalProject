@@ -1,11 +1,11 @@
 package by.dziuba.subscription.service.impl;
 
 import by.dziuba.subscription.dao.GenreDAO;
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.dao.impl.GenreDAOImpl;
 import by.dziuba.subscription.entity.Genre;
 import by.dziuba.subscription.service.GenreService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 
 import java.util.List;
 import java.util.Map;

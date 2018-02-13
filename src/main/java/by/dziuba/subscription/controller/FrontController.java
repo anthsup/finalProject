@@ -4,8 +4,8 @@ import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandProvider;
 import by.dziuba.subscription.command.CommandResult;
 import by.dziuba.subscription.command.RequestContent;
-import by.dziuba.subscription.command.exception.BadRequestException;
-import by.dziuba.subscription.command.exception.CommandException;
+import by.dziuba.subscription.exception.BadRequestException;
+import by.dziuba.subscription.exception.CommandException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,9 +40,9 @@ public class FrontController extends HttpServlet {
             CommandResult commandResult = command.execute(requestContent);
             commandResult.updateRequest(req);
 
-            if (commandResult.getRoutingType().equals(REDIRECT)) {
+            if (REDIRECT.equals(commandResult.getRoutingType())) {
                 resp.sendRedirect(req.getContextPath() + commandResult.getPage());
-            } else if (commandResult.getRoutingType().equals(FORWARD)) {
+            } else if (FORWARD.equals(commandResult.getRoutingType())) {
                 getServletContext().getRequestDispatcher(commandResult.getPage()).forward(req, resp);
             } else {
                 resp.sendError(commandResult.getErrorCode(), commandResult.getErrorMessage());

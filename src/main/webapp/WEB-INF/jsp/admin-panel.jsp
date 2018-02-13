@@ -29,9 +29,9 @@
 
                 <form method="POST" action="${pageContext.request.contextPath}/controller">
                     <div class="input-group">
-                        <input type="hidden" name="command" value="add_genre">
+                        <input type="hidden" name="command" value="add-genre">
                         <span class="input-group-addon"><i class="fas fa-book fa-fw"></i></span>
-                        <input type="text" name="genre" class="form-control" placeholder="<fmt:message key="period.genre"/>">
+                        <input required pattern="^[А-ЯЁA-Z][а-яёa-z\s]{3,45}$" title="<fmt:message key="valid.genre"/>" type="text" name="genre" class="form-control" placeholder="<fmt:message key="period.genre"/>">
                         <span class="input-group-btn">
                             <button class="btn btn-success" type="submit"><fmt:message key="period.add"/></button>
                         </span>
@@ -40,9 +40,9 @@
                 <hr>
                 <form method="POST" action="${pageContext.request.contextPath}/controller">
                     <div class="input-group">
-                        <input type="hidden" name="command" value="add_author">
+                        <input type="hidden" name="command" value="add-author">
                         <span class="input-group-addon"><i class="fas fa-user fa-fw"></i></span>
-                        <input type="text" name="author" class="form-control" placeholder="<fmt:message key="period.author"/>">
+                        <input required pattern="^[А-ЯЁA-Z][а-яёa-z\s]{3,99}$" title="<fmt:message key="valid.author"/>" type="text" name="author" class="form-control" placeholder="<fmt:message key="period.author"/>">
                         <span class="input-group-btn">
                             <button class="btn btn-success" type="submit"><fmt:message key="period.add"/></button>
                         </span>
@@ -55,7 +55,7 @@
                 <h3><fmt:message key="period.delete"/></h3>
                 <form method="POST" action="${pageContext.request.contextPath}/controller">
                     <div class="input-group">
-                        <input type="hidden" name="command" value="delete_authors">
+                        <input type="hidden" name="command" value="delete-authors">
                         <span class="input-group-addon"><i class="fas fa-minus-circle fa-fw"></i></span>
                         <select name="authors" class="selectpicker form-control input-md show-tick" data-selected-text-format="count > 3" multiple title="<fmt:message key="period.authors"/>">
                             <c:forEach items="${authors}" var="author">
@@ -70,7 +70,7 @@
                 <hr>
                 <form method="POST" action="${pageContext.request.contextPath}/controller">
                     <div class="input-group">
-                        <input type="hidden" name="command" value="delete_genres">
+                        <input type="hidden" name="command" value="delete-genres">
                         <span class="input-group-addon" id="sizing-addon2"><i class="fas fa-trash fa-fw"></i></span>
                         <select name="genres" class="selectpicker form-control input-md show-tick" data-selected-text-format="count > 3" multiple data-live-search="true" data-size="5" title="<fmt:message key="period.genres"/>">
                             <c:forEach items="${genres}" var="genre">
@@ -87,7 +87,7 @@
     </div>
     <div class="col-md-12 text-center">
         <hr>
-        <a href="${pageContext.request.contextPath}/controller?command=periodical_add" type="button" class="btn btn-success"><fmt:message key="period.addPeriodical"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=periodical-add" type="button" class="btn btn-success"><fmt:message key="period.addPeriodical"/></a>
     </div>
 </div>
 

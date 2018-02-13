@@ -4,7 +4,7 @@ import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.LogInService;
 import by.dziuba.subscription.service.SignUpService;
 import by.dziuba.subscription.service.UserService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 
 public class SignUpServiceImpl implements SignUpService {
     private static final UserService userService = new UserServiceImpl();

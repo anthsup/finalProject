@@ -3,10 +3,11 @@ package by.dziuba.subscription.command.impl.cart;
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
 import by.dziuba.subscription.command.RequestContent;
-import by.dziuba.subscription.command.exception.CommandException;
+import by.dziuba.subscription.exception.CommandException;
+import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.entity.Periodical;
 import by.dziuba.subscription.service.PeriodicalService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 
 import java.math.BigDecimal;
@@ -25,19 +26,21 @@ public class AddToCartCommand implements Command {
     public CommandResult execute(RequestContent requestContent) throws CommandException {
         try {
             CommandResult commandResult = new CommandResult(REDIRECT, requestContent.getReferer());
-            Periodical periodical = periodicalService.getByPeriodicalId(Integer.parseInt(requestContent.getRequestParameter("id")));
+
+            Periodical periodical = periodicalService.getByPeriodicalId(Integer.parseInt(requestContent
+                    .getRequestParameter(ParameterConstant.PERIODICAL_ID)));
             Map<Integer, Integer> quantities = defineQuantities(requestContent, periodical.getId());
 
             Set<Periodical> cartPeriodicals = new LinkedHashSet<>();
-            if (requestContent.getSessionAttribute("cart_products") != null) {
-                ((Set<Periodical>)requestContent.getSessionAttribute("cart_products")).add(periodical);
+            if (requestContent.getSessionAttribute(ParameterConstant.CART_PRODUCTS) != null) {
+                ((Set<Periodical>)requestContent.getSessionAttribute(ParameterConstant.CART_PRODUCTS)).add(periodical);
             } else {
                 cartPeriodicals.add(periodical);
-                commandResult.putSessionAttribute("cart_products", cartPeriodicals);
+                commandResult.putSessionAttribute(ParameterConstant.CART_PRODUCTS, cartPeriodicals);
             }
 
-            commandResult.putSessionAttribute("totalPrice", calculateTotalPrice(requestContent, periodical));
-            commandResult.putSessionAttribute("quantities", quantities);
+            commandResult.putSessionAttribute(ParameterConstant.TOTAL_PRICE, calculateTotalPrice(requestContent, periodical));
+            commandResult.putSessionAttribute(ParameterConstant.QUANTITIES, quantities);
             return commandResult;
         } catch (ServiceException e) {
             throw new CommandException(e);
@@ -45,7 +48,7 @@ public class AddToCartCommand implements Command {
     }
 
     private BigDecimal calculateTotalPrice(RequestContent requestContent, Periodical periodical) {
-        BigDecimal totalPrice = (BigDecimal)requestContent.getSessionAttribute("totalPrice");
+        BigDecimal totalPrice = (BigDecimal)requestContent.getSessionAttribute(ParameterConstant.TOTAL_PRICE);
         if (totalPrice == null) {
             totalPrice = new BigDecimal(0);
         }
@@ -53,7 +56,7 @@ public class AddToCartCommand implements Command {
     }
 
     private Map<Integer, Integer> defineQuantities(RequestContent requestContent, int periodicalId) {
-        Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute("quantities");
+        Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute(ParameterConstant.QUANTITIES);
         if (quantities == null) {
             quantities = new HashMap<>();
         }

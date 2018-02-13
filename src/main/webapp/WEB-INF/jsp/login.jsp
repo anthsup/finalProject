@@ -39,14 +39,14 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="login"><fmt:message key="user.login"/></label>
                             <div class="col-sm-5 login">
-                                <input type="text" class="form-control" name="login" id="login"  placeholder="<fmt:message key="user.login"/>"/>
+                                <input autofocus required type="text" class="form-control" name="login" id="login"  placeholder="<fmt:message key="user.login"/>"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="password"><fmt:message key="user.password"/></label>
                             <div class="col-sm-5 password">
-                                <input type="password" class="form-control" name="password" id="password"  placeholder="<fmt:message key="user.password"/>"/>
+                                <input required type="password" class="form-control" name="password" id="password"  placeholder="<fmt:message key="user.password"/>"/>
                             </div>
                         </div>
 
@@ -66,11 +66,6 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/signup.js"></script>
-<script src="${pageContext.request.contextPath}/js/messages_ru.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

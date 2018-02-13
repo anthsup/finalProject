@@ -12,7 +12,11 @@
 
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/controller</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>BanFilter</filter-name>
+        <url-pattern>/controller</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>

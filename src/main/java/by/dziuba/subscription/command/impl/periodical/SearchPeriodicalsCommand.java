@@ -2,10 +2,12 @@ package by.dziuba.subscription.command.impl.periodical;
 
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.constant.JspPath;
 import by.dziuba.subscription.command.RequestContent;
-import by.dziuba.subscription.command.exception.BadRequestException;
-import by.dziuba.subscription.command.exception.CommandException;
+import by.dziuba.subscription.constant.MessageConstant;
+import by.dziuba.subscription.constant.ParameterConstant;
+import by.dziuba.subscription.exception.BadRequestException;
+import by.dziuba.subscription.exception.CommandException;
 import by.dziuba.subscription.entity.Author;
 import by.dziuba.subscription.entity.Genre;
 import by.dziuba.subscription.entity.Periodical;
@@ -14,11 +16,12 @@ import by.dziuba.subscription.service.AuthorService;
 import by.dziuba.subscription.service.GenreService;
 import by.dziuba.subscription.service.PeriodicalService;
 import by.dziuba.subscription.service.PeriodicalTypeService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.AuthorServiceImpl;
 import by.dziuba.subscription.service.impl.GenreServiceImpl;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 import by.dziuba.subscription.service.impl.PeriodicalTypeServiceImpl;
+import by.dziuba.subscription.util.MessageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +36,12 @@ public class SearchPeriodicalsCommand implements Command {
     private static final GenreService genreService = new GenreServiceImpl();
     private static final PeriodicalTypeService periodicalTypeService = new PeriodicalTypeServiceImpl();
 
+    static final String DEFAULT_PAGE_NUMBER = "1";
+    static final String DEFAULT_PERIODICALS_PER_PAGE = "8";
+
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException, BadRequestException {
-        CommandResult commandResult = new CommandResult(JspResourceManager.PERIODICALS_PAGE);
+        CommandResult commandResult = new CommandResult(JspPath.PERIODICALS_PAGE);
         try {
             List<Periodical> foundPeriodicals = findPeriodicals(requestContent);
 
@@ -45,39 +51,41 @@ public class SearchPeriodicalsCommand implements Command {
             Map<Integer, Author> authors = authorService.getAll().stream()
                     .collect(Collectors.toMap(Author::getId, Function.identity()));
 
-            commandResult.putRequestAttribute("genres", genres);
-            commandResult.putRequestAttribute("authors", authors);
-            commandResult.putRequestAttribute("periodicals", foundPeriodicals);
-            commandResult.putRequestAttribute("periodicalTypes", periodicalTypes);
-            commandResult.putRequestAttribute("periodicalsNumber", foundPeriodicals.size());
+            commandResult.putRequestAttribute(ParameterConstant.GENRES, genres);
+            commandResult.putRequestAttribute(ParameterConstant.AUTHORS, authors);
+            commandResult.putRequestAttribute(ParameterConstant.PERIODICALS, foundPeriodicals);
+            commandResult.putRequestAttribute(ParameterConstant.PERIODICAL_TYPES, periodicalTypes);
+            commandResult.putRequestAttribute(ParameterConstant.PERIODICAL_NUMBER, foundPeriodicals.size());
             commandResult.putRequestAttribute("searchCommand", requestContent.getRequestURL());
             return commandResult;
         } catch (ServiceException e) {
-            throw new CommandException(e);
+            throw new CommandException(e.getMessage());
         }
     }
 
     private List<Periodical> findPeriodicals(RequestContent requestContent) throws ServiceException, BadRequestException {
-        int pageNumber = Integer.parseInt(Optional.ofNullable(requestContent.getRequestParameter("page")).orElse("1"));
+        int pageNumber = Integer.parseInt(Optional.ofNullable(requestContent.getRequestParameter(ParameterConstant.PAGE)).orElse(DEFAULT_PAGE_NUMBER));
         int periodicalsPerPage = Integer.parseInt(Optional.ofNullable(requestContent
-                .getRequestParameter("periodicalsPerPage")).orElse("8"));
+                .getRequestParameter(ParameterConstant.PERIODICALS_PER_PAGE)).orElse(DEFAULT_PERIODICALS_PER_PAGE));
 
-        if (requestContent.getRequestParameter("periodicalType") != null) {
+        if (requestContent.getRequestParameter(ParameterConstant.PERIODICAL_TYPE) != null) {
             return periodicalService.getByPeriodicalType(Integer.parseInt(requestContent
-                    .getRequestParameter("periodicalType")), pageNumber, periodicalsPerPage);
-        } else if (requestContent.getRequestParameter("periodicity") != null) {
+                    .getRequestParameter(ParameterConstant.PERIODICAL_TYPE)), pageNumber, periodicalsPerPage);
+        } else if (requestContent.getRequestParameter(ParameterConstant.PERIODICITY) != null) {
             return periodicalService.getByPeriodicity(Integer.parseInt(requestContent
-                    .getRequestParameter("periodicity")), pageNumber, periodicalsPerPage);
-        } else if (requestContent.getRequestParameter("genre") != null) {
+                    .getRequestParameter(ParameterConstant.PERIODICITY)), pageNumber, periodicalsPerPage);
+        } else if (requestContent.getRequestParameter(ParameterConstant.GENRE) != null) {
             List<Periodical> foundPeriodicals = new ArrayList<>();
-            for (int periodicalId : genreService.getPeriodicalsByGenreName(requestContent.getRequestParameter("genre"))) {
+            for (int periodicalId : genreService.getPeriodicalsByGenreName(requestContent.getRequestParameter(ParameterConstant.GENRE))) {
                 foundPeriodicals.add(periodicalService.getByPeriodicalId(periodicalId));
             }
             return foundPeriodicals;
-        } else if (requestContent.getRequestParameter("author") != null) {
+        } else if (requestContent.getRequestParameter(ParameterConstant.AUTHOR) != null) {
             return periodicalService.getByAuthorId(Integer.parseInt(requestContent
-                    .getRequestParameter("author")), pageNumber, periodicalsPerPage);
+                    .getRequestParameter(ParameterConstant.AUTHOR)), pageNumber, periodicalsPerPage);
         }
-        throw new BadRequestException("Nothing has been found.");
+        String locale = (String) requestContent.getSessionAttribute(ParameterConstant.LOCALE);
+        String msg = MessageManager.getMessage(MessageConstant.NOTHING_FOUND, locale);
+        throw new BadRequestException(msg);
     }
 }

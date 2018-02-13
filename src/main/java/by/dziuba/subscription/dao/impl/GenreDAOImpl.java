@@ -1,9 +1,9 @@
 package by.dziuba.subscription.dao.impl;
 
 import by.dziuba.subscription.dao.GenreDAO;
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.database.DBConnectionPool;
-import by.dziuba.subscription.database.exception.DBException;
+import by.dziuba.subscription.exception.DBException;
 import by.dziuba.subscription.entity.Genre;
 
 import java.sql.PreparedStatement;
@@ -25,6 +25,9 @@ public class GenreDAOImpl implements GenreDAO {
     private static final String DELETE_GENRE = "DELETE FROM genre WHERE genre_name = ?";
     private static final String SELECT_BY_GENRE_NAME = "SELECT * FROM periodical_genre WHERE genre_name = ?";
 
+    private static final String GENRE_NAME = "genre_name";
+    private static final String PERIODICAL_ID = "periodical_id";
+
     @Override
     public Map<Integer, List<Genre>> findAllPeriodicalGenres() throws DAOException {
         Map<Integer, List<Genre>> genresMap = new HashMap<>();
@@ -32,12 +35,12 @@ public class GenreDAOImpl implements GenreDAO {
              PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_ALL_PERIODICAL_GENRES)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    int genreId = resultSet.getInt("periodical_id");
+                    int genreId = resultSet.getInt(PERIODICAL_ID);
                     if (genresMap.get(genreId) != null) {
-                        genresMap.get(genreId).add(new Genre(resultSet.getString("genre_name")));
+                        genresMap.get(genreId).add(new Genre(resultSet.getString(GENRE_NAME)));
                     } else {
                         List<Genre> genres = new ArrayList<>();
-                        genres.add(new Genre(resultSet.getString("genre_name")));
+                        genres.add(new Genre(resultSet.getString(GENRE_NAME)));
                         genresMap.put(genreId, genres);
                     }
                 }
@@ -55,7 +58,7 @@ public class GenreDAOImpl implements GenreDAO {
              PreparedStatement statement = poolConnection.getConnection().prepareStatement(SELECT_ALL)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    genres.add(new Genre(resultSet.getString("genre_name")));
+                    genres.add(new Genre(resultSet.getString(GENRE_NAME)));
                 }
             }
             return genres;
@@ -119,7 +122,7 @@ public class GenreDAOImpl implements GenreDAO {
             statement.setInt(1, periodicalId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    genres.add(new Genre(resultSet.getString("genre_name")));
+                    genres.add(new Genre(resultSet.getString(GENRE_NAME)));
                 }
             }
             return genres;
@@ -136,7 +139,7 @@ public class GenreDAOImpl implements GenreDAO {
             statement.setString(1, genreName);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    periodicalIds.add(resultSet.getInt("periodical_id"));
+                    periodicalIds.add(resultSet.getInt(PERIODICAL_ID));
                 }
             }
         } catch (DBException | SQLException e) {

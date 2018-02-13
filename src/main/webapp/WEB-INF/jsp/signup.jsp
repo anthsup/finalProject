@@ -32,7 +32,7 @@
                     <h3 class="panel-title"><fmt:message key="title.registration"/></h3>
                 </div>
                 <div class="panel-body">
-                    <form id="signupForm" method="post" class="form-horizontal" action="${pageContext.request.contextPath}/controller">
+                    <form id="formToValidate" method="post" class="form-horizontal" action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="command" value="signup">
                     <div class="form-group">
                             <label class="col-sm-4 control-label" for="login"><fmt:message key="user.login"/></label>
@@ -115,7 +115,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/signup.js"></script>
+<script src="${pageContext.request.contextPath}/js/userValidation.js"></script>
 <script src="${pageContext.request.contextPath}/js/messages_ru.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

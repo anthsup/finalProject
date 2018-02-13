@@ -1,6 +1,6 @@
 package by.dziuba.subscription.dao;
 
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.entity.Subscription;
 
 import java.util.List;

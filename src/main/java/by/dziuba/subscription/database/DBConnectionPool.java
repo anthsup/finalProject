@@ -1,7 +1,7 @@
 package by.dziuba.subscription.database;
 
 
-import by.dziuba.subscription.database.exception.DBException;
+import by.dziuba.subscription.exception.DBException;
 import by.dziuba.subscription.database.util.DBConnector;
 import by.dziuba.subscription.database.util.DBResourceManager;
 import org.apache.logging.log4j.LogManager;

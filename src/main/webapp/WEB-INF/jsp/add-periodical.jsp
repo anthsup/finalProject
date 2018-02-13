@@ -21,7 +21,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 ">
-            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=add_periodical">
+            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="add-periodical">
                 <fieldset>
                     <legend><fmt:message key="period.addPeriodical"/></legend>
                     <div class="form-group">

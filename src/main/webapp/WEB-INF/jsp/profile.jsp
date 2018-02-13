@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="id" value="1" scope="page"/>
+<fmt:message key="status.active" var="active"/>
+<fmt:message key="status.expired" var="expired"/>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -11,7 +13,6 @@
 <html>
 <head>
     <title>User profile</title>
-    <%--Bootstrap core CSS--%>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile-style.css">
@@ -80,7 +81,7 @@
             <div class="panel-footer profile-edit">
                 <span class="pull-right">
                     <c:if test="${sessionScope.user eq user}">
-                        <a href="${pageContext.request.contextPath}/controller?command=profile_edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="${pageContext.request.contextPath}/controller?command=profile-edit" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                     </c:if>
                 </span>
             </div>
@@ -98,7 +99,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     <div class="alert alert-info">
-                                        <b>${sessionScope.user.login}</b><fmt:message key="profile.orders"/>
+                                        <b>${user.login}</b><fmt:message key="profile.orders"/>
                                     </div>
                                     <hr />
                                     <div class="table-responsive">
@@ -126,10 +127,10 @@
                                                     </td>
                                                     <td>
                                                         <label class="label <c:choose>
-                                                                                    <c:when test="${statuses[subscription.periodicalId] eq 'Active.'}">
+                                                                                    <c:when test="${statuses[subscription.periodicalId] eq active}">
                                                                                     label-success
                                                                                     </c:when>
-                                                                                    <c:when test="${statuses[subscription.periodicalId] eq 'Expired.'}">
+                                                                                    <c:when test="${statuses[subscription.periodicalId] eq expired}">
                                                                                     label-danger
                                                                                     </c:when>
                                                                                     <c:otherwise>

@@ -3,7 +3,7 @@ package by.dziuba.subscription.service.impl;
 import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.LogInService;
 import by.dziuba.subscription.service.UserService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class LogInServiceImpl implements LogInService {

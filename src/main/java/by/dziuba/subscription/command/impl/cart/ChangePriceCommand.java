@@ -2,11 +2,12 @@ package by.dziuba.subscription.command.impl.cart;
 
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.constant.JspPath;
 import by.dziuba.subscription.command.RequestContent;
-import by.dziuba.subscription.command.exception.CommandException;
+import by.dziuba.subscription.exception.CommandException;
+import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.service.PeriodicalService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 
 import java.math.BigDecimal;
@@ -17,15 +18,15 @@ public class ChangePriceCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
-        CommandResult commandResult = new CommandResult(JspResourceManager.CART_PAGE_COMMAND);
+        CommandResult commandResult = new CommandResult(JspPath.CART_PAGE_COMMAND);
 
-        Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute("quantities");
-        Integer id = Integer.parseInt(requestContent.getRequestParameter("id"));
+        Map<Integer, Integer> quantities = (Map<Integer, Integer>)requestContent.getSessionAttribute(ParameterConstant.QUANTITIES);
+        Integer id = Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.PERIODICAL_ID));
         int quantity = quantities.get(id);
-        quantities.put(id, Integer.parseInt(requestContent.getRequestParameter("quantity")));
+        quantities.put(id, Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.QUANTITY)));
         BigDecimal totalPrice = calculateTotalPrice(requestContent, id, quantity, quantities);
 
-        commandResult.putSessionAttribute("totalPrice", totalPrice);
+        commandResult.putSessionAttribute(ParameterConstant.TOTAL_PRICE, totalPrice);
         return commandResult;
     }
 
@@ -35,7 +36,7 @@ public class ChangePriceCommand implements Command {
             BigDecimal price = periodicalService.getByPeriodicalId(id).getPrice();
             BigDecimal oldSubtotal = price.multiply(new BigDecimal(quantity));
             BigDecimal newSubtotal = price.multiply(new BigDecimal(quantities.get(id)));
-            BigDecimal totalPrice = (BigDecimal)requestContent.getSessionAttribute("totalPrice");
+            BigDecimal totalPrice = (BigDecimal)requestContent.getSessionAttribute(ParameterConstant.TOTAL_PRICE);
             totalPrice = totalPrice.subtract(oldSubtotal);
             totalPrice = totalPrice.add(newSubtotal);
             return totalPrice;

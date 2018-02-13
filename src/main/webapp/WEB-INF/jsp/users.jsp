@@ -46,7 +46,7 @@
                                 <tr>
                                     <td>
                                         <img src="${user.photo}">
-                                        <a href="${pageContext.request.contextPath}/controller?command=profile&id=${user.id}" class="user-link">${user.firstName} ${user.lastName}</a>
+                                        <a href="${pageContext.request.contextPath}/controller?command=profile&userId=${user.id}" class="user-link">${user.firstName} ${user.lastName}</a>
                                         <c:choose>
                                             <c:when test="${user.admin eq true}">
                                                 <span class="user-subhead"><fmt:message key="users.admin"/></span>
@@ -71,8 +71,8 @@
                                         <a href="mailto:${user.email}">${user.email}</a>
                                     </td>
                                     <td class="text-center">
-                                        <form method="POST" action="${pageContext.request.contextPath}/controller?command=ban_user">
-                                            <input type="hidden" name="user_id" value="${user.id}">
+                                        <form method="POST" action="${pageContext.request.contextPath}/controller?command=ban-user">
+                                            <input type="hidden" name="userId" value="${user.id}">
                                             <c:choose>
                                                 <c:when test="${user.banned eq false}">
                                                     <button type="submit" class="btn btn-danger"><i class="fa fa-lock" aria-hidden="true"></i> <fmt:message key="users.ban"/></button>

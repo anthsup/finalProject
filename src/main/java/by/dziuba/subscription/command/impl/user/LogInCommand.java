@@ -2,20 +2,18 @@ package by.dziuba.subscription.command.impl.user;
 
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.constant.JspPath;
 import by.dziuba.subscription.command.RequestContent;
-import by.dziuba.subscription.command.exception.CommandException;
+import by.dziuba.subscription.exception.CommandException;
+import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.LogInService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.LogInServiceImpl;
 
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
 public class LogInCommand implements Command {
-    private static final String LOGIN_PARAMETER = "login";
-    private static final String PASSWORD_PARAMETER = "password";
-
     private final LogInService logInService = new LogInServiceImpl();
 
     @Override
@@ -23,17 +21,16 @@ public class LogInCommand implements Command {
         try {
             CommandResult commandResult = new CommandResult(REDIRECT, requestContent.getReferer());
             if (requestContent.getRequestParameter("previousURI") != null) {
-                commandResult.setPage(JspResourceManager.PROFILE_PAGE_COMMAND);
+                commandResult.setPage(JspPath.PROFILE_PAGE_COMMAND);
             }
 
-            String login = requestContent.getRequestParameter(LOGIN_PARAMETER);
-            String password = requestContent.getRequestParameter(PASSWORD_PARAMETER);
+            String login = requestContent.getRequestParameter(ParameterConstant.LOGIN);
+            String password = requestContent.getRequestParameter(ParameterConstant.PASSWORD);
             User user = logInService.logIn(login, password);
             if (user != null) {
-                commandResult.putSessionAttribute("user", user);
+                commandResult.putSessionAttribute(ParameterConstant.USER, user);
             } else {
-                commandResult.setErrorCode(401);
-                commandResult.setErrorMessage("Incorrect login or password");
+                commandResult = new CommandResult(401, "Incorrect login or password");
             }
             return commandResult;
         } catch (ServiceException e) {

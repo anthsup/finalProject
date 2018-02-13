@@ -1,12 +1,14 @@
 package by.dziuba.subscription.dao;
 
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.entity.User;
 
 import java.util.List;
 
 public interface UserDAO {
     User findUserByLogin(String login) throws DAOException;
+
+    User findUserByEmail(String email) throws DAOException;
 
     User findUserById(int id) throws DAOException;
 

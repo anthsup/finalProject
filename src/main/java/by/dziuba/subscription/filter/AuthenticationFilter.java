@@ -2,7 +2,8 @@ package by.dziuba.subscription.filter;
 
 import by.dziuba.subscription.command.CommandProvider;
 import by.dziuba.subscription.command.CommandType;
-import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.constant.JspPath;
+import by.dziuba.subscription.constant.ParameterConstant;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -31,13 +32,13 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession currentSession = request.getSession(false);
 
-        boolean userLoggedIn = currentSession != null && currentSession.getAttribute("user") != null;
-        String command = CommandProvider.convertCommandType(request.getParameter("command"));
+        boolean userLoggedIn = currentSession != null && currentSession.getAttribute(ParameterConstant.USER) != null;
+        String command = CommandProvider.convertCommandType(request.getParameter(ParameterConstant.COMMAND));
 
         if (grantedCommands.contains(command) || userLoggedIn) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            response.sendRedirect(request.getContextPath() + JspResourceManager.LOGIN_PAGE_COMMAND);
+            response.sendRedirect(request.getContextPath() + JspPath.LOGIN_PAGE_COMMAND);
         }
     }
 

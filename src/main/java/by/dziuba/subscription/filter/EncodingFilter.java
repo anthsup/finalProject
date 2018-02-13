@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@WebFilter(filterName = "EncodingFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST,
+@WebFilter(filterName = "EncodingFilter", urlPatterns = {"/controller"}, dispatcherTypes = {DispatcherType.REQUEST,
         DispatcherType.FORWARD}, initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(EncodingFilter.class);

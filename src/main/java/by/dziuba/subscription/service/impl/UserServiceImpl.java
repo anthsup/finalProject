@@ -1,11 +1,11 @@
 package by.dziuba.subscription.service.impl;
 
 import by.dziuba.subscription.dao.UserDAO;
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.dao.impl.UserDAOImpl;
 import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.UserService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 
 import java.util.List;
 
@@ -16,6 +16,15 @@ public class UserServiceImpl implements UserService {
     public User getUserByLogin(String login) throws ServiceException {
         try {
             return userDao.findUserByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws ServiceException {
+        try {
+            return userDao.findUserByEmail(email);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

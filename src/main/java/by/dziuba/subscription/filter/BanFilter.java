@@ -2,7 +2,8 @@ package by.dziuba.subscription.filter;
 
 import by.dziuba.subscription.command.CommandProvider;
 import by.dziuba.subscription.command.CommandType;
-import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.constant.JspPath;
+import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.entity.User;
 
 import javax.servlet.*;
@@ -31,14 +32,14 @@ public class BanFilter  implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession currentSession = request.getSession(false);
-        User currentUser = (User) currentSession.getAttribute("user");
-        String bannedURL = JspResourceManager.BAN_PAGE_COMMAND;
+        User currentUser = (User) currentSession.getAttribute(ParameterConstant.USER);
+        String bannedURL = JspPath.BAN_PAGE_COMMAND;
         String requestedURL = request.getRequestURI() + "?" + request.getQueryString();
         boolean banPageRequested = bannedURL.equalsIgnoreCase(requestedURL);
 
         if (currentUser != null && currentUser.isBanned() && !grantedCommands
-                .contains(CommandProvider.convertCommandType(request.getParameter("command"))) && !banPageRequested) {
-            response.sendRedirect(JspResourceManager.BAN_PAGE_COMMAND);
+                .contains(CommandProvider.convertCommandType(request.getParameter(ParameterConstant.COMMAND))) && !banPageRequested) {
+            response.sendRedirect(JspPath.BAN_PAGE_COMMAND);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

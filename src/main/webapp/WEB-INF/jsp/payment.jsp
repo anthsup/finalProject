@@ -32,7 +32,7 @@
                                     <input type="hidden" name="command" value="checkout"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="hidden" name="command" value="pay_loan"/>
+                                    <input type="hidden" name="command" value="pay-loan"/>
                                 </c:otherwise>
                             </c:choose>
                             <div class="row">

@@ -2,16 +2,17 @@ package by.dziuba.subscription.command.impl.user;
 
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
-import by.dziuba.subscription.command.JspResourceManager;
+import by.dziuba.subscription.constant.JspPath;
 import by.dziuba.subscription.command.RequestContent;
-import by.dziuba.subscription.command.exception.CommandException;
+import by.dziuba.subscription.exception.CommandException;
+import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.entity.Periodical;
 import by.dziuba.subscription.entity.Subscription;
 import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.PeriodicalService;
 import by.dziuba.subscription.service.SubscriptionService;
 import by.dziuba.subscription.service.UserService;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 import by.dziuba.subscription.service.impl.SubscriptionServiceImpl;
 import by.dziuba.subscription.service.impl.UserServiceImpl;
@@ -25,16 +26,16 @@ public class ShowProfileCommand implements Command {
     private static final SubscriptionService subscriptionService = new SubscriptionServiceImpl();
     private static final PeriodicalService periodicalService = new PeriodicalServiceImpl();
     private static final UserService userService = new UserServiceImpl();
-
+    // TODO localize statuses
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
         try {
-            CommandResult commandResult = new CommandResult(JspResourceManager.PROFILE_PAGE);
+            CommandResult commandResult = new CommandResult(JspPath.PROFILE_PAGE);
             int userId;
-            if (requestContent.getRequestParameter("id") != null) {
-                userId = Integer.parseInt(requestContent.getRequestParameter("id"));
+            if (requestContent.getRequestParameter(ParameterConstant.USER_ID) != null) {
+                userId = Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.USER_ID));
             } else {
-                userId = ((User) requestContent.getSessionAttribute("user")).getId();
+                userId = ((User) requestContent.getSessionAttribute(ParameterConstant.USER)).getId();
             }
             User user = userService.getUserById(userId);
             List<Subscription> userSubscriptions = subscriptionService.getSubscriptionByUserId(userId);
@@ -42,10 +43,10 @@ public class ShowProfileCommand implements Command {
             for (Subscription subscription : userSubscriptions) {
                 userPeriodicals.put(subscription.getPeriodicalId(), periodicalService.getByPeriodicalId(subscription.getPeriodicalId()));
             }
-            commandResult.putRequestAttribute("user", user);
-            commandResult.putRequestAttribute("subscriptions", userSubscriptions);
-            commandResult.putRequestAttribute("periodicals", userPeriodicals);
-            commandResult.putRequestAttribute("statuses", defineSubscriptionStatus(userSubscriptions));
+            commandResult.putRequestAttribute(ParameterConstant.USER, user);
+            commandResult.putRequestAttribute(ParameterConstant.SUBSCRIPTIONS, userSubscriptions);
+            commandResult.putRequestAttribute(ParameterConstant.PERIODICALS, userPeriodicals);
+            commandResult.putRequestAttribute(ParameterConstant.STATUSES, defineSubscriptionStatus(userSubscriptions));
             return commandResult;
         } catch (ServiceException e) {
             throw new CommandException(e);

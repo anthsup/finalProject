@@ -1,7 +1,7 @@
 package by.dziuba.subscription.service;
 
 import by.dziuba.subscription.entity.Genre;
-import by.dziuba.subscription.service.exception.ServiceException;
+import by.dziuba.subscription.exception.ServiceException;
 
 import java.util.List;
 import java.util.Map;

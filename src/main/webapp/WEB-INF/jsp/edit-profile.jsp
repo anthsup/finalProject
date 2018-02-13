@@ -20,8 +20,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 ">
-            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
-                <input type="hidden" name="command" value="edit_profile">
+            <form id="formToValidate" class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="edit-profile">
                 <fieldset>
 
                     <!-- Form Name -->
@@ -30,21 +30,21 @@
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="firstName"><fmt:message key="user.firstName"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                                 <input id="firstName" name="firstName" type="text" placeholder="<fmt:message key="user.firstName"/>" class="form-control" value="${sessionScope.user.firstName}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="lastName"><fmt:message key="user.lastName"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                                 <input id="lastName" name="lastName" type="text" placeholder="<fmt:message key="user.lastName"/>" class="form-control" value="${sessionScope.user.lastName}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="upload"><fmt:message key="edit.photo"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                             <input id="upload" name="photo" class="form-control" type="url" <c:if test="${not empty sessionScope.user.photo}">value="${sessionScope.user.photo}"</c:if> placeholder="<fmt:message key="edit.insert"/>" pattern="^(https|http).+(jpg|svg|gif|png)$">
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="login"><fmt:message key="user.login"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                                 <input id="login" name="login" type="text" placeholder="<fmt:message key="user.login"/>" class="form-control input-md" value="${sessionScope.user.login}">
                         </div>
                     </div>
@@ -60,28 +60,28 @@
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="email"><fmt:message key="user.email"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                                 <input id="email" name="email" type="text" placeholder="<fmt:message key="user.email"/>" class="form-control input-md" value="${sessionScope.user.email}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label col-xs-12" for="city"><fmt:message key="user.city"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                             <input id="city" name="city" type="text" placeholder="<fmt:message key="user.city"/>" class="form-control input-md" value="${sessionScope.user.city}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="address"><fmt:message key="user.address"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                             <input id="address" name="address" type="text" placeholder="<fmt:message key="user.address"/>" class="form-control input-md" value="${sessionScope.user.address}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="postal"><fmt:message key="user.postal"/></label>
-                        <div class="col-md-4">
+                        <div class="col-sm-5">
                             <input id="postal" name="postal" type="text" placeholder="<fmt:message key="user.postal"/>" class="form-control input-md" value="${sessionScope.user.postalIndex}">
                         </div>
                     </div>
@@ -93,8 +93,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" ></label>
-                        <div class="col-md-6-offset-2">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-sm-5">
                             <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> <fmt:message key="edit.submit"/></button>
                         </div>
                     </div>
@@ -103,9 +103,10 @@
             <div class="modal fade product_view" id="change_password">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=change_password">
+                        <form id="changePassword" class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
+                            <input type="hidden" name="command" value="change-password">
                             <div class="form-group">
-                                <label class="col-md-6 control-label" for="password"><fmt:message key="edit.oldPassword"/></label>
+                                <label class="col-md-6 control-label" for="old_password"><fmt:message key="edit.oldPassword"/></label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input id="old_password" name="old_password" type="password" placeholder="<fmt:message key="edit.oldPassword"/>" class="form-control input-md">
@@ -113,10 +114,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-6 control-label" for="password"><fmt:message key="edit.newPassword"/></label>
+                                <label class="col-md-6 control-label" for="new_password"><fmt:message key="edit.newPassword"/></label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input id="password" name="new_password" type="password" placeholder="<fmt:message key="edit.newPassword"/>" class="form-control input-md">
+                                        <input id="new_password" name="new_password" type="password" placeholder="<fmt:message key="edit.newPassword"/>" class="form-control input-md">
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +149,11 @@
 <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/userValidation.js"></script>
+<script src="${pageContext.request.contextPath}/js/messages_ru.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

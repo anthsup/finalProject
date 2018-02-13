@@ -33,7 +33,7 @@
                 <div class="panel panel-default  panel--styled">
                     <c:if test="${sessionScope.user.admin eq true}">
                         <div class="panel-heading clearfix">
-                            <a href="${pageContext.request.contextPath}/controller?command=periodical_edit&id=${periodical.id}" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning pull-left"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="${pageContext.request.contextPath}/controller?command=periodical-edit&periodicalId=${periodical.id}" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning pull-left"><i class="glyphicon glyphicon-edit"></i></a>
                             <a data-toggle="modal" data-target="#delete${periodical.id}" type="button" class="btn btn-sm btn-danger pull-right"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </c:if>
@@ -50,15 +50,15 @@
                         </div>
 
                         <div class="row text-center">
-                            <p><fmt:message key="period.type"/>: <a href="${pageContext.request.contextPath}/controller?command=search_periodicals&periodicalType=${periodical.typeId}">${(periodicalTypes[periodical.typeId]).name}</a></p>
+                            <p><fmt:message key="period.type"/>: <a href="${pageContext.request.contextPath}/controller?command=search-periodicals&periodicalType=${periodical.typeId}">${(periodicalTypes[periodical.typeId]).name}</a></p>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12 panelBottom">
                                 <div class="col-lg-6 pull-left">
                                     <form method="post" action="${pageContext.request.contextPath}/controller">
-                                        <input type="hidden" name="command" value="add_to_cart">
-                                        <input type="hidden" name="id" value="${periodical.id}">
+                                        <input type="hidden" name="command" value="add-to-cart">
+                                        <input type="hidden" name="periodicalId" value="${periodical.id}">
                                         <button class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user || sessionScope.user.loan < 0}">disabled</c:if>><span
                                                 class="glyphicon glyphicon-shopping-cart"></span> <fmt:message key="period.addToCart"/>
                                         </button>
@@ -99,25 +99,25 @@
                                          class="img-responsive" id="img-custom">
                                 </div>
                                 <div class="col-md-6 product_content">
-                                    <h4><fmt:message key="period.periodicity"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search_periodicals&periodicity=${periodical.periodicity}">${periodical.periodicity}</a> <fmt:message key="period.times"/></span></h4>
+                                    <h4><fmt:message key="period.periodicity"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search-periodicals&periodicity=${periodical.periodicity}">${periodical.periodicity}</a> <fmt:message key="period.times"/></span></h4>
 
-                                    <h4><fmt:message key="period.type"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search_periodicals&periodicalType=${periodical.typeId}">${(periodicalTypes[periodical.typeId]).name}</a></span></h4>
+                                    <h4><fmt:message key="period.type"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search-periodicals&periodicalType=${periodical.typeId}">${(periodicalTypes[periodical.typeId]).name}</a></span></h4>
 
                                     <p>${periodical.description}</p>
 
                                     <c:if test="${periodical.authorId ne 0}">
-                                        <h4><fmt:message key="period.author"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search_periodicals&author=${periodical.authorId}">${authors[periodical.authorId].fullName}</a></span></h4>
+                                        <h4><fmt:message key="period.author"/>: <span><a href="${pageContext.request.contextPath}/controller?command=search-periodicals&author=${periodical.authorId}">${authors[periodical.authorId].fullName}</a></span></h4>
                                         <h4><fmt:message key="period.books"/>: <span>${periodical.booksAmount}</span></h4>
                                     </c:if>
 
                                     <h4><fmt:message key="period.genres"/>: <span><c:forEach items="${genres[periodical.id]}" var="genre">
-                                        <a href="${pageContext.request.contextPath}/controller?command=search_periodicals&genre=${genre.name}">${genre.name}</a>
+                                        <a href="${pageContext.request.contextPath}/controller?command=search-periodicals&genre=${genre.name}">${genre.name}</a>
                                     </c:forEach></span></h4>
 
                                     <h3 class="cost">${periodical.price} <fmt:message key="currency.value"/></h3>
                                     <form method="post" action="${pageContext.request.contextPath}/controller">
-                                        <input type="hidden" name="command" value="add_to_cart">
-                                        <input type="hidden" name="id" value="${periodical.id}">
+                                        <input type="hidden" name="command" value="add-to-cart">
+                                        <input type="hidden" name="periodicalId" value="${periodical.id}">
                                         <div class="space-ten"></div>
                                         <div class="btn-ground text-center">
                                             <button type="submit" class="btn btn-md btn-add-to-cart" <c:if test="${empty sessionScope.user || sessionScope.user.loan < 0}">disabled</c:if>><span
@@ -152,7 +152,7 @@
                             <strong><fmt:message key="period.delete.msg"/></strong>
                         </div>
                         <div class="modal-footer">
-                            <a href="${pageContext.request.contextPath}/controller?command=delete_periodical&id=${periodical.id}" type="button" id="del" class="btn btn-danger"><fmt:message key="period.delete"/></a>
+                            <a href="${pageContext.request.contextPath}/controller?command=delete-periodical&periodicalId=${periodical.id}" type="button" id="del" class="btn btn-danger"><fmt:message key="period.delete"/></a>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="period.close"/></button>
                         </div>
                     </div>

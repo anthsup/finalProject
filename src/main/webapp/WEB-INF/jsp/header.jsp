@@ -36,8 +36,8 @@
                         <fmt:message key="nav.lang"/> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU"><fmt:message key="nav.lang.ru"/></a></li>
-                        <li><a href="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_US"><fmt:message key="nav.lang.en"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=change-locale&locale=ru_RU"><fmt:message key="nav.lang.ru"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=change-locale&locale=en_US"><fmt:message key="nav.lang.en"/></a></li>
                     </ul>
                 </li>
                 <li><a href="${pageContext.request.contextPath}/controller?command=periodicals"><fmt:message key="nav.periodicals"/></a></li>
@@ -51,12 +51,12 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="${pageContext.request.contextPath}/controller?command=users"><fmt:message key="users.management"/></a></li>
-                            <li><a href="${pageContext.request.contextPath}/controller?command=admin_panel"><fmt:message key="period.management"/></a></li>
+                            <li><a href="${pageContext.request.contextPath}/controller?command=admin-panel"><fmt:message key="period.management"/></a></li>
                         </ul>
                     </li>
                 </c:if>
             <c:if test="${empty sessionScope.user}">
-                <li><a href="${pageContext.request.contextPath}/controller?command=signup_page"><fmt:message key="nav.signup"/></a></li>
+                <li><a href="${pageContext.request.contextPath}/controller?command=signup-page"><fmt:message key="nav.signup"/></a></li>
                 <li>
                         <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2"><fmt:message key="nav.login"/></a>
                     </li>
@@ -84,11 +84,10 @@
                     </ul>
                     <ul class="collapse nav navbar-nav nav-collapse" id="nav-collapse4">
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${user.login}<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">${sessionScope.user.login}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="nav.myProfile"/></a></li>
-                                <%--<li><a href="#">Favorited</a></li>--%>
-                                <li><a href="${pageContext.request.contextPath}/controller?command=profile_edit"><fmt:message key="nav.settings"/></a></li>
+                                <li><a href="${pageContext.request.contextPath}/controller?command=profile-edit"><fmt:message key="nav.settings"/></a></li>
                                 <li class="divider"></li>
                                 <li><a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="nav.logout"/></a></li>
                             </ul>
@@ -97,25 +96,4 @@
                 </c:if>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
-    <div class="modal fade" id="language-form" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">
-                        <fmt:message key="nav.lang"/>
-                    </h4>
-                </div>
-                <form class="form-group" action="${pageContext.request.contextPath}/controller" method="GET">
-                    <input type="hidden" name="command" value="change_locale">
-                    <select name="locale">
-                        <option value="en_US"><fmt:message key="nav.lang.en"/></option>
-                        <option value="ru_RU"><fmt:message key="nav.lang.ru"/></option>
-                    </select>
-                    <button class="btn-custom" type="submit"><fmt:message key="edit.submit"/></button>
-                </form>
-            </div>
-        </div>
-    </div>
 </nav><!-- /.navbar -->

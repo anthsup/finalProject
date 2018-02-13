@@ -2,6 +2,7 @@ package by.dziuba.subscription.filter;
 
 import by.dziuba.subscription.command.CommandProvider;
 import by.dziuba.subscription.command.CommandType;
+import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.entity.User;
 
 import javax.servlet.*;
@@ -29,7 +30,7 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession currentSession = request.getSession(false);
-        if (currentSession == null || currentSession.getAttribute("user") == null) {
+        if (currentSession == null || currentSession.getAttribute(ParameterConstant.USER) == null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             authorize(servletRequest, servletResponse, filterChain);
@@ -40,9 +41,9 @@ public class AuthorizationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        User currentUser = (User) request.getSession().getAttribute("user");
+        User currentUser = (User) request.getSession().getAttribute(ParameterConstant.USER);
         boolean isAdmin = currentUser.isAdmin();
-        String command = CommandProvider.convertCommandType(request.getParameter("command"));
+        String command = CommandProvider.convertCommandType(request.getParameter(ParameterConstant.COMMAND));
         if (isAdmin || !adminCommands.contains(command)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

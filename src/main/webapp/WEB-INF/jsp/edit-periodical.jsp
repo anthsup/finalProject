@@ -21,14 +21,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 ">
-            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller?command=edit_periodical">
-                <input type="hidden" name="id" value="${periodical.id}"/>
+            <form class="form-horizontal" method="POST" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="edit-periodical">
+                <input type="hidden" name="periodicalId" value="${periodical.id}"/>
                 <fieldset>
                     <legend>Edit Periodical</legend>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="title"><fmt:message key="period.title"/></label>
                         <div class="col-md-4">
-                            <input id="title" name="title" type="text" placeholder="<fmt:message key="period.title"/>" class="form-control" value="${periodical.title}">
+                            <input id="title" pattern="^[А-ЯЁA-Z][A-Za-z\u0400-\u04ff\s]{3,255}$" name="title" type="text" placeholder="<fmt:message key="period.title"/>" class="form-control" value="${periodical.title}">
                         </div>
                     </div>
 
@@ -54,14 +55,14 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="periodicity"><fmt:message key="period.periodicity"/></label>
                         <div class="col-md-4">
-                            <input id="periodicity" name="periodicity" type="number" placeholder="<fmt:message key="period.periodicity"/>" class="form-control input-md" min="1" max="30" value="${periodical.periodicity}">
+                            <input id="periodicity" name="periodicity" pattern="[0-9]{1,2}" type="number" placeholder="<fmt:message key="period.periodicity"/>" class="form-control input-md" min="1" max="30" value="${periodical.periodicity}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="price"><fmt:message key="period.price"/></label>
                         <div class="col-md-4">
-                            <input id="price" name="price" type="number" step="0.01" placeholder="<fmt:message key="period.price"/>" class="form-control input-md" min="0" value="${periodical.price}">
+                            <input id="price" name="price" pattern="^\d+(([.,])\d{1,2})?$" type="number" step="0.01" placeholder="<fmt:message key="period.price"/>" class="form-control input-md" min="0" value="${periodical.price}">
                         </div>
                     </div>
 

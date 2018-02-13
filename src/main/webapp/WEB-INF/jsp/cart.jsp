@@ -30,7 +30,7 @@
             <th style="width:10%"></th>
         </tr>
         </thead>
-        <c:forEach items="${sessionScope.cart_products}" var="product">
+        <c:forEach items="${sessionScope.cartProducts}" var="product">
             <tbody>
             <tr>
                 <td data-th="Product">
@@ -44,17 +44,17 @@
                 <form action="${pageContext.request.contextPath}/controller" method="post" class="parent-custom${product.id}">
                     <td data-th="Price" class="price">${product.price} <fmt:message key="currency.value"/></td>
                     <td data-th="Quantity">
-                        <input type="hidden" name="command" value="change_price">
+                        <input type="hidden" name="command" value="change-price">
                         <input type="number" name="quantity" class="form-control text-center input-custom" min="1" value="${sessionScope.quantities[product.id]}" <c:if test="${product.booksAmount ne 0}">
                                max="${product.booksAmount}"</c:if>>
-                        <input type="hidden" id="command-id" name="id" value="${product.id}">
+                        <input type="hidden" id="command-id" name="periodicalId" value="${product.id}">
                     </td>
                     <td data-th="Subtotal" id="subtotal${product.id}" class="text-center">${product.price * sessionScope.quantities[product.id]}</td>
                 </form>
                 <td class="actions" data-th="">
                     <form method="post" action="${pageContext.request.contextPath}/controller">
-                        <input type="hidden" name="command" value="delete_from_cart">
-                        <input type="hidden" name="id" value="${product.id}"/>
+                        <input type="hidden" name="command" value="delete-from-cart">
+                        <input type="hidden" name="periodicalId" value="${product.id}"/>
                         <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </form>
                 </td>
@@ -66,7 +66,7 @@
             <td><a href="${pageContext.request.contextPath}/controller?command=periodicals" class="btn btn-warning"><i class="fa fa-angle-left"></i> <fmt:message key="cart.continue"/></a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong id="total" class="total">${sessionScope.totalPrice} <fmt:message key="currency.value"/></strong></td>
-            <td><a class="btn btn-success btn-block" data-toggle="modal" data-keyboard="true" data-target="#payment" <c:if test="${empty sessionScope.cart_products}">disabled</c:if>><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
+            <td><a class="btn btn-success btn-block" <c:if test="${not empty sessionScope.cartProducts}">data-toggle="modal" data-keyboard="true" data-target="#payment"</c:if> <c:if test="${empty sessionScope.cartProducts}">disabled</c:if>><fmt:message key="cart.checkout"/> <i class="fa fa-angle-right"></i></a></td>
         </tr>
         </tfoot>
     </table>

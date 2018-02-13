@@ -1,10 +1,10 @@
 package by.dziuba.subscription.dao.impl;
 
 import by.dziuba.subscription.dao.UserDAO;
-import by.dziuba.subscription.dao.exception.DAOException;
+import by.dziuba.subscription.exception.DAOException;
 import by.dziuba.subscription.database.DBConnectionPool;
 import by.dziuba.subscription.database.DBConnectionPool.PoolConnection;
-import by.dziuba.subscription.database.exception.DBException;
+import by.dziuba.subscription.exception.DBException;
 import by.dziuba.subscription.entity.User;
 
 import java.sql.PreparedStatement;
@@ -15,6 +15,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final String SELECT_BY_LOGIN = "SELECT * FROM user WHERE login = ?";
+    private static final String SELECT_BY_EMAIL = "SELECT * FROM user WHERE email = ?";
     private static final String SELECT_BY_ID = "SELECT * FROM user WHERE id = ?";
     private static final String SELECT_ALL = "SELECT * FROM user";
     private static final String INSERT_USER = "INSERT INTO user (login, email, firstName, lastName, city, address," +
@@ -29,7 +30,12 @@ public class UserDAOImpl implements UserDAO {
     public User findUserByLogin(String login) throws DAOException {
         return findUserBy(login, SELECT_BY_LOGIN);
     }
-    //TODO refactor return expressions
+
+    @Override
+    public User findUserByEmail(String email) throws DAOException {
+        return findUserBy(email, SELECT_BY_EMAIL);
+    }
+
     @Override
     public User findUserById(int id) throws DAOException {
         User user = null;
