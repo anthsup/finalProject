@@ -10,6 +10,11 @@ import javax.servlet.annotation.WebListener;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Fires after application context is initialized and initializes Connection pool.
+ * Destroys it after application context is destroyed.
+ * @see DBConnectionPool
+ */
 @WebListener
 public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = LogManager.getLogger(ContextListener.class);
@@ -19,7 +24,7 @@ public class ContextListener implements ServletContextListener {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         } catch (SQLException e) {
-            LOGGER.warn(e.getMessage());
+            LOGGER.warn(e.getMessage(), e);
         }
 
         DBConnectionPool.getInstance();

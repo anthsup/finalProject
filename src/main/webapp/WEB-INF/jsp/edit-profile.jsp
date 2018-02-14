@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -15,7 +16,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container">
     <div class="row">
@@ -146,7 +147,7 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<custom:footer/>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>

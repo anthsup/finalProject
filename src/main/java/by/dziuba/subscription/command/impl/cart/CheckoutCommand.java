@@ -21,6 +21,10 @@ import java.util.*;
 
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
+/**
+ * Registers user payment and creates subscriptions using periodical data, month quantity,
+ * total price. Updates user loan if corresponding attribute is set.
+ */
 public class CheckoutCommand implements Command {
     private static final SubscriptionService subscriptionService = new SubscriptionServiceImpl();
     private static final UserService userService = new UserServiceImpl();
@@ -32,7 +36,7 @@ public class CheckoutCommand implements Command {
 
             List<Subscription> subscriptions = createSubscriptionList(requestContent);
             subscriptionService.addSubscription(subscriptions);
-            if (requestContent.getRequestParameter("credit").equals("true")) {
+            if (requestContent.getRequestParameter("credit") != null) {
                 User user = (User) requestContent.getSessionAttribute(ParameterConstant.USER);
                 user.setLoan(user.getLoan().subtract((BigDecimal) requestContent.getSessionAttribute(ParameterConstant.TOTAL_PRICE)));
                 userService.updateLoan(user);

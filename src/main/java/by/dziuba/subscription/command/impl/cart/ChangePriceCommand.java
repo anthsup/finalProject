@@ -13,6 +13,10 @@ import by.dziuba.subscription.service.impl.PeriodicalServiceImpl;
 import java.math.BigDecimal;
 import java.util.Map;
 
+/**
+ * Command is being called by js file changePrice via AJAX after changing month quantity
+ * in cart. It calculates new total price and sends it back.
+ */
 public class ChangePriceCommand implements Command {
     private PeriodicalService periodicalService = new PeriodicalServiceImpl();
 

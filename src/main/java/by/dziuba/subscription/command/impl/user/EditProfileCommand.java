@@ -1,5 +1,6 @@
 package by.dziuba.subscription.command.impl.user;
 
+import by.dziuba.subscription.constant.MessageConstant;
 import by.dziuba.subscription.util.DataValidator;
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
@@ -11,6 +12,9 @@ import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.UserService;
 import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.UserServiceImpl;
+import by.dziuba.subscription.util.MessageManager;
+
+import javax.servlet.http.HttpServletResponse;
 
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
@@ -19,12 +23,13 @@ public class EditProfileCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
-        //TODO check redirected, validation etc
         try {
             CommandResult commandResult = new CommandResult(REDIRECT, JspPath.PROFILE_PAGE_COMMAND);
             User currentUser = setUpdatedUserData(requestContent);
             if (!DataValidator.validateUser(currentUser)) {
-                commandResult = new CommandResult(400, "Invalid format.");
+                String locale = (String) requestContent.getSessionAttribute(ParameterConstant.LOCALE);
+                return new CommandResult(HttpServletResponse.SC_BAD_REQUEST,
+                        MessageManager.getMessage(MessageConstant.INVALID_USER_DATA, locale));
             } else {
                 userService.updateUserById(currentUser);
             }

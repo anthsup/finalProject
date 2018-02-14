@@ -30,6 +30,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Searches periodical by either genre, author, periodicity or type.
+ */
 public class SearchPeriodicalsCommand implements Command {
     private static final PeriodicalService periodicalService = new PeriodicalServiceImpl();
     private static final AuthorService authorService = new AuthorServiceImpl();
@@ -59,7 +62,7 @@ public class SearchPeriodicalsCommand implements Command {
             commandResult.putRequestAttribute("searchCommand", requestContent.getRequestURL());
             return commandResult;
         } catch (ServiceException e) {
-            throw new CommandException(e.getMessage());
+            throw new CommandException(e);
         }
     }
 

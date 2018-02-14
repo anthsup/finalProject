@@ -1,12 +1,20 @@
 package by.dziuba.subscription.command;
 
 import by.dziuba.subscription.command.impl.ChangeLocaleCommand;
+import by.dziuba.subscription.command.impl.ShowBanPageCommand;
+import by.dziuba.subscription.command.impl.ShowErrorPageCommand;
 import by.dziuba.subscription.command.impl.admin.ShowAdminPanelCommand;
 import by.dziuba.subscription.command.impl.admin.ShowUsersCommand;
 import by.dziuba.subscription.command.impl.cart.*;
 import by.dziuba.subscription.command.impl.periodical.*;
 import by.dziuba.subscription.command.impl.user.*;
+import by.dziuba.subscription.controller.FrontController;
 
+/**
+ * List of enums with initialized commands inside.
+ * Commands are split into groups to be used in Filter classes.
+ * @see Command
+ */
 public enum CommandType {
     // Guest Commands
     LOGIN(new LogInCommand()),
@@ -44,10 +52,17 @@ public enum CommandType {
     PERIODICAL_ADD(new ShowPeriodicalAddCommand()),
     ADD_PERIODICAL(new AddPeriodicalCommand()),
 
-    BANNED(new ShowBanPageCommand());
+    BANNED(new ShowBanPageCommand()),
+    ERROR_PAGE(new ShowErrorPageCommand());
 
     private Command command;
 
+    /**
+     * Creates a Command which which FrontController then gets through CommandProvider.
+     * @param command - command that came with jsp.
+     * @see CommandProvider
+     * @see FrontController
+     */
     CommandType(Command command) {
         this.command = command;
     }

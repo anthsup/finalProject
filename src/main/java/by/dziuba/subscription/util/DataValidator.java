@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Validates user, periodical, password, genre/author name using regular expressions.
+ * @see User
+ * @see Periodical
+ */
 public class DataValidator {
     private static final Logger LOGGER = LogManager.getLogger(DataValidator.class);
 
@@ -19,7 +24,7 @@ public class DataValidator {
     private static final String CITY_REGEX = "^[a-zA-Z\\u0400-\\u04ff]+(?:[\\s-][a-zA-Z\\u0400-\\u04ff]+)*$";
     private static final String PASSWORD_REGEX = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
     private static final String POSTAL_REGEX = "^[2][0-9]{5}$";
-    private static final String ADDRESS_REGEX = "^[a-zA-Z\\u0400-\\u04ff]+(?:[\\s-.,]+[a-zA-Z\\u0400-\\u04ff0-9]+)*$";
+    private static final String ADDRESS_REGEX = "^[a-zA-Z\\u0400-\\u04ff]+(?:[\\s-.,/\\\\]+[a-zA-Z\\u0400-\\u04ff0-9]+)*$";
     private static final String EMAIL_REGEX = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@" +
             "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
@@ -37,7 +42,7 @@ public class DataValidator {
 
     public static boolean validateUser(User user) {
         return user.getLogin().matches(LOGIN_REGEX) &&
-               user.getPassword().matches(PASSWORD_REGEX) &&
+               validatePassword(user.getPassword()) &&
                user.getAddress().matches(ADDRESS_REGEX) &&
                user.getCity().matches(CITY_REGEX) &&
                user.getEmail().matches(EMAIL_REGEX) &&
@@ -45,6 +50,10 @@ public class DataValidator {
                user.getLastName().matches(NAME_REGEX) &&
                user.getPostalIndex().matches(POSTAL_REGEX) &&
                validateImage(user.getPhoto());
+    }
+
+    public static boolean validatePassword(String password) {
+        return password.matches(PASSWORD_REGEX);
     }
 
     public static boolean validatePeriodical(Periodical periodical) {
@@ -74,7 +83,7 @@ public class DataValidator {
         } catch (MalformedURLException e) {
             return false;
         } catch (IOException e) {
-            LOGGER.warn(e.getMessage());
+            LOGGER.warn(e.getMessage(), e);
             return false;
         }
         return true;

@@ -1,6 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
+
 <c:set var="id" value="1" scope="page"/>
 <fmt:message key="status.active" var="active"/>
 <fmt:message key="status.expired" var="expired"/>
@@ -12,14 +14,14 @@
 
 <html>
 <head>
-    <title>User profile</title>
+    <title><fmt:message key="profile.info"/></title>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile-style.css">
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
@@ -153,7 +155,7 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<custom:footer/>
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>

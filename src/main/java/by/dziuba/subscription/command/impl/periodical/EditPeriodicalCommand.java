@@ -50,7 +50,7 @@ public class EditPeriodicalCommand implements Command {
         }
     }
 
-    private Periodical setUpdatedPeriodicalData(RequestContent requestContent, Periodical periodical) throws CommandException {
+    private Periodical setUpdatedPeriodicalData(RequestContent requestContent, Periodical periodical) {
         if (requestContent.getRequestParameter(ParameterConstant.AUTHOR) != null) {
             periodical.setAuthorId(Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.AUTHOR)));
             periodical.setBooksAmount(Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.BOOKS_AMOUNT)));

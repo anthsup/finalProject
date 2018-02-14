@@ -131,7 +131,6 @@ public class User {
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
-    //TODO getters setters after other stuff is all set
 
     @Override
     public boolean equals(Object o) {

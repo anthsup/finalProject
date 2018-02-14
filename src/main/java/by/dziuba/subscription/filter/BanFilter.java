@@ -15,11 +15,19 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Redirects user to ban page if he is banned.
+ * Allows only certain commands like profile, logout or change locale.
+ */
 @WebFilter(filterName = "BanFilter", urlPatterns = {"/controller"}, dispatcherTypes = {DispatcherType.REQUEST,
         DispatcherType.FORWARD})
 public class BanFilter  implements Filter {
     private Set<String> grantedCommands = new HashSet<>();
 
+    /**
+     * Initialize granted commands for banned users.
+     * @param filterConfig
+     */
     @Override
     public void init(FilterConfig filterConfig) {
         grantedCommands.add(CommandType.LOGOUT.name());
@@ -27,6 +35,15 @@ public class BanFilter  implements Filter {
         grantedCommands.add(CommandType.CHANGE_LOCALE.name());
     }
 
+    /**
+     * Filters request if ban page is requested, granted commands contain requested resource,
+     * or session doesn't contain any user.
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -47,6 +64,5 @@ public class BanFilter  implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

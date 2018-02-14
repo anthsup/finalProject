@@ -16,6 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Contains and manages database connections.
+ */
 public class DBConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(DBConnectionPool.class);
 
@@ -40,7 +43,7 @@ public class DBConnectionPool {
                 connectionCount.incrementAndGet();
             }
         } catch (SQLException e) {
-            LOGGER.warn(e.getMessage());
+            LOGGER.warn(e.getMessage(), e);
         }
     }
 
@@ -48,6 +51,13 @@ public class DBConnectionPool {
         return DBConnectionPoolHolder.INSTANCE;
     }
 
+    /**
+     * Takes connection from the queue, if there still are connections.
+     * In other case database manager creates it. If pool capacity is exceeded,
+     * DBException is thrown.
+     *
+     * @return PoolConnection — wrapped autoclosable Connection
+     */
     public PoolConnection getConnection() throws DBException {
         Connection connection;
         try {
@@ -70,10 +80,17 @@ public class DBConnectionPool {
         return new PoolConnection(connection);
     }
 
+    /**
+     * Closes the pool by closing each of its connections.
+     */
     public void close() {
         pool.forEach(this::closeConnection);
     }
 
+    /**
+     * Closes unwrapped connections.
+     * @param connection to be closed
+     */
     private void closeConnection(Connection connection) {
         if (connection != null) {
             try {
@@ -88,6 +105,10 @@ public class DBConnectionPool {
         private static final DBConnectionPool INSTANCE = new DBConnectionPool();
     }
 
+    /**
+     * Wrapper class to use proxy connection as a normal connection.
+     * Implements AutoCloseable interface to be used in try-with-resources block.
+     */
     public class PoolConnection implements AutoCloseable {
         private Connection connection;
 
@@ -99,6 +120,10 @@ public class DBConnectionPool {
             return connection;
         }
 
+        /**
+         * Removes connection from the queue if it is already closed.
+         * In other cases returns it to the queue.
+         */
         @Override
         public void close() {
             try {
@@ -108,7 +133,7 @@ public class DBConnectionPool {
                     pool.remove(connection);
                 }
             } catch (SQLException e) {
-                LOGGER.warn(e.getMessage());
+                LOGGER.warn(e.getMessage(), e);
             }
         }
     }

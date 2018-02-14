@@ -2,6 +2,10 @@
     margin-bottom: 14px;
 }
 
+th {
+    text-align: unset;
+}
+
 .user-row:last-child {
     margin-bottom: 0;
 }

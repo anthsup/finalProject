@@ -1,6 +1,7 @@
 <%@ page isErrorPage="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -19,7 +20,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container error">
     <div class="jumbotron">
@@ -28,6 +29,12 @@
         <c:choose>
             <c:when test="${pageContext.errorData.statusCode eq 404}">
                 <h3 class="text-center"><fmt:message key="error.404.cause"/></h3>
+            </c:when>
+            <c:when test="${pageContext.errorData.statusCode eq 403}">
+                <h3 class="text-center"><fmt:message key="error.403.cause"/></h3>
+            </c:when>
+            <c:when test="${pageContext.errorData.statusCode eq 500}">
+                <h2 class="text-center"><fmt:message key="error.500.cause"/></h2>
             </c:when>
             <c:otherwise>
                 <h3 class="text-center">${requestScope['javax.servlet.error.message']}</h3>
@@ -39,7 +46,7 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<custom:footer/>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->

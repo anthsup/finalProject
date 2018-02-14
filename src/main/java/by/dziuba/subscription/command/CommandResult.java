@@ -4,6 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class which transfers command results to FrontController — path, routing type, error code/msg.
+ */
 public class CommandResult {
     private String page;
     private RoutingType routingType;

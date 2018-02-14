@@ -1,5 +1,6 @@
 package by.dziuba.subscription.command.impl.user;
 
+import by.dziuba.subscription.constant.MessageConstant;
 import by.dziuba.subscription.util.DataValidator;
 import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
@@ -13,7 +14,9 @@ import by.dziuba.subscription.service.UserService;
 import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.SignUpServiceImpl;
 import by.dziuba.subscription.service.impl.UserServiceImpl;
+import by.dziuba.subscription.util.MessageManager;
 
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -24,20 +27,24 @@ public class SignUpCommand implements Command {
 
     private final SignUpService signUpService = new SignUpServiceImpl();
     private final UserService userService = new UserServiceImpl();
-    // TODO localize error msg
+
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
-        //TODO check email and overall signup process
         try {
             CommandResult commandResult = new CommandResult(REDIRECT, JspPath.LOGIN_PAGE_COMMAND);
             User user = setUserData(requestContent);
+            String locale = (String) requestContent.getSessionAttribute(ParameterConstant.LOCALE);
             if (!DataValidator.validateUser(user)) {
-                commandResult = new CommandResult(400, "Invalid format.");
-            } else if (userService.getUserByLogin(user.getLogin()) == null &&
-                    userService.getUserByEmail(user.getEmail()) == null) {
-                signUpService.signUp(user);
+                String msg = MessageManager.getMessage(MessageConstant.INVALID_USER_DATA, locale);
+                return new CommandResult(HttpServletResponse.SC_BAD_REQUEST, msg);
+            } else if (userService.getUserByLogin(user.getLogin()) != null) {
+                String msg = MessageManager.getMessage(MessageConstant.LOGIN_EXISTS, locale);
+                return new CommandResult(HttpServletResponse.SC_BAD_REQUEST, msg);
+            } else if (userService.getUserByEmail(user.getEmail()) != null) {
+                String msg = MessageManager.getMessage(MessageConstant.EMAIL_EXISTS, locale);
+                return new CommandResult(HttpServletResponse.SC_BAD_REQUEST, msg);
             } else {
-                commandResult = new CommandResult(409, "User with such email or login already exists.");
+                signUpService.signUp(user);
             }
             return commandResult;
         } catch (ServiceException e) {

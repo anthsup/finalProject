@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -9,14 +10,14 @@
 
 <html>
 <head>
-    <title>Admin Panel</title>
+    <title><fmt:message key="period.management"/></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-panel-style.css"/>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container admin">
     <div class="page-header">
@@ -92,7 +93,7 @@
 </div>
 
 
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<custom:footer/>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>

@@ -1,6 +1,7 @@
 <%@ page isErrorPage="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -19,7 +20,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container error">
     <div class="jumbotron">
@@ -31,7 +32,7 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<custom:footer/>
 
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->

@@ -3,6 +3,9 @@ package by.dziuba.subscription.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Returns message from Contents properties depending on provided locale.
+ */
 public class MessageManager {
     private static ResourceBundle ruBundle = ResourceBundle.getBundle("Contents", new Locale("ru", "RU"));
     private static ResourceBundle enBundle = ResourceBundle.getBundle("Contents", new Locale("en", "US"));

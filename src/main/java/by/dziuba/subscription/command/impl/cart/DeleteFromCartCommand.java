@@ -19,6 +19,10 @@ import java.util.Set;
 
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
+/**
+ * Deletes periodical from cart by its id. Sends error if id is invalid.
+ * Recalculates and sets new total price.
+ */
 public class DeleteFromCartCommand implements Command {
     private static final PeriodicalService periodicalService = new PeriodicalServiceImpl();
 

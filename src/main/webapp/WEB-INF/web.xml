@@ -7,7 +7,7 @@
     <display-name>Subscription Web Application</display-name>
 
     <error-page>
-        <location>/WEB-INF/jsp/error.jsp</location>
+        <location>/controller?command=error-page</location>
     </error-page>
 
     <filter-mapping>

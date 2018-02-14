@@ -19,6 +19,12 @@ import java.io.IOException;
 import static by.dziuba.subscription.command.CommandResult.RoutingType.FORWARD;
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
+/**
+ * Front Controller manages requests and responses. It executes commands which were called,
+ * passing them wrapped request data. It then gets results and forwards/redirects to corresponding pages.
+ * @see RequestContent
+ * @see CommandResult
+ */
 @WebServlet(name = "FrontController", urlPatterns = {"/controller"})
 public class FrontController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(FrontController.class);
@@ -48,11 +54,11 @@ public class FrontController extends HttpServlet {
                 resp.sendError(commandResult.getErrorCode(), commandResult.getErrorMessage());
             }
         } catch (CommandException e) {
-            LOGGER.warn(e.getMessage());
-            throw new ServletException(e);
+            LOGGER.warn(e.getMessage(), e);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (BadRequestException e) {
-            LOGGER.warn(e.getMessage());
-            resp.sendError(400, e.getMessage()); //TODO maybe 404?
+            LOGGER.warn(e.getMessage(), e);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
 }

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -9,14 +10,14 @@
 
 <html lang="${locale}">
 <head>
-    <title>Edit Periodical</title>
+    <title><fmt:message key="period.edit"/></title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container">
     <div class="row">
@@ -25,18 +26,18 @@
                 <input type="hidden" name="command" value="edit-periodical">
                 <input type="hidden" name="periodicalId" value="${periodical.id}"/>
                 <fieldset>
-                    <legend>Edit Periodical</legend>
+                    <legend><fmt:message key="period.edit"/></legend>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="title"><fmt:message key="period.title"/></label>
                         <div class="col-md-4">
-                            <input id="title" pattern="^[А-ЯЁA-Z][A-Za-z\u0400-\u04ff\s]{3,255}$" name="title" type="text" placeholder="<fmt:message key="period.title"/>" class="form-control" value="${periodical.title}">
+                            <input required id="title" pattern="^[А-ЯЁA-Z][A-Za-z\u0400-\u04ff\s]{3,255}$" name="title" type="text" placeholder="<fmt:message key="period.title"/>" class="form-control" value="${periodical.title}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="type"><fmt:message key="period.type"/></label>
                         <div class="col-md-4">
-                            <select id="type" name="type" data-style="btn-primary" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.type"/>">
+                            <select required id="type" name="type" data-style="btn-primary" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.type"/>">
                                 <c:forEach items="${periodicalTypes}" var="periodicalType">
                                     <option <c:if test="${periodicalType.id eq periodical.typeId}">selected</c:if> value="${periodicalType.id}">${periodicalType.name}</option>
                                 </c:forEach>
@@ -47,7 +48,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="coverImage"><fmt:message key="period.image"/></label>
                         <div class="col-md-4">
-                            <input id="coverImage" name="coverImage" class="form-control" type="url" placeholder="<fmt:message key="period.image"/> URL"
+                            <input id="coverImage" required name="coverImage" class="form-control" type="url" placeholder="<fmt:message key="period.image"/> URL"
                                    pattern="^(https|http).+(jpg|svg|gif|png)$" value="${periodical.coverImage}">
                         </div>
                     </div>
@@ -55,21 +56,21 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="periodicity"><fmt:message key="period.periodicity"/></label>
                         <div class="col-md-4">
-                            <input id="periodicity" name="periodicity" pattern="[0-9]{1,2}" type="number" placeholder="<fmt:message key="period.periodicity"/>" class="form-control input-md" min="1" max="30" value="${periodical.periodicity}">
+                            <input id="periodicity" required name="periodicity" pattern="[0-9]{1,2}" type="number" placeholder="<fmt:message key="period.periodicity"/>" class="form-control input-md" min="1" max="30" value="${periodical.periodicity}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="price"><fmt:message key="period.price"/></label>
                         <div class="col-md-4">
-                            <input id="price" name="price" pattern="^\d+(([.,])\d{1,2})?$" type="number" step="0.01" placeholder="<fmt:message key="period.price"/>" class="form-control input-md" min="0" value="${periodical.price}">
+                            <input id="price" required name="price" pattern="^\d+(([.,])\d{1,2})?$" type="number" step="0.01" placeholder="<fmt:message key="period.price"/>" class="form-control input-md" min="0" value="${periodical.price}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label col-xs-12" for="genres"><fmt:message key="period.genres"/></label>
                         <div class="col-md-4">
-                            <select id="genres" name="genres" data-style="btn-info" class="selectpicker form-control input-md" multiple data-max-options="5" data-actions-box="true" data-live-search="true" title="<fmt:message key="period.genres"/>" data-size="5">
+                            <select id="genres" required name="genres" data-style="btn-info" class="selectpicker form-control input-md" multiple data-max-options="5" data-actions-box="true" data-live-search="true" title="<fmt:message key="period.genres"/>" data-size="5">
                                 <c:forEach items="${genres}" var="genre">
                                     <option <c:if test="${periodicalGenres.contains(genre) eq true}">selected</c:if>>${genre.name}</option>
                                 </c:forEach>
@@ -81,7 +82,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label col-xs-12" for="author"><fmt:message key="period.author"/></label>
                             <div class="col-md-4">
-                                <select id="author" name="author" data-style="btn-danger" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.author"/>">
+                                <select id="author" required name="author" data-style="btn-danger" class="selectpicker form-control input-md show-tick" title="<fmt:message key="period.author"/>">
                                     <c:forEach items="${authors}" var="author">
                                         <option <c:if test="${author.id eq periodical.authorId}">selected</c:if> value="${author.id}">${author.fullName}</option>
                                     </c:forEach>
@@ -92,7 +93,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="books"><fmt:message key="period.books"/></label>
                             <div class="col-md-4">
-                                <input id="books" name="books" type="number" placeholder="<fmt:message key="period.books"/>" class="form-control input-md" min="0" value="${periodical.booksAmount}">
+                                <input id="books" required name="books" type="number" placeholder="<fmt:message key="period.books"/>" class="form-control input-md" min="1" value="${periodical.booksAmount}">
                             </div>
                         </div>
                     </c:if>
@@ -100,7 +101,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="Description"><fmt:message key="period.description"/></label>
                         <div class="col-md-4">
-                            <textarea id="description" name="description" placeholder="<fmt:message key="period.description"/>" class="form-control input-md" rows="5">${periodical.description}</textarea>
+                            <textarea id="description" required name="description" placeholder="<fmt:message key="period.description"/>" class="form-control input-md" rows="5">${periodical.description}</textarea>
                         </div>
                     </div>
 
@@ -116,7 +117,7 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+<custom:footer/>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>

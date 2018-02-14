@@ -7,6 +7,7 @@ function changePage(page, periodicalsPerPage) {
         type: 'GET',
         url: command + '&page=' + pageNumber + '&periodicalsPerPage=' + periodicalsPerPage,
         success: function (data) {
+            // window.location.replace(url);
             var jqObj = jQuery(data);
             var periodicals = jqObj.find(".periodicals").children();
             $(".periodicals").empty();

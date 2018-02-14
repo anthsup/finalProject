@@ -13,6 +13,7 @@ public final class JspPath {
     public static final String ADMIN_PANEL_PAGE = "/WEB-INF/jsp/admin-panel.jsp";
     public static final String PERIODICAL_ADD_PAGE = "/WEB-INF/jsp/add-periodical.jsp";
     public static final String BAN_PAGE = "/WEB-INF/jsp/banned.jsp";
+    public static final String ERROR_PAGE = "/WEB-INF/jsp/error.jsp";
 
     public static final String PERIODICALS_PAGE_COMMAND = "/controller?command=periodicals";
     public static final String ADMIN_PANEL_PAGE_COMMAND = "/controller?command=admin-panel";
@@ -20,4 +21,6 @@ public final class JspPath {
     public static final String PROFILE_PAGE_COMMAND = "/controller?command=profile";
     public static final String LOGIN_PAGE_COMMAND = "/controller?command=login-page";
     public static final String BAN_PAGE_COMMAND = "/controller?command=banned";
+
+    private JspPath() {}
 }

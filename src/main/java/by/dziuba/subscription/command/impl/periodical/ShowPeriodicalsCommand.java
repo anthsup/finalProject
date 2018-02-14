@@ -34,7 +34,6 @@ public class ShowPeriodicalsCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContent requestContent) throws CommandException {
-        CommandResult commandResult = new CommandResult(JspPath.PERIODICALS_PAGE);
         try {
             String pageNumber = Optional.ofNullable(requestContent
                     .getRequestParameter(ParameterConstant.PAGE)).orElse(SearchPeriodicalsCommand.DEFAULT_PAGE_NUMBER);
@@ -48,6 +47,7 @@ public class ShowPeriodicalsCommand implements Command {
             Map<Integer, Author> authors = authorService.getAll().stream()
                     .collect(Collectors.toMap(Author::getId, Function.identity()));
 
+            CommandResult commandResult = new CommandResult(JspPath.PERIODICALS_PAGE);
             commandResult.putRequestAttribute(ParameterConstant.GENRES, genres);
             commandResult.putRequestAttribute(ParameterConstant.AUTHORS, authors);
             commandResult.putRequestAttribute(ParameterConstant.PERIODICALS, periodicals);

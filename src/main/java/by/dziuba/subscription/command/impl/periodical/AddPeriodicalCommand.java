@@ -49,7 +49,8 @@ public class AddPeriodicalCommand implements Command {
 
     private Periodical setPeriodicalData(RequestContent requestContent) {
         Periodical periodical = new Periodical();
-        if (!requestContent.getRequestParameter(ParameterConstant.AUTHOR).isEmpty()) {
+        if (requestContent.getRequestParameter(ParameterConstant.AUTHOR) != null &&
+                !requestContent.getRequestParameter(ParameterConstant.AUTHOR).isEmpty()) {
             periodical.setAuthorId(Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.AUTHOR)));
             periodical.setBooksAmount(Integer.parseInt(requestContent.getRequestParameter(ParameterConstant.BOOKS_AMOUNT)));
         }

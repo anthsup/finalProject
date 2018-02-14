@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="custom" tagdir="/WEB-INF/tags" %>
 
 <!-- internationalization -->
 <c:set var="locale" value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
@@ -9,7 +10,7 @@
 
 <html lang="${locale}">
 <head>
-    <title>Cart</title>
+    <title><fmt:message key="nav.cart"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart-style.css">
@@ -17,7 +18,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/header.jsp"/>
+<custom:header/>
 
 <div class="container">
     <table id="cart" class="table table-hover table-condensed">
@@ -72,7 +73,8 @@
     </table>
 
     <jsp:include page="payment.jsp"/>
-    <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
+
+    <custom:footer/>
 
 </div>
 <script src="${pageContext.request.contextPath}/js/changePrice.js"></script>

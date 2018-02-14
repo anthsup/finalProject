@@ -45,7 +45,11 @@ public final class ParameterConstant {
     public static final String PAGE = "page";
     public static final String PERIODICALS_PER_PAGE = "periodicalsPerPage";
     public static final String LOCALE = "locale";
+    public static final String RU_LOCALE = "ru_RU";
+    public static final String EN_LOCALE = "en_US";
     public static final String COMMAND = "command";
     public static final String STATUSES = "statuses";
     public static final String PERIODICAL_NUMBER = "periodicalsNumber";
+
+    private ParameterConstant() {}
 }

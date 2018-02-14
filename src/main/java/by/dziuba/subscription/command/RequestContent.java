@@ -1,11 +1,16 @@
 package by.dziuba.subscription.command;
 
+import by.dziuba.subscription.constant.JspPath;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Proxy class which transfers request data from users to business logic.
+ */
 public class RequestContent {
     private String requestURL;
     private String referer;
@@ -15,9 +20,12 @@ public class RequestContent {
     public RequestContent(HttpServletRequest req) {
         sessionAttributes = new HashMap<>();
         requestParameters = new HashMap<>(req.getParameterMap());
-        requestURL = req.getRequestURL().append("?").append(req.getQueryString()).toString();
-
-        referer = req.getHeader("Referer");
+        requestURL = req.getRequestURL().append("?").append(req.getQueryString() == null ? "" : req.getQueryString()).toString();
+        if (req.getHeader("Referer") != null) {
+            referer = req.getHeader("Referer").equals("http://localhost:8080/controller") ? JspPath.INDEX_PAGE : req.getHeader("Referer");
+        } else {
+            referer = null;
+        }
         HttpSession currentSession = req.getSession(false);
         if (currentSession != null) {
             Enumeration<String> sessionAttributeNames = currentSession.getAttributeNames();

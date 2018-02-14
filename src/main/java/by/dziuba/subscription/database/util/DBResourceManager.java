@@ -2,6 +2,9 @@ package by.dziuba.subscription.database.util;
 
 import java.util.ResourceBundle;
 
+/**
+ * Util class returning database properties from corresponding ResourceBundle.
+ */
 public final class DBResourceManager {
     public static final String URL = "url";
     public static final String USER = "user";

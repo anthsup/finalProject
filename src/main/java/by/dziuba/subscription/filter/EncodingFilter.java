@@ -9,6 +9,9 @@ import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * Sets UTF-8 encoding on every request and response.
+ */
 @WebFilter(filterName = "EncodingFilter", urlPatterns = {"/controller"}, dispatcherTypes = {DispatcherType.REQUEST,
         DispatcherType.FORWARD}, initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {
@@ -26,11 +29,10 @@ public class EncodingFilter implements Filter {
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain
             filterChain) throws IOException, ServletException {
         try {
-            if (servletRequest.getCharacterEncoding() == null) {
-                servletRequest.setCharacterEncoding(encoding);
-            }
+            servletRequest.setCharacterEncoding(encoding);
+            servletResponse.setCharacterEncoding(encoding);
         } catch (UnsupportedEncodingException e) {
-            LOGGER.warn(e.getMessage(), "Using default request encoding (not utf-8)");
+            LOGGER.warn("Using default request encoding (not utf-8)", e);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

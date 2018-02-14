@@ -18,6 +18,10 @@ import java.util.Set;
 
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
+/**
+ * Gets periodical by id, calculates its price, defines quantity and adds it to cart,
+ * placing all the info in session attributes.
+ */
 public class AddToCartCommand implements Command {
     private static final PeriodicalService periodicalService = new PeriodicalServiceImpl();
     private static final int INITIAL_MONTHS_AMOUNT = 1;

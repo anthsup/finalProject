@@ -4,12 +4,16 @@ import by.dziuba.subscription.command.Command;
 import by.dziuba.subscription.command.CommandResult;
 import by.dziuba.subscription.constant.JspPath;
 import by.dziuba.subscription.command.RequestContent;
+import by.dziuba.subscription.constant.MessageConstant;
 import by.dziuba.subscription.exception.CommandException;
 import by.dziuba.subscription.constant.ParameterConstant;
 import by.dziuba.subscription.entity.User;
 import by.dziuba.subscription.service.LogInService;
 import by.dziuba.subscription.exception.ServiceException;
 import by.dziuba.subscription.service.impl.LogInServiceImpl;
+import by.dziuba.subscription.util.MessageManager;
+
+import javax.servlet.http.HttpServletResponse;
 
 import static by.dziuba.subscription.command.CommandResult.RoutingType.REDIRECT;
 
@@ -30,7 +34,9 @@ public class LogInCommand implements Command {
             if (user != null) {
                 commandResult.putSessionAttribute(ParameterConstant.USER, user);
             } else {
-                commandResult = new CommandResult(401, "Incorrect login or password");
+                String locale = (String) requestContent.getSessionAttribute(ParameterConstant.LOCALE);
+                return new CommandResult(HttpServletResponse.SC_BAD_REQUEST,
+                        MessageManager.getMessage(MessageConstant.INVALID_CREDENTIALS, locale));
             }
             return commandResult;
         } catch (ServiceException e) {
